@@ -8,7 +8,6 @@ class UserService {
 
     async register(data) {
         const userData = await createUserWithEmailAndPassword(auth, data.email, data.password)
-        console.log(userData)
         const user = userData.user
         let newUser = new UserModel()
         newUser.id = user.uid

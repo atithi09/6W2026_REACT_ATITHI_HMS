@@ -4,7 +4,7 @@ export default class DoctorModel{
     mobile=''
     userType=2
     dateOFbirth=''
-    departmentId=''
+    departmentid=''
     specialization=''
     qualification=''
     experience=''

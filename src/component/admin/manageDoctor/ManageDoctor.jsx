@@ -2,17 +2,25 @@ import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import DoctorServices from "../../../services/DoctorServices"
 import Swal from "sweetalert2"
+import DepartmentServices from "../../../services/DepartmentServices"
 
 
 export default function ManageDoctor() {
     const [doctors, setDoctors] = useState([])
+    const [departments, setDepartments] = useState([])
 
     async function fetchDoctors() {
         let res = await DoctorServices.all()
         setDoctors(res)
     }
 
+
+    async function fetchDepartments() {
+        let res = await DepartmentServices.all()
+        setDepartments(res)
+    }
     useEffect(() => {
+        fetchDepartments();
         fetchDoctors();
     }, [])
 
@@ -114,7 +122,8 @@ export default function ManageDoctor() {
                                         {doctor.name}
                                     </td>
 
-                                    <td>{doctor.department}</td>
+                                    <td>{departments.find((d)=>d.id == doctor.departmentid)?.name}</td>
+                                    {/* <td>{doctor.departmentid}</td> */}
 
                                     <td>
                                         <span

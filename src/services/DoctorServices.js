@@ -15,7 +15,7 @@ class DoctorServices {
         newUser.email = user.email
         newUser.userType = 2
         newUser.dob = data.dob
-        newUser.department = data.department;
+        newUser.departmentid = data.departmentid;
         newUser.mobile = data.mobile
 
         const setDocData = await setDoc(doc(db, "users", user.uid), { ...newUser });

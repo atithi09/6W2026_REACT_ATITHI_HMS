@@ -10,7 +10,6 @@ export default function ManagePatient() {
     async function fetchPatients() {
         let res = await PatientService.all()
         setPatients(res)
-        console.log(res)
     }
 
     useEffect(() => {

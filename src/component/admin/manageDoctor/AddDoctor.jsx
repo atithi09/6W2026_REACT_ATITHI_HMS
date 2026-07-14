@@ -1,47 +1,58 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import DoctorServices from "../../../services/DoctorServices"
-import {toast} from "react-toastify"
+import DepartmentServices from "../../../services/DepartmentServices"
+import { toast } from "react-toastify"
 import { Link } from "react-router-dom"
 import { useNavigate } from "react-router-dom"
 
 
 export default function AddDoctor() {
 
-    const[name,setName]=useState('')
-    const[email,setEmail]=useState('')
-    const[dob,setDOB]=useState('')
-    const[mobile,setMobile]=useState('')
-    const[department,setDepartment]=useState('')
-    const[password,setPassword]=useState('')
-    let nav=useNavigate()
+    const [name, setName] = useState('')
+    const [email, setEmail] = useState('')
+    const [dob, setDOB] = useState('')
+    const [mobile, setMobile] = useState('')
+    const [departmentid, setDepartmentid] = useState('')
+    const [password, setPassword] = useState('')
+    let nav = useNavigate()
 
-    async function registerDoctor(e){
+    const [departments, setDepartments] = useState([])
+    async function fetchDepartments() {
+        let res = await DepartmentServices.all()
+        setDepartments(res)
+    }
+
+    useEffect(() => {
+        fetchDepartments()
+    }, [])
+
+    async function registerDoctor(e) {
         e.preventDefault()
 
         if (
-        !name.trim() ||
-        !email.trim() ||
-        !dob.trim() ||
-        !department.trim() ||
-        !mobile.trim() ||
-        !password.trim()
-    ) {
-        toast.info("All Fields are required ")
-       return;
-    }
-        try{
+            !name.trim() ||
+            !email.trim() ||
+            !dob.trim() ||
+            !departmentid.trim() ||
+            !mobile.trim() ||
+            !password.trim()
+        ) {
+            toast.info("All Fields are required ")
+            return;
+        }
+        try {
             let payload = {
-                name:name,
-                email:email,
-                dob:dob,
-                department:department,
-                mobile:mobile,
-                password:password
+                name: name,
+                email: email,
+                dob: dob,
+                departmentid: departmentid,
+                mobile: mobile,
+                password: password
             }
-               await  DoctorServices.registerDoctor(payload);
-                toast.success("Doctor Added")
-               nav("/admin/managedoc")
-               
+            await DoctorServices.registerDoctor(payload);
+            toast.success("Doctor Added")
+            nav("/admin/managedoc")
+
         }
         catch (error) {
             console.log(error);
@@ -54,14 +65,14 @@ export default function AddDoctor() {
                 toast.error("Email already exists.");
             } else {
                 toast.error("Something went wrong");
-                console.log("error:",error)
+                console.log("error:", error)
             }
         }
-        
-        
+
+
     }
     return (
-         <>
+        <>
             <div className="page-title">
                 <div className="heading">
                     <div className="container">
@@ -89,111 +100,109 @@ export default function AddDoctor() {
                     </div>
                 </nav>
             </div>
-          
-                <section id="appointmnet" className="appointmnet section">
-                    <div className="container" >
-                        <div className="row">
-                            <div className="col-lg-8 mx-auto">
-                                <div className="booking-wrapper">
-                                    <div
-                                        className="booking-header text-center"
-                                    >
-                                        <h2>Add Doctor</h2>
-                                    </div>
-                                    <div
-                                        className="appointment-form"
 
-                                    >
-                                        <form
-                                            action=""
-                                            method=""
-                                            className="php-email-form"
-                                            onSubmit={registerDoctor}
-                                        >
-                                            <div className="row gy-4">
-                                                <div className="col-md-6">
-                                                    <input
-                                                        type="text"
-                                                        name="name"
-                                                        className="form-control"
-                                                        placeholder="Full Name"
-                                                        required=""
-                                                        onChange={(e)=>{setName(e.target.value)}}
-                                                    />
-                                                </div>
-                                                <div className="col-md-6">
-                                                    <input
-                                                        type="email"
-                                                        name="email"
-                                                        className="form-control"
-                                                        placeholder="Email Address"
-                                                        required
-                                                        onChange={(e)=>{setEmail(e.target.value)}}
-                                                    />
-                                                </div>
-                                                <div className="col-md-6">
-                                                    <input
-                                                        type="tel"
-                                                        name="phone"
-                                                        className="form-control"
-                                                        placeholder="Phone Number"
-                                                        required
-                                                        onChange={(e)=>{setMobile(e.target.value)}}
-                                                    />
-                                                </div>
-                                                <div className="col-md-6">
-                                                    <select
-                                                        name="department"
-                                                        className="form-select"
-                                                        required
-                                                        onChange={(e)=>{setDepartment(e.target.value)}}
-                                                    >
-                                                        <option value="">Select Department</option>
-                                                        <option value="general">General Consultation</option>
-                                                        <option value="cardiology">Cardiology</option>
-                                                        <option value="neurology">Neurology</option>
-                                                        <option value="orthopedics">Orthopedics</option>
-                                                        <option value="pediatrics">Pediatrics</option>
-                                                        <option value="dermatology">Dermatology</option>
-                                                        <option value="oncology">Oncology</option>
-                                                    </select>
-                                                </div>
-                                                <div className="col-md-6">
-                                                    <input
-                                                        type="date"
-                                                        name="date"
-                                                        className="form-control"
-                                                        required
-                                                        onChange={(e)=>{setDOB(e.target.value)}}
-                                                    />
-                                                </div>
-                                                 
-                                                <div className="col-md-6">
-                                                    <input
-                                                        type="password"
-                                                        name="password"
-                                                        className="form-control"
-                                                        placeholder="Create Password"
-                                                        required
-                                                        onChange={(e)=>{setPassword(e.target.value)}}
-                                                    />
-                                                </div>
+            <section id="appointmnet" className="appointmnet section">
+                <div className="container" >
+                    <div className="row">
+                        <div className="col-lg-8 mx-auto">
+                            <div className="booking-wrapper">
+                                <div
+                                    className="booking-header text-center"
+                                >
+                                    <h2>Add Doctor</h2>
+                                </div>
+                                <div
+                                    className="appointment-form"
 
-                                                <div className="col-12">
-                                                    <div className="loading">Loading</div>
-                                                    <div className="error-message" />
-                                                    <button type="submit" className="btn-book" >
-                                                        Register Doctor
-                                                    </button>
-                                                </div>
+                                >
+                                    <form
+                                        action=""
+                                        method=""
+                                        className="php-email-form"
+                                        onSubmit={registerDoctor}
+                                    >
+                                        <div className="row gy-4">
+                                            <div className="col-md-6">
+                                                <input
+                                                    type="text"
+                                                    name="name"
+                                                    className="form-control"
+                                                    placeholder="Full Name"
+                                                    required=""
+                                                    onChange={(e) => { setName(e.target.value) }}
+                                                />
                                             </div>
-                                        </form>
-                                    </div>
+                                            <div className="col-md-6">
+                                                <input
+                                                    type="email"
+                                                    name="email"
+                                                    className="form-control"
+                                                    placeholder="Email Address"
+                                                    required
+                                                    onChange={(e) => { setEmail(e.target.value) }}
+                                                />
+                                            </div>
+                                            <div className="col-md-6">
+                                                <input
+                                                    type="tel"
+                                                    name="phone"
+                                                    className="form-control"
+                                                    placeholder="Phone Number"
+                                                    required
+                                                    onChange={(e) => { setMobile(e.target.value) }}
+                                                />
+                                            </div>
+                                            <div className="col-md-6">
+                                                <select
+                                                    name="department"
+                                                    className="form-select"
+                                                    required
+                                                    onChange={(e)=> {setDepartmentid(e.target.value)} }
+                                                >
+                                                    <option value="" selected disabled>Select Department</option>
+                                                    { departments.map((dept)=>(
+                                                        <option value={dept.id} >{dept.name}</option>
+                                                        ))
+                                                    }
+                                                    
+                                                </select>
+                                            </div>
+                                            <div className="col-md-6">
+                                                <input
+                                                    type="date"
+                                                    name="date"
+                                                    className="form-control"
+                                                    required
+                                                    onChange={(e) => { setDOB(e.target.value) }}
+                                                />
+                                            </div>
+
+                                            <div className="col-md-6">
+                                                <input
+                                                    type="password"
+                                                    name="password"
+                                                    className="form-control"
+                                                    placeholder="Create Password"
+                                                    required
+                                                    onChange={(e) => { setPassword(e.target.value) }}
+                                                />
+                                            </div>
+
+                                            <div className="col-12">
+                                                <div className="loading">Loading</div>
+                                                <div className="error-message" />
+                                                <button type="submit" className="btn-book" >
+                                                    Register Doctor
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </section>
+                </div>
+            </section>
 
         </>
     )
