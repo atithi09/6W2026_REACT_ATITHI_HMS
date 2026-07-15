@@ -11,6 +11,7 @@ export default function Doctors() {
   async function fetchDoctors() {
     let res = await DoctorServices.all()
     setDoctors(res)
+    console.log(res)
   }
 
   async function fetchDepartments() {
@@ -66,7 +67,7 @@ export default function Doctors() {
                   <div className="doctor-card">
                     <div className="doctor-image">
                       <img
-                        src="assets/img/health/doctorPlaceholder.avif"
+                        src={doctor.image? doctor.image : "assets/img/health/doctorPlaceholder.avif"}
                         alt={doctor.name}
                         className="img-fluid"
                       />
