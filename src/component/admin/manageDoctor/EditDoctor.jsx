@@ -3,6 +3,7 @@ import { Link } from "react-router-dom"
 import DoctorServices from "../../../services/DoctorServices"
 import { toast } from "react-toastify"
 import { useNavigate, useParams } from "react-router-dom"
+import DepartmentServices from "../../../services/DepartmentServices"
 
 
 export default function EditDoctor() {
@@ -11,8 +12,17 @@ export default function EditDoctor() {
     const [email, setEmail] = useState('')
     const [dob, setDOB] = useState('')
     const [mobile, setMobile] = useState('')
-    const [department, setDepartment] = useState('')
-   
+    const [departmentid, setDepartmentid] = useState('')
+    const [departments, setDepartments] = useState([])
+    async function fetchDepartments() {
+        let res = await DepartmentServices.all()
+        setDepartments(res)
+    }
+
+    useEffect(() => {
+        fetchDepartments()
+    }, [])
+
 
     let nav = useNavigate()
     const params = useParams()
@@ -23,8 +33,8 @@ export default function EditDoctor() {
             !name.trim() ||
             !email.trim() ||
             !dob ||
-            !department.trim() ||
-            !mobile.trim()            
+            !departmentid.trim() ||
+            !mobile.trim()
         ) {
             toast.info("All Fields are required ")
             return;
@@ -34,11 +44,11 @@ export default function EditDoctor() {
                 name: name,
                 email: email,
                 dateOFbirth: dob,
-                department: department,
+                departmentid: departmentid,
                 mobile: mobile,
             }
-            await DoctorServices.update(payload,params.id);  
-            nav(-1)          
+            await DoctorServices.update(payload, params.id);
+            nav(-1)
             toast.success("Details Updated")
         }
         catch (err) {
@@ -55,16 +65,16 @@ export default function EditDoctor() {
             setEmail(res.email)
             setDOB(res.dob)
             setMobile(res.mobile)
-            setDepartment(res.department)
+            setDepartmentid(res.departmentid)
         }
         else {
             toast.error("No such Document")
         }
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         getDoctorDetails()
-    },[])
+    }, [])
     return (
         <>
             <div className="page-title">
@@ -154,17 +164,14 @@ export default function EditDoctor() {
                                                     name="department"
                                                     className="form-select"
                                                     required=""
-                                                    value={department}
-                                                    onChange={(e) => { setDepartment(e.target.value) }}
+                                                    value={departmentid}
+                                                    onChange={(e) => { setDepartmentid(e.target.value) }}
                                                 >
-                                                    <option value="">Select Department</option>
-                                                    <option value="general">General Consultation</option>
-                                                    <option value="cardiology">Cardiology</option>
-                                                    <option value="neurology">Neurology</option>
-                                                    <option value="orthopedics">Orthopedics</option>
-                                                    <option value="pediatrics">Pediatrics</option>
-                                                    <option value="dermatology">Dermatology</option>
-                                                    <option value="oncology">Oncology</option>
+                                                    <option value="" selected disabled>Select Department</option>
+                                                    {departments.map((dept) => (
+                                                        <option value={dept.id} >{dept.name}</option>
+                                                    ))
+                                                    }
                                                 </select>
                                             </div>
                                             <div className="col-md-6">
@@ -179,7 +186,7 @@ export default function EditDoctor() {
                                             </div>
 
                                             <div className="col-12">
-                                               <button type="submit" className="btn-book" >
+                                                <button type="submit" className="btn-book" >
                                                     Update Doctor
                                                 </button>
                                             </div>

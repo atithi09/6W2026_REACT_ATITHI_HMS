@@ -123,7 +123,6 @@ export default function ManageDoctor() {
                                     </td>
 
                                     <td>{departments.find((d)=>d.id == doctor.departmentid)?.name}</td>
-                                    {/* <td>{doctor.departmentid}</td> */}
 
                                     <td>
                                         <span
