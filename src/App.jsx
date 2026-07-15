@@ -23,6 +23,7 @@ import AddDepartment from "./component/admin/manageDepartments/AddDepartment"
 import ManageDepartment from "./component/admin/manageDepartments/ManageDepartment"
 import EditPatients from "./component/admin/managePatient/EditPatients"
 import ManagePatient from "./component/admin/managePatient/ManagePatient"
+import DoctorProfile from "./component/doctor/profile/DoctorProfile"
 
 
 
@@ -62,7 +63,8 @@ function App() {
 
           
           <Route path='/doctor' element={<DoctorLayout/>}>
-          <Route path='/doctor' element={<DoctorDashboard/>}></Route>          
+          <Route path='/doctor' element={<DoctorDashboard/>}></Route> 
+          <Route path='doctorProfile/:id' element={<DoctorProfile/>}></Route>         
           </Route>
           
         </Routes>

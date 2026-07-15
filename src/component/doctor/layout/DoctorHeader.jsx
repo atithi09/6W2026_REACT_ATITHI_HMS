@@ -1,9 +1,24 @@
-import { useState } from "react";
-import { Link } from 'react-router-dom'
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import AuthService from "../../../services/AuthService";
 
-export default function DcotorHeader() {
+export default function DoctorHeader() {
+
+    const nav = useNavigate();
+
     const [mobileOpen, setMobileOpen] = useState(false);
-    const closeMenu = () => setMobileOpen(false);
+    const [email, setEmail] = useState("");
+
+    useEffect(() => {
+        setEmail(AuthService.email());
+    }, []);
+
+    const doctorId = AuthService.uid();
+
+    function logout() {
+        AuthService.logout();
+        nav("/");
+    }
 
     return (
         <>
@@ -11,71 +26,68 @@ export default function DcotorHeader() {
                 id="header"
                 className={`header fixed-top ${mobileOpen ? "mobile-nav-active" : ""}`}
             >
-                
 
-                {/* Branding */}
-                <div className=" branding d-flex align-items-center">
+                <div className="branding d-flex align-items-center">
+
                     <div className="container position-relative d-flex align-items-center justify-content-between">
+
                         <Link to="/" className="logo d-flex align-items-center">
-                            <h1 className="sitename">Doctor Dashboard</h1>
+                            <h1 className="sitename">Clinic</h1>
                         </Link>
 
                         <nav id="navmenu" className="navmenu ms-auto me-3">
                             <ul>
-                                <li>
-                                    <Link to="/" onClick={closeMenu}>
-                                        Home
-                                    </Link>
-                                </li>
-
-                                <li>
-                                    <Link to="/about" onClick={closeMenu}>
-                                        About
-                                    </Link>
-                                </li>
-
-                                <li>
-                                    <Link to="/department" onClick={closeMenu}>
-                                        Departments
-                                    </Link>
-                                </li>
-
-                                <li>
-                                    <Link to="/services" onClick={closeMenu}>
-                                        Services
-                                    </Link>
-                                </li>
-
-                                <li>
-                                    <Link to="/doctors" onClick={closeMenu}>
-                                        Doctors
-                                    </Link>
-                                </li>
-
-                                <li>
-                                    <Link to="/contact" onClick={closeMenu}>
-                                        Contact
-                                    </Link>
-                                </li>
+                                <li><Link to="/">Home</Link></li>
+                                <li><Link to="/about">About</Link></li>
+                                <li><Link to="/department">Departments</Link></li>
+                                <li><Link to="/services">Services</Link></li>
+                                <li><Link to="/doctors">Doctors</Link></li>
+                                <li><Link to="/contact">Contact</Link></li>
                             </ul>
                         </nav>
-                        
-                        <div className="d-flex gap-3 ms-auto me-2">
-                            <Link to="/login" className="btn btn-primary text-white py-1 px-3">
-                                Logout
+
+                        {email ? (
+
+                            <div className="d-flex gap-3 ms-auto me-2 align-items-center">
+
+                               <button
+                                    className="btn btn-primary py-1 px-3"
+                                    onClick={logout}
+                                >
+                                    Logout
+                                </button>
+                                
+                                 <Link
+                                    to={`/doctor/doctorProfile/${doctorId}`}
+                                >
+                                    <i className="bi bi-person-circle fs-3"></i>
+                                </Link>
+
+                                
+
+                            </div>
+
+                        ) : (
+
+                            <Link
+                                to="/login"
+                                className="btn btn-primary"
+                            >
+                                Login
                             </Link>
-                        </div>
-                        <div>
+
+                        )}
+
                         <i
-                            className={`mobile-nav-toggle d-xl-none bi ${mobileOpen ? "bi-x" : "bi-list"
-                                }`}
+                            className={`mobile-nav-toggle d-xl-none bi ${mobileOpen ? "bi-x" : "bi-list"}`}
                             onClick={() => setMobileOpen(!mobileOpen)}
                         ></i>
-                        </div>
-                    </div>
-                </div>
-            </header>
 
+                    </div>
+
+                </div>
+
+            </header>
         </>
-    )
+    );
 }

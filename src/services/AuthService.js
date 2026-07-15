@@ -1,8 +1,8 @@
 import { signOut } from "firebase/auth";
 import { auth } from "../firebase/FirebaseConfig"
 
-class AuthService{
-    async setData(data){
+class AuthService {
+    setData(data) {
         localStorage.setItem('id', data.id);
         localStorage.setItem('email', data.email)
         localStorage.setItem('name', data.name)
@@ -11,19 +11,24 @@ class AuthService{
         localStorage.setItem('isLogin', true)
     }
 
-     email(){
+    email() {
         return localStorage.getItem("email");
     }
 
-    userType(){
-        return localStorage.getItem("userType")
+    userType() {
+        return localStorage.getItem("userType");
     }
 
-     logout(){
-        localStorage.clear()
-        sessionStorage.clear()
+    uid(){
+        return localStorage.getItem("id");
+    }
+
+    logout() {
+        localStorage.clear();
+        sessionStorage.clear();
         signOut(auth);
     }
+
 }
 
 export default new AuthService

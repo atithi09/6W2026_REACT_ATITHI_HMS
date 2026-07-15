@@ -3,6 +3,7 @@ export default class DoctorModel{
     email=''
     mobile=''
     userType=2
+    gender=''
     dateOFbirth=''
     departmentid=''
     specialization=''

@@ -98,7 +98,7 @@ export default function Doctors() {
                         </div>
                         <div className="department">
                           <i className="bi bi-building" />
-                          <span> {departments.find((d)=> d.id==doctor.departmentid)?.name}</span>
+                          <span> {departments.find((d)=> d.id==doctor.departmentid)?.name} dept</span>
                         </div>
                       </div>
                       <Link to="/appointment" className="btn-appointment">

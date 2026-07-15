@@ -6372,3 +6372,74 @@ thead tr{
     white-space: normal;
     word-wrap: break-word;
 }
+/* ------------------------------------------ */
+
+.profile-image{
+    width:180px;
+    height:180px;
+    border-radius:50%;
+    object-fit:cover;
+    border:6px solid #0D6EFD;
+    box-shadow:0 8px 20px rgba(0,0,0,.15);
+    background:#f8f9fa;
+}
+
+.change-photo-btn{
+    display:inline-flex;
+    align-items:center;
+    padding:10px 22px;
+    background:#1977cc;
+    color:#fff;
+    border-radius:30px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.change-photo-btn:hover{
+    background:#166ab5;
+}
+.info{
+  transition:0.3s;
+}
+.info:hover{
+  transform:translateY(-6px);
+}
+.info h2{
+  color:#112344;
+    font-weight:700;
+}
+/* ------------------------------------ */
+.profile-option-card{
+    transition:.3s;
+    border-radius:18px;
+    box-shadow:0 12px 35px 
+}
+
+.profile-option-card:hover{
+    transform:translateY(-6px);
+    
+}
+
+.icon-box{
+    width:65px;
+    height:65px;
+    border-radius:16px;
+    background:#eef6fc;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.icon-box i{
+    font-size:30px;
+    color:#1977cc;
+}
+
+.profile-option-card h4{
+    color:#112344;
+    font-weight:700;
+}
+
+.profile-option-card .btn{
+    font-weight:600;
+}
