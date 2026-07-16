@@ -13,7 +13,7 @@ export default function ManageDoctor() {
         let res = await DoctorServices.all()
         setDoctors(res)
     }
-
+    
 
     async function fetchDepartments() {
         let res = await DepartmentServices.all()

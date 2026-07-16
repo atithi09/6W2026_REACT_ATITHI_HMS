@@ -1,16 +1,72 @@
 import { useEffect, useState } from "react"
 import DepartmentServices from "../../../services/DepartmentServices"
 import DoctorServices from "../../../services/DoctorServices"
+import AuthService from "../../../services/AuthService"
+import { toast } from "react-toastify"
+import { useNavigate } from "react-router-dom"
+import AppointmentService from "../../../services/AppointmentService"
 
 export default function Appointment() {
+    let nav = useNavigate()
+    const [departments, setDepartments] = useState([])
+    const [doctors, setDoctors] = useState([])
 
-     const [departments, setDepartments] = useState([])
-     const [doctors, setDoctors] = useState([])  
+    const [patientid, setPatientid] = useState('')
+    const [name, setName] = useState('')
+    const [email, setEmail] = useState('')
+    const [mobile, setMobile] = useState('')
+    const [date, setDate] = useState('')
+    const [time, setTime] = useState('')
+    const [doctorid, setDoctorid] = useState('')
+    const [reason, setReason] = useState('')
+
+    function getEmail() {
+        const email = AuthService.email();
+        setEmail(email);
+    }
+    function getUid() {
+        const uid = AuthService.uid()
+        setPatientid(uid)
+    }
+    async function security(e) {
+        e.preventDefault()
+        if (!email) {
+            toast.error("Login or Sign Up to book appointments")
+        }
+        else {
+            try {
+                let payload = {
+                    patientId: patientid,
+                    doctorId: doctorid,
+                    appointmentDate: date,
+                    appointmentTime: time,
+                    reason: reason,
+                }
+                const slotBooked = await AppointmentService.isSlotBooked(
+                    doctorid,
+                    date,
+                    time
+                );
+
+                if (slotBooked) {
+                    toast.error("This slot is already booked.");
+                    return;
+                } else {
+                    await AppointmentService.add(payload);
+                    toast.success("Appointment booked successfully");
+                }
+            }
+            catch (err) {
+                console.log("error:", err)
+                toast.error("Something went wrong")
+            }
+        }
+    }
 
     async function fetchDoctors() {
-            let res = await DoctorServices.all()
-            setDoctors(res)
-        }
+        let res = await DoctorServices.all()
+        setDoctors(res)
+    }
 
     async function fetchDepartments() {
         let res = await DepartmentServices.all()
@@ -19,6 +75,8 @@ export default function Appointment() {
     useEffect(() => {
         fetchDepartments();
         fetchDoctors();
+        getUid()
+        getEmail()
     }, [])
 
     return (
@@ -61,7 +119,7 @@ export default function Appointment() {
                                 <div className="booking-wrapper">
                                     <div
                                         className="booking-header text-center"
-                                      
+
                                     >
                                         <h2>Schedule Your Appointment</h2>
                                         <p>
@@ -72,7 +130,7 @@ export default function Appointment() {
                                     </div>
                                     <div
                                         className="booking-steps"
-                                        
+
                                     >
                                         <div className="step">
                                             <div className="step-icon">
@@ -104,12 +162,13 @@ export default function Appointment() {
                                     </div>
                                     <div
                                         className="appointment-form"
-                                        
+
                                     >
                                         <form
                                             action=""
                                             method=""
                                             className="php-email-form"
+                                            onSubmit={security}
                                         >
                                             <div className="row gy-4">
                                                 <div className="col-md-6">
@@ -118,7 +177,9 @@ export default function Appointment() {
                                                         name="name"
                                                         className="form-control"
                                                         placeholder="Full Name"
-                                                        required=""
+                                                        required
+                                                        value={name}
+                                                        onChange={(e) => setName(e.target.value)}
                                                     />
                                                 </div>
                                                 <div className="col-md-6">
@@ -127,7 +188,9 @@ export default function Appointment() {
                                                         name="email"
                                                         className="form-control"
                                                         placeholder="Email Address"
-                                                        required=""
+                                                        required
+                                                        value={email}
+                                                        readOnly
                                                     />
                                                 </div>
                                                 <div className="col-md-6">
@@ -136,55 +199,58 @@ export default function Appointment() {
                                                         name="phone"
                                                         className="form-control"
                                                         placeholder="Phone Number"
-                                                        required=""
+                                                        required
+                                                        value={mobile}
+                                                        onChange={(e) => setMobile(e.target.value)}
                                                     />
                                                 </div>
 
                                                 <div className="col-md-6">
-                                                <select
-                                                    name="department"
-                                                    className="form-select"
-                                                    required
-                                                    
-                                                >
-                                                    <option value="" selected disabled>Select Department</option>
-                                                    { departments.map((dept)=>(
-                                                        <option value={dept.id} >{dept.name}</option>
+                                                    <select
+                                                        name="doctors"
+                                                        className="form-select"
+                                                        required
+                                                        onChange={(e) => setDoctorid(e.target.value)}
+                                                        value={doctorid}
+                                                    >
+                                                        <option value="" selected disabled>Select Doctor</option>
+                                                        {doctors.map((doctor) => (
+                                                            <option value={doctor.id} >{doctor.name}</option>
                                                         ))
-                                                    }
-                                                    
-                                                </select>
-                                            </div>
+                                                        }
+
+                                                    </select>
+                                                </div>
+
                                                 <div className="col-md-6">
                                                     <input
                                                         type="date"
                                                         name="date"
                                                         className="form-control"
                                                         required=""
+                                                        value={date}
+                                                        onChange={(e) => setDate(e.target.value)}
                                                     />
                                                 </div>
+
                                                 <div className="col-md-6">
-                                                <select
-                                                    name="doctors"
-                                                    className="form-select"
-                                                    required
-                                                    
-                                                >
-                                                    <option value="" selected disabled>Select Doctor</option>
-                                                    { doctors.map((doctor)=>(
-                                                        <option value={doctor.id} >{doctor.name}</option>
-                                                        ))
-                                                    }
-                                                    
-                                                </select>
-                                            </div>
+                                                    <input
+                                                        type="time"
+                                                        name="time"
+                                                        className="form-control"
+                                                        required=""
+                                                        value={time}
+                                                        onChange={(e) => setTime(e.target.value)}
+                                                    />
+                                                </div>
                                                 <div className="col-12">
                                                     <textarea
                                                         name="message"
                                                         className="form-control"
                                                         rows={4}
                                                         placeholder="Additional notes or symptoms (optional)"
-                                                        defaultValue={""}
+                                                        value={reason}
+                                                        onChange={(e) => setReason(e.target.value)}
                                                     />
                                                 </div>
                                                 <div className="col-6 mt-4">
@@ -193,7 +259,7 @@ export default function Appointment() {
                                                     <div className="sent-message">
                                                         Your appointment has been scheduled. Thank you!
                                                     </div>
-                                                    <button type="submit" className="btn-book">
+                                                    <button type="submit" className="btn-book" >
                                                         Book Appointment
                                                     </button>
                                                 </div>
@@ -213,7 +279,7 @@ export default function Appointment() {
                                     </div>
                                     <div
                                         className="emergency-info"
-                                        
+
                                     >
                                         <p>
                                             <i className="bi bi-exclamation-triangle" /> For medical
