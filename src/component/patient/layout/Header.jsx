@@ -6,6 +6,7 @@ export default function Header() {
     const nav = useNavigate()
     const [mobileOpen, setMobileOpen] = useState(false);
     const closeMenu = () => setMobileOpen(false);
+    const [userType, setUserType]=useState('')
 
     const [email, setEmail] = useState('')
     function getEmail() {
@@ -13,8 +14,15 @@ export default function Header() {
         setEmail(email)
         return email;
     }
+    function getuserType(){
+        let userType=AuthService.userType()
+        setUserType(userType)
+        return userType;
+    }
+    
     useEffect(() => {
         getEmail()
+        getuserType()
     });
 
     function logout() {
@@ -111,7 +119,10 @@ export default function Header() {
                                 <Link to="/"> <button className="btn btn-primary text-white py-1 px-3" onClick={logout}>
                                     Logout </button>
                                 </Link>
-                                <Link to="/profile"><i class="bi bi-person-circle fs-3"></i></Link>
+                                
+                               { (userType==='3') &&(
+                                <Link to="/profile"><i class="bi bi-person-circle fs-3"></i></Link>)
+                               }
                             </div>
                             :
                             <div className="d-flex gap-3 ms-auto me-2">

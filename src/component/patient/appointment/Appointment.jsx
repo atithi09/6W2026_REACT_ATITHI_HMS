@@ -1,6 +1,26 @@
+import { useEffect, useState } from "react"
+import DepartmentServices from "../../../services/DepartmentServices"
+import DoctorServices from "../../../services/DoctorServices"
+
 export default function Appointment() {
 
-    
+     const [departments, setDepartments] = useState([])
+     const [doctors, setDoctors] = useState([])  
+
+    async function fetchDoctors() {
+            let res = await DoctorServices.all()
+            setDoctors(res)
+        }
+
+    async function fetchDepartments() {
+        let res = await DepartmentServices.all()
+        setDepartments(res)
+    }
+    useEffect(() => {
+        fetchDepartments();
+        fetchDoctors();
+    }, [])
+
     return (
         <>
             <main className="main">
@@ -121,21 +141,20 @@ export default function Appointment() {
                                                 </div>
 
                                                 <div className="col-md-6">
-                                                    <select
-                                                        name="department"
-                                                        className="form-select"
-                                                        required=""
-                                                    >
-                                                        <option value="">Select Department</option>
-                                                        <option value="general">General Consultation</option>
-                                                        <option value="cardiology">Cardiology</option>
-                                                        <option value="neurology">Neurology</option>
-                                                        <option value="orthopedics">Orthopedics</option>
-                                                        <option value="pediatrics">Pediatrics</option>
-                                                        <option value="dermatology">Dermatology</option>
-                                                        <option value="oncology">Oncology</option>
-                                                    </select>
-                                                </div>
+                                                <select
+                                                    name="department"
+                                                    className="form-select"
+                                                    required
+                                                    
+                                                >
+                                                    <option value="" selected disabled>Select Department</option>
+                                                    { departments.map((dept)=>(
+                                                        <option value={dept.id} >{dept.name}</option>
+                                                        ))
+                                                    }
+                                                    
+                                                </select>
+                                            </div>
                                                 <div className="col-md-6">
                                                     <input
                                                         type="date"
@@ -145,21 +164,20 @@ export default function Appointment() {
                                                     />
                                                 </div>
                                                 <div className="col-md-6">
-                                                    <select name="doctor" className="form-select" required="">
-                                                        <option value="">Select Doctor</option>
-                                                        <option value="dr-sarah-johnson">
-                                                            Dr. Sarah Johnson
-                                                        </option>
-                                                        <option value="dr-michael-chen">Dr. Michael Chen</option>
-                                                        <option value="dr-emily-davis">Dr. Emily Davis</option>
-                                                        <option value="dr-robert-smith">Dr. Robert Smith</option>
-                                                        <option value="dr-lisa-brown">Dr. Lisa Brown</option>
-                                                        <option value="dr-david-wilson">Dr. David Wilson</option>
-                                                        <option value="dr-maria-rodriguez">
-                                                            Dr. Maria Rodriguez
-                                                        </option>
-                                                    </select>
-                                                </div>
+                                                <select
+                                                    name="doctors"
+                                                    className="form-select"
+                                                    required
+                                                    
+                                                >
+                                                    <option value="" selected disabled>Select Doctor</option>
+                                                    { doctors.map((doctor)=>(
+                                                        <option value={doctor.id} >{doctor.name}</option>
+                                                        ))
+                                                    }
+                                                    
+                                                </select>
+                                            </div>
                                                 <div className="col-12">
                                                     <textarea
                                                         name="message"
@@ -169,14 +187,25 @@ export default function Appointment() {
                                                         defaultValue={""}
                                                     />
                                                 </div>
-                                                <div className="col-12">
+                                                <div className="col-6 mt-4">
                                                     <div className="loading">Loading</div>
                                                     <div className="error-message" />
                                                     <div className="sent-message">
                                                         Your appointment has been scheduled. Thank you!
                                                     </div>
                                                     <button type="submit" className="btn-book">
-                                                        Book Appointment Now
+                                                        Book Appointment
+                                                    </button>
+                                                </div>
+
+                                                <div className="col-6 mt-4">
+                                                    <div className="loading">Loading</div>
+                                                    <div className="error-message" />
+                                                    <div className="sent-message">
+                                                        Your appointment has been scheduled. Thank you!
+                                                    </div>
+                                                    <button type="submit" className="btn-book">
+                                                        Pay Now
                                                     </button>
                                                 </div>
                                             </div>

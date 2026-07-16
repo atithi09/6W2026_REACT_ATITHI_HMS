@@ -63,14 +63,14 @@ export default function DoctorProfile() {
                 image: imageUrl
             }
             await DoctorServices.update(payload, params.id);
+            
             toast.success("Profile Updated")
-            console.log(payload.image)
         }
         catch (err) {
             console.log("error:", err)
             toast.error("Error updating details")
         }
-
+        
     }
 
     return (

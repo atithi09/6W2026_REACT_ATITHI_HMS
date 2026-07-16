@@ -95,7 +95,7 @@ export default function Doctors() {
                       <div className="doctor-meta">
                         <div className="experience">
                           <i className="bi bi-award" />
-                          <span>{doctor.experience}</span>
+                          <span>{doctor.experience} experience</span>
                         </div>
                         <div className="department">
                           <i className="bi bi-building" />

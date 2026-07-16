@@ -60,7 +60,7 @@ export default function About(){
                   data-purecounter-end={15000}
                   data-purecounter-duration={2}
                 >
-                  15000
+                  15000+
                 </span>
                 <span className="stat-label">Patients Treated</span>
               </div>
@@ -71,7 +71,7 @@ export default function About(){
                   data-purecounter-end={25}
                   data-purecounter-duration={2}
                 >
-                  25
+                  25+
                 </span>
                 <span className="stat-label">Years Experience</span>
               </div>
@@ -82,7 +82,7 @@ export default function About(){
                   data-purecounter-end={50}
                   data-purecounter-duration={2}
                 >
-                  50
+                  50+
                 </span>
                 <span className="stat-label">Medical Specialists</span>
               </div>
