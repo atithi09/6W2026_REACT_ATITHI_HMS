@@ -1,16 +1,140 @@
-# React + Vite
+# Hospital Management System
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+A modern Hospital Management System built using **React.js**, **Firebase Firestore**, and **Bootstrap**. The project provides separate dashboards for **Admin**, **Doctor**, and **Patient** to streamline hospital operations such as appointment booking, doctor management, medical records, and prescriptions.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+### Admin Panel
+- Secure Login
+- Dashboard
+- Manage Departments
+- Manage Doctors
+- Manage Patients
+- Manage Appointments
+- Verify Payments
+- View Reports
+- Manage Feedback
 
-## React Compiler
+### Doctor Panel
+- Secure Login
+- Dashboard
+- Update Profile
+- View Patient Details
+- Accept/Reject Appointments
+- Create Prescriptions
+- Add Medical Records
+- View Appointment History
+- View Earnings
+- View Feedback
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Patient Panel
+- Registration & Login
+- Dashboard
+- Update Profile
+- Browse Doctors
+- Book Appointments
+- Track Appointment Status
+- View Medical Records
+- View Prescriptions
+- View Bills
+- Appointment History
+- Submit Feedback
 
-## Expanding the Oxlint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+## Tech Stack
+
+### Frontend
+- React.js
+- React Router DOM
+- Bootstrap 5
+- HTML5
+- CSS3
+- JavaScript (ES6)
+
+### Backend
+- Firebase Firestore
+
+### Authentication
+- Firebase Authentication
+
+### Other Libraries
+- SweetAlert2
+- React Toastify
+
+---
+
+## Project Structure
+
+```
+src/
+│
+├── components/
+├── pages/
+│   ├── Admin/
+│   ├── Doctor/
+│   ├── Patient/
+│   └── Website/
+│
+├── services/
+├── models/
+├── firebase/
+├── assets/
+├── layouts/
+└── App.jsx
+```
+
+---
+
+## Database Collections
+
+The project uses the following Firestore collections: :contentReference[oaicite:0]{index=0}
+
+- Users
+- Doctors
+- Departments
+- Appointments
+- Medical Records
+- Prescriptions
+- Bills
+- Feedback
+
+---
+
+## Main Modules
+
+- User Authentication
+- Doctor Management
+- Department Management
+- Appointment Booking
+- Appointment Approval
+- Medical Records
+- Prescription Management
+- Billing Management
+- Feedback System
+
+---
+
+## Future Enhancements
+
+- AI-assisted prescription generation
+- Voice-to-text consultation support
+- Email notifications
+- SMS appointment reminders
+- Video consultation
+- Doctor availability calendar
+- Analytics Dashboard
+
+---
+
+## Author
+
+**Atithi**
+
+B.Tech Computer Science Engineering Student
+
+---
+
+## License
+
+This project is created for educational purposes and training.
