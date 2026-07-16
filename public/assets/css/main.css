@@ -4778,6 +4778,7 @@ h6 {
 .appointmnet .appointment-form .php-email-form input[type=tel],
 .appointmnet .appointment-form .php-email-form input[type=date],
 .appointmnet .appointment-form .php-email-form input[type=password],
+.appointmnet .appointment-form .php-email-form input[type=time],
 .appointmnet .appointment-form .php-email-form select,
 .appointmnet .appointment-form .php-email-form textarea {
   color: var(--default-color);
