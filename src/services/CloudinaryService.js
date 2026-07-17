@@ -11,7 +11,6 @@ class CloudinaryService{
         formData.append('upload_preset', uploadPreset)
 
         const result = await axios.post(uploadURL, formData);
-        console.log("result:",result.data);
 
         return result.data.secure_url;
     }

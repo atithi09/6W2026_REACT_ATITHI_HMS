@@ -1,6 +1,64 @@
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import CloudinaryService from "../../../services/CloudinaryService";
+import PatientService from "../../../services/PatientService";
+import { toast } from "react-toastify";
 
 export default function PatientProfile() {
+    const params = useParams()
+    const [name, setName] = useState('')
+    const [email, setEmail] = useState('')
+    const [mobile, setMobile] = useState('')
+    const [gender, setGender] = useState('')
+    const [date, setDate] = useState('')
+    const [address, setAddress] = useState('')
+    const [image, setImage] = useState('')
+
+    async function fetchPatients() {
+        let data = await PatientService.getSingle(params.id)
+        console.log(data)
+        if (data) {
+            setName(data.name || "");
+            setEmail(data.email || "");
+            setMobile(data.phone || "");
+            setGender(data.gender || "");
+            setDate(data.dob || "");
+            setAddress(data.address || "");
+            setImage(data.profileImage || "");
+        }
+    }
+    useEffect(() => {
+        fetchPatients()
+    })
+
+    async function updateProfile(e) {
+        e.preventDefault()
+
+        let imageUrl = ""
+        if (image) {
+            imageUrl = await CloudinaryService.upload(image)
+            console.log(imageUrl)
+        }
+
+        try {
+            let payload = {
+                name: name,
+                email: email,
+                phone: mobile,
+                gender: gender,
+                dob: date,
+                address: address,
+                profileImage: imageUrl,
+            }
+            await PatientService.update(payload, params.id)
+            toast.success("Profile updated.")
+
+        } catch (err) {
+            console.log("Error:", err)
+            toast.error("Something went wrong")
+        }
+    }
+
     return (
         <>
             {/* Page Title */}
@@ -35,7 +93,7 @@ export default function PatientProfile() {
                 <div className="container">
 
                     <div className="card border-0 info shadow rounded-4  justify-content-center">
-                        
+
                         <h2 className="text-center mt-2">Personal Information</h2>
 
 
@@ -45,7 +103,7 @@ export default function PatientProfile() {
                             <div className="col-12 col-md-6 col-lg-4 align-self-start text-center mb-4 mb-md-0">
 
                                 <img
-                                    src="/assets/img/health/doctorPlaceholder.avif"
+                                    src={image || "/assets/img/health/doctorPlaceholder.avif"}
                                     alt="Profile"
                                     className="img-fluid rounded-circle border border-4 shadow"
                                     style={{
@@ -60,7 +118,9 @@ export default function PatientProfile() {
                                     <label className="btn btn-primary px-3">
                                         <i className="bi bi-camera-fill me-2"></i>
                                         Change Photo
-                                        <input type="file" hidden />
+                                        <input type="file"
+                                            hidden
+                                            onChange={(e) => setImage(e.target.files[0])} />
                                     </label>
                                 </div>
 
@@ -79,6 +139,7 @@ export default function PatientProfile() {
                                         action=""
                                         method=""
                                         className="php-email-form"
+                                        onSubmit={updateProfile}
                                     >
                                         <div className="row gy-4 p-2">
 
@@ -90,7 +151,9 @@ export default function PatientProfile() {
                                                     name="name"
                                                     className="form-control"
                                                     placeholder="Full Name"
-                                                    required=""
+                                                    required
+                                                    value={name}
+                                                    onChange={(e) => setName(e.target.value)}
                                                 />
                                             </div>
                                             <div className="col-12 col-lg-6">
@@ -99,7 +162,9 @@ export default function PatientProfile() {
                                                     name="email"
                                                     className="form-control"
                                                     placeholder="Email Address"
-                                                    required=""
+                                                    required
+                                                    value={email}
+                                                    onChange={(e) => setEmail(e.target.value)}
                                                 />
                                             </div>
                                             <div className="col-12 col-lg-6">
@@ -108,7 +173,9 @@ export default function PatientProfile() {
                                                     name="phone"
                                                     className="form-control"
                                                     placeholder="Phone Number"
-                                                    required=""
+                                                    required
+                                                    value={mobile}
+                                                    onChange={(e) => setMobile(e.target.value)}
                                                 />
                                             </div>
 
@@ -118,7 +185,9 @@ export default function PatientProfile() {
                                                     name="name"
                                                     className="form-control"
                                                     placeholder="Gender"
-                                                    required=""
+                                                    required
+                                                    value={gender}
+                                                    onChange={(e) => setGender(e.target.value)}
                                                 />
                                             </div>
 
@@ -127,7 +196,9 @@ export default function PatientProfile() {
                                                     type="date"
                                                     name="date"
                                                     className="form-control"
-                                                    required=""
+                                                    required
+                                                    value={date}
+                                                    onChange={(e) => setDate(e.target.value)}
                                                 />
                                             </div>
 
@@ -137,7 +208,9 @@ export default function PatientProfile() {
                                                     name="name"
                                                     className="form-control"
                                                     placeholder="Address"
-                                                    required=""
+                                                    required
+                                                    value={address}
+                                                    onChange={(e) => setAddress(e.target.value)}
                                                 />
                                             </div>
 

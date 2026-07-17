@@ -7,16 +7,15 @@ export default function DoctorHeader() {
     const nav = useNavigate();
 
     const [mobileOpen, setMobileOpen] = useState(false);
-    const [email, setEmail] = useState("");
 
-    useEffect(() => {
-        setEmail(AuthService.email());
-    }, []);
-
+    const email = AuthService.email();
+    const userType = AuthService.userType();
     const doctorId = AuthService.uid();
 
     function logout() {
         AuthService.logout();
+        setEmail("");
+        setUserType("");
         nav("/");
     }
 
@@ -50,20 +49,20 @@ export default function DoctorHeader() {
 
                             <div className="d-flex gap-3 ms-auto me-2 align-items-center">
 
-                               <button
+                                <button
                                     className="btn btn-primary py-1 px-3"
                                     onClick={logout}
                                 >
                                     Logout
                                 </button>
-                                
-                                 <Link
+
+                                <Link
                                     to={`/doctor/doctorProfile/${doctorId}`}
                                 >
                                     <i className="bi bi-person-circle fs-3"></i>
                                 </Link>
 
-                                
+
 
                             </div>
 

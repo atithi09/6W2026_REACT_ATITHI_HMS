@@ -23,7 +23,6 @@ export default function DoctorProfile() {
 
     async function fetchDoctor() {
         const data = await DoctorServices.getSingle(params.id);
-
         if (data) {
             setName(data.name);
             setEmail(data.email)
@@ -48,6 +47,23 @@ export default function DoctorProfile() {
         if (image) {
             imageUrl = await CloudinaryService.upload(image)
         }
+         if(
+            !name.trim()||
+            !email.trim()||
+            !mobile.trim()||
+            !gender.trim()||
+            !dob.trim()||
+            !availability.trim()||
+            !specialization.trim()||
+            !experience.trim()||
+            !consultationfee.trim()||
+            !qualification.trim()
+        ){
+            toast.info("All feilds are required")
+            return;
+        }
+
+       
         try {
             let payload = {
                 name: name,
@@ -70,7 +86,7 @@ export default function DoctorProfile() {
             console.log("error:", err)
             toast.error("Error updating details")
         }
-        
+    
     }
 
     return (

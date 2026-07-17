@@ -6,27 +6,15 @@ export default function Header() {
     const nav = useNavigate()
     const [mobileOpen, setMobileOpen] = useState(false);
     const closeMenu = () => setMobileOpen(false);
-    const [userType, setUserType]=useState('')
 
-    const [email, setEmail] = useState('')
-    function getEmail() {
-        let email = AuthService.email()
-        setEmail(email)
-        return email;
-    }
-    function getuserType(){
-        let userType=AuthService.userType()
-        setUserType(userType)
-        return userType;
-    }
-    
-    useEffect(() => {
-        getEmail()
-        getuserType()
-    });
+    const email = AuthService.email();
+    const userType = AuthService.userType();
+    const userId = AuthService.uid();
 
     function logout() {
         AuthService.logout();
+        setEmail("");
+        setUserType("");
         nav("/")
     }
     return (
@@ -114,22 +102,22 @@ export default function Header() {
                                 </li>
                             </ul>
                         </nav>
-                        {email ?
+                        {email ? (
                             <div className="d-flex gap-3 ms-auto me-2 align-items-center">
                                 <Link to="/"> <button className="btn btn-primary text-white py-1 px-3" onClick={logout}>
                                     Logout </button>
                                 </Link>
-                                
-                               { (userType==='3') &&(
-                                <Link to="/profile"><i class="bi bi-person-circle fs-3"></i></Link>)
-                               }
+
+                                {(userType === '3') && (
+                                    <Link to={`/profile/${userId}`}><i className="bi bi-person-circle fs-3"></i></Link>)
+                                }
                             </div>
-                            :
+                        ) : (
                             <div className="d-flex gap-3 ms-auto me-2">
                                 <Link to="/login" className="btn btn-primary text-white py-1 px-3">
                                     Login
                                 </Link>
-                            </div>
+                            </div>)
                         }
                         <div>
                             <i

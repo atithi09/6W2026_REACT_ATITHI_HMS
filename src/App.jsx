@@ -45,7 +45,7 @@ function App() {
           <Route path='contact' element={<Contacts/>}></Route>
           <Route path='login' element={<Login/>}></Route>
           <Route path='signup' element={<SignUp/>}></Route>
-          <Route path='profile' element={<PatientProfile/>}></Route>
+          <Route path='profile/:id' element={<PatientProfile/>}></Route>
           </Route>
 
           
