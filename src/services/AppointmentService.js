@@ -1,6 +1,7 @@
 import { addDoc, collection, getDocs, query, where } from "firebase/firestore";
 import AppointmentModel from "../models/AppointmentModel";
 import { db } from "../firebase/FirebaseConfig";
+import AuthService from "./AuthService";
 
 class AppointmentService {
 
@@ -26,6 +27,17 @@ class AppointmentService {
     const snapshot = await getDocs(q);
 
     return !snapshot.empty;
+}
+
+async AppointmentByDoctor(doctorId){
+    const q= query(collection(db,"appointments"),where("doctorId","==",doctorId))
+   const querySnapshot= await getDocs(q)
+   let appointments = []
+        querySnapshot.forEach((appt) => {
+            // doc.data() is never undefined for query doc snapshots
+            appointments.push({ id: appt.id, ...appt.data() })
+        });
+   return appointments
 }
 }
 

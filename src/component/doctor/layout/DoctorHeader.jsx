@@ -36,12 +36,12 @@ export default function DoctorHeader() {
 
                         <nav id="navmenu" className="navmenu ms-auto me-3">
                             <ul>
-                                <li><Link to="/">Home</Link></li>
-                                <li><Link to="/about">About</Link></li>
-                                <li><Link to="/department">Departments</Link></li>
-                                <li><Link to="/services">Services</Link></li>
-                                <li><Link to="/doctors">Doctors</Link></li>
-                                <li><Link to="/contact">Contact</Link></li>
+                                <li><Link to="/doctor">Dashboard</Link></li>
+                                <li><Link to="/doctor/viewappt">View Appointments</Link></li>
+                                <li><Link to="/doctor/viewpatient">Patients </Link></li>
+                                <li><Link to="/services">Appointment History</Link></li>
+                                <li><Link to="/doctors">Earnings</Link></li>
+                                <li><Link to="/contact">Feedback</Link></li>
                             </ul>
                         </nav>
 

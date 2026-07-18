@@ -24,6 +24,8 @@ import ManageDepartment from "./component/admin/manageDepartments/ManageDepartme
 import EditPatients from "./component/admin/managePatient/EditPatients"
 import ManagePatient from "./component/admin/managePatient/ManagePatient"
 import DoctorProfile from "./component/doctor/profile/DoctorProfile"
+import ViewAppointments from "./component/doctor/appointments/ViewAppointments"
+import PatientsList from "./component/doctor/patients/PatientsList"
 
 
 
@@ -64,7 +66,9 @@ function App() {
           
           <Route path='/doctor' element={<DoctorLayout/>}>
           <Route path='/doctor' element={<DoctorDashboard/>}></Route> 
-          <Route path='doctorProfile/:id' element={<DoctorProfile/>}></Route>         
+          <Route path='doctorProfile/:id' element={<DoctorProfile/>}></Route>
+          <Route path='viewpatient' element={<PatientsList/>}></Route>
+          <Route path='viewappt' element={<ViewAppointments/>}></Route>         
           </Route>
           
         </Routes>

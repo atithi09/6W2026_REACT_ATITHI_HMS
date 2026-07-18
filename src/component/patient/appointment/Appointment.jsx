@@ -65,8 +65,6 @@ export default function Appointment() {
                             appointmentDate: date,
                             appointmentTime: time,
                             reason: reason,
-                            paymentId: response.razorpay_payment_id
-
                         }
                         await AppointmentService.add(payload);
                         toast.success("Appointment booked successfully");
