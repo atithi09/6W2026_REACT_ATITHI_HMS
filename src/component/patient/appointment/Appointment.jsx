@@ -10,7 +10,7 @@ export default function Appointment() {
     let nav = useNavigate()
     const [departments, setDepartments] = useState([])
     const [doctors, setDoctors] = useState([])
-
+    const todayString = new Date().toISOString().split("T")[0];
     const [patientid, setPatientid] = useState('')
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
@@ -30,10 +30,52 @@ export default function Appointment() {
     }
     async function security(e) {
         e.preventDefault()
-        if (!email) {
+        let selectedDoctor = doctors.find((d) => d.id == doctorid)
+        if(!email){
             toast.error("Login or Sign Up to book appointments")
+            return;
         }
-        else {
+
+        if (selectedDoctor && mobile && name) {
+
+            var options = {
+                "key": "rzp_test_TEsYc8A2eTFXl2", // Enter the Key ID generated from the Dashboard
+                "amount": selectedDoctor.consultationFee * 100, // Amount is in currency subunits.
+                "currency": "INR",
+                "name": "clinic", //your business name
+                "description": "Test Transaction",
+                "image": "https://example.com/your_logo",
+                "handler": function (response) {
+                    alert(response.razorpay_payment_id);
+                    alert(response.razorpay_order_id);
+                    alert(response.razorpay_signature)
+                },
+                "prefill": { //We recommend using the prefill parameter to auto-fill customer's contact information, especially their phone number
+                    prefill: {
+                        name: name,
+                        email: email,
+                        contact: mobile
+                    }  //Provide the customer's phone number for better conversion rates 
+                },
+                "notes": {
+                    "address": "Razorpay Corporate Office"
+                },
+                "theme": {
+                    "color": "#0D6EFD"
+                }
+            };
+            var rzp1 = new Razorpay(options);
+            rzp1.on('payment.failed', function (response) {
+                alert(response.error.code);
+                alert(response.error.description);
+                alert(response.error.source);
+                alert(response.error.step);
+                alert(response.error.reason);
+                alert(response.error.metadata.order_id);
+                alert(response.error.metadata.payment_id);
+            });
+            rzp1.open();
+
             try {
                 let payload = {
                     patientId: patientid,
@@ -60,6 +102,10 @@ export default function Appointment() {
                 console.log("error:", err)
                 toast.error("Something went wrong")
             }
+
+        }
+        else {
+            toast.info("Fill the required information")
         }
     }
 
@@ -190,7 +236,6 @@ export default function Appointment() {
                                                         placeholder="Email Address"
                                                         required
                                                         value={email}
-                                                        readOnly
                                                     />
                                                 </div>
                                                 <div className="col-md-6">
@@ -229,6 +274,7 @@ export default function Appointment() {
                                                         className="form-control"
                                                         required=""
                                                         value={date}
+                                                        min={todayString}
                                                         onChange={(e) => setDate(e.target.value)}
                                                     />
                                                 </div>
@@ -253,7 +299,7 @@ export default function Appointment() {
                                                         onChange={(e) => setReason(e.target.value)}
                                                     />
                                                 </div>
-                                                <div className="col-6 mt-4">
+                                                <div className="col-12 mt-4">
                                                     <div className="loading">Loading</div>
                                                     <div className="error-message" />
                                                     <div className="sent-message">
@@ -264,16 +310,7 @@ export default function Appointment() {
                                                     </button>
                                                 </div>
 
-                                                <div className="col-6 mt-4">
-                                                    <div className="loading">Loading</div>
-                                                    <div className="error-message" />
-                                                    <div className="sent-message">
-                                                        Your appointment has been scheduled. Thank you!
-                                                    </div>
-                                                    <button type="submit" className="btn-book">
-                                                        Pay Now
-                                                    </button>
-                                                </div>
+                                                
                                             </div>
                                         </form>
                                     </div>

@@ -18,18 +18,18 @@ export default function PatientProfile() {
         let data = await PatientService.getSingle(params.id)
         console.log(data)
         if (data) {
-            setName(data.name || "");
-            setEmail(data.email || "");
-            setMobile(data.phone || "");
-            setGender(data.gender || "");
-            setDate(data.dob || "");
-            setAddress(data.address || "");
-            setImage(data.profileImage || "");
+            setName(data.name);
+            setEmail(data.email);
+            setMobile(data.phone);
+            setGender(data.gender);
+            setDate(data.dob);
+            setAddress(data.address);
+            setImage(data.profileImage);
         }
     }
     useEffect(() => {
         fetchPatients()
-    })
+    },[])
 
     async function updateProfile(e) {
         e.preventDefault()
@@ -37,7 +37,6 @@ export default function PatientProfile() {
         let imageUrl = ""
         if (image) {
             imageUrl = await CloudinaryService.upload(image)
-            console.log(imageUrl)
         }
 
         try {
@@ -52,6 +51,7 @@ export default function PatientProfile() {
             }
             await PatientService.update(payload, params.id)
             toast.success("Profile updated.")
+            fetchPatients()
 
         } catch (err) {
             console.log("Error:", err)
