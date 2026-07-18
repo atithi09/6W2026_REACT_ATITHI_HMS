@@ -31,8 +31,17 @@ export default function Appointment() {
     async function security(e) {
         e.preventDefault()
         let selectedDoctor = doctors.find((d) => d.id == doctorid)
-        if(!email){
+        if (!email) {
             toast.error("Login or Sign Up to book appointments")
+            return;
+        }
+        const slotBooked = await AppointmentService.isSlotBooked(
+            doctorid,
+            date,
+            time
+        );
+        if (slotBooked) {
+            toast.error("This slot is already booked.");
             return;
         }
 
@@ -45,18 +54,35 @@ export default function Appointment() {
                 "name": "clinic", //your business name
                 "description": "Test Transaction",
                 "image": "https://example.com/your_logo",
-                "handler": function (response) {
-                    alert(response.razorpay_payment_id);
+                "handler": async function (response) {
                     alert(response.razorpay_order_id);
                     alert(response.razorpay_signature)
+
+                    try {
+                        let payload = {
+                            patientId: patientid,
+                            doctorId: doctorid,
+                            appointmentDate: date,
+                            appointmentTime: time,
+                            reason: reason,
+                            paymentId: response.razorpay_payment_id
+
+                        }
+                        await AppointmentService.add(payload);
+                        toast.success("Appointment booked successfully");
+                    }
+                    catch (err) {
+                        console.log("error:", err)
+                        toast.error("Something went wrong")
+                    }
                 },
-                "prefill": { //We recommend using the prefill parameter to auto-fill customer's contact information, especially their phone number
+                 //We recommend using the prefill parameter to auto-fill customer's contact information, especially their phone number
                     prefill: {
                         name: name,
                         email: email,
                         contact: mobile
                     }  //Provide the customer's phone number for better conversion rates 
-                },
+                ,
                 "notes": {
                     "address": "Razorpay Corporate Office"
                 },
@@ -76,32 +102,7 @@ export default function Appointment() {
             });
             rzp1.open();
 
-            try {
-                let payload = {
-                    patientId: patientid,
-                    doctorId: doctorid,
-                    appointmentDate: date,
-                    appointmentTime: time,
-                    reason: reason,
-                }
-                const slotBooked = await AppointmentService.isSlotBooked(
-                    doctorid,
-                    date,
-                    time
-                );
 
-                if (slotBooked) {
-                    toast.error("This slot is already booked.");
-                    return;
-                } else {
-                    await AppointmentService.add(payload);
-                    toast.success("Appointment booked successfully");
-                }
-            }
-            catch (err) {
-                console.log("error:", err)
-                toast.error("Something went wrong")
-            }
 
         }
         else {
@@ -310,7 +311,7 @@ export default function Appointment() {
                                                     </button>
                                                 </div>
 
-                                                
+
                                             </div>
                                         </form>
                                     </div>
