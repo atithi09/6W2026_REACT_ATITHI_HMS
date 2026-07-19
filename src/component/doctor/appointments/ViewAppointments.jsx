@@ -5,17 +5,17 @@ import AuthService from '../../../services/AuthService'
 import PatientService from '../../../services/PatientService'
 
 export default function ViewAppointments() {
-    const DoctorId= AuthService.uid()
+    const DoctorId = AuthService.uid()
     const [appointments, setAppointments] = useState([])
-    const [patients, setPatients]=useState([])
+    const [patients, setPatients] = useState([])
 
     async function fetchAppointments() {
         let res = await AppointmentService.AppointmentByDoctor(DoctorId)
         setAppointments(res)
     }
 
-    async function fetchPatients(){
-        let res= await PatientService.all()
+    async function fetchPatients() {
+        let res = await PatientService.all()
         setPatients(res)
     }
 
@@ -24,7 +24,7 @@ export default function ViewAppointments() {
         fetchPatients()
     }, [])
 
-    
+
 
     return (
         <>
@@ -55,74 +55,97 @@ export default function ViewAppointments() {
                     </div>
                 </nav>
             </div>
-            <div className="container">
+            {!appointments ?
+                <div className="container">
 
-                <div className="d-flex justify-content-between my-3">
+                    <div className="d-flex justify-content-between my-3">
 
-                    <div className="mt-4 mb-2">
-                        <h3>Appointments</h3>
+                        <div className="mt-4 mb-2">
+                            <h3>Appointments</h3>
+                        </div>
+
                     </div>
+                    <div
+                        style={{
+                            marginBottom: "20px"
+                        }}
+                    >
 
-                </div>
-                <div
-                    style={{
-                        marginBottom: "20px"
-                    }}
-                >
-                    <div className="table-responsive shadow-sm rounded-4">
-                        <table className="table table-hover align-middle text-center mb-0">
-                            <thead className="table-primary">
-                                <tr>
-                                    <th>Sr No.</th>
-                                    <th>Patient Name</th>
-                                    <th>Time</th>
-                                    <th>Date</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
 
-                            <tbody>
-                                {appointments.map((appt, index) => (
-                                    <tr key={appt.id}>
-                                        <td>{index + 1}</td>
-
-                                        <td>{patients.find((p)=>p.id == appt.patientId)?.name}</td>
-
-                                        <td
-                                            className="description-cell"
-                                        >
-                                            {appt.appointmentTime}
-                                        </td>
-
-                                        <td>
-                                           {appt.appointmentDate}
-                                        </td>
-                                    <td>
-                                           {appt.appointmentStatus}
-                                        </td>   
-
-                                        <td>
-                                           
-                                                <button className="btn btn-outline-primary btn-sm rounded-circle me-2">
-                                                   <i className="bi bi-check-circle-fill"></i>
-                                                </button>
-                                          
-
-                                            <button
-                                                className="btn btn-outline-danger btn-sm rounded-circle"
-                                                
-                                            >
-                                                <i className="bi bi-x-circle-fill"></i>
-                                            </button>
-                                        </td>
+                        <div className="table-responsive shadow-sm rounded-4">
+                            <table className="table table-hover align-middle text-center mb-0">
+                                <thead className="table-primary">
+                                    <tr>
+                                        <th>Sr No.</th>
+                                        <th>Patient Name</th>
+                                        <th>Time</th>
+                                        <th>Date</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
                                     </tr>
-                                ))}
-                            </tbody>
-                        </table>
+                                </thead>
+
+                                <tbody>
+                                    {appointments.map((appt, index) => (
+                                        <tr key={appt.id}>
+                                            <td>{index + 1}</td>
+
+                                            <td>{patients.find((p) => p.id == appt.patientId)?.name}</td>
+
+                                            <td
+                                                className="description-cell"
+                                            >
+                                                {appt.appointmentTime}
+                                            </td>
+
+                                            <td>
+                                                {appt.appointmentDate}
+                                            </td>
+                                            <td>
+                                                {appt.appointmentStatus}
+                                            </td>
+
+                                            <td>
+
+                                                <button className="btn btn-outline-primary btn-sm rounded-circle me-2">
+                                                    <i className="bi bi-check-circle-fill"></i>
+                                                </button>
+
+
+                                                <button
+                                                    className="btn btn-outline-danger btn-sm rounded-circle"
+
+                                                >
+                                                    <i className="bi bi-x-circle-fill"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                </div>
-            </div>
+                </div> : (<div className="col-12">
+                    <div className="card border-0 shadow-sm text-center py-5">
+                        <div className="card-body">
+                            <i
+                                className="bi bi-calendar2-x text-primary"
+                                style={{ fontSize: "4rem" }}
+                            ></i>
+
+                            <h4 className="mt-3 fw-bold">
+                                No Appointments Scheduled
+                            </h4>
+
+                            <p className="text-muted mb-4">
+                                You don't have any appointments at the moment. Enjoy your free time or
+                                check back later for new bookings.
+                            </p>
+
+                        </div>
+                    </div>
+                </div>)
+            }
         </>
     )
 }
