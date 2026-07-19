@@ -8,28 +8,28 @@ import AuthService from "../../../services/AuthService"
 
 export default function PatientsList() {
     const [patients, setPatients] = useState([])
-    const doctorId= AuthService.uid()
-    const [appointments,setAppointments]=useState([])
+    const doctorId = AuthService.uid()
+    const [appointments, setAppointments] = useState([])
     const doctorPatients = patients.filter((patient) =>
-    appointments.some((appointment) => appointment.patientId === patient.id)
-);
+        appointments.some((appointment) => appointment.patientId === patient.id)
+    );
 
     async function fetchAppointments() {
         let res = await AppointmentService.AppointmentByDoctor(doctorId)
         setAppointments(res)
     }
-    
-        async function fetchPatients(){
-            let res= await PatientService.all()
-            setPatients(res)
-        }
+
+    async function fetchPatients() {
+        let res = await PatientService.all()
+        setPatients(res)
+    }
 
     useEffect(() => {
         fetchPatients();
         fetchAppointments()
     }, [])
 
-    
+
     return (
         <>
             <div className="page-title">
@@ -59,77 +59,92 @@ export default function PatientsList() {
                     </div>
                 </nav>
             </div>
-            <div className="container">
+            {patients.length>0 ?
+                <div className="container">
 
-                <div className="d-flex justify-content-between">
+                    <div className="d-flex justify-content-between">
 
-                    <div className="mt-4 mb-2">
-                        <h3>Patients</h3>
+                        <div className="mt-4 mb-2">
+                            <h3>Patients</h3>
+                        </div>
+
+
                     </div>
+                    <div
+                        style={{
+                            marginBottom: "20px"
+                        }}
+                    >
+                        <div className="table-responsive shadow-sm rounded-4">
+                            <table className="table table-hover align-middle text-center mb-0">
+                                <thead className="table-primary">
+                                    <tr>
+                                        <th>Sr No.</th>
+                                        <th>Name</th>
+                                        <th>Status</th>
+                                        <th>Date</th>
+                                        <th width="170">Action</th>
+                                    </tr>
+                                </thead>
 
+                                <tbody>
+                                    {doctorPatients.map((patients, index) => (
+                                        <tr key={patients.id}>
+                                            <td>{index + 1}</td>
 
-                </div>
-                <div
-                    style={{
-                        marginBottom: "20px"
-                    }}
-                >
-                    <div className="table-responsive shadow-sm rounded-4">
-                        <table className="table table-hover align-middle text-center mb-0">
-                            <thead className="table-primary">
-                                <tr>
-                                    <th>Sr No.</th>
-                                    <th>Name</th>
-                                    <th>Status</th>
-                                    <th>Date</th>
-                                    <th width="170">Action</th>
-                                </tr>
-                            </thead>
+                                            <td className="fw-semibold">
+                                                {patients.name}
+                                            </td>
 
-                            <tbody>
-                                {doctorPatients.map((patients, index) => (
-                                    <tr key={patients.id}>
-                                        <td>{index + 1}</td>
+                                            <td>
+                                                <span
+                                                    className={`badge ${patients.status
+                                                        ? "bg-success"
+                                                        : "bg-danger"
+                                                        }`}
+                                                >
+                                                    {patients.status ? "Active" : "Inactive"}
+                                                </span>
+                                            </td>
 
-                                        <td className="fw-semibold">
-                                            {patients.name}
-                                        </td>
+                                            <td>
+                                                {new Date(patients.createdAt).toLocaleDateString()}
+                                            </td>
 
-                                        <td>
-                                            <span
-                                                className={`badge ${patients.status
-                                                    ? "bg-success"
-                                                    : "bg-danger"
-                                                    }`}
-                                            >
-                                                {patients.status ? "Active" : "Inactive"}
-                                            </span>
-                                        </td>
+                                            <td>
 
-                                        <td>
-                                            {new Date(patients.createdAt).toLocaleDateString()}
-                                        </td>
-
-                                        <td>
-                                           
                                                 <button className="btn btn-outline-primary btn-sm rounded-circle me-2">
                                                     <i className="bi bi-pencil-fill"></i>
                                                 </button>
 
-                                            <button
-                                                className="btn btn-outline-danger btn-sm rounded-circle"
-                                            >
-                                                <i className="bi bi-trash-fill"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
+                                                <button
+                                                    className="btn btn-outline-danger btn-sm rounded-circle"
+                                                >
+                                                    <i className="bi bi-trash-fill"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div > :
+                <div className="card border-0 shadow-sm text-center py-5">
+                    <div className="card-body">
+                        <i className="bi bi-people-fill display-1 text-primary"></i>
+
+                        <h3 className="fw-bold mt-3">
+                            No Patients Found
+                        </h3>
+
+                        <p className="text-muted mb-0">
+                            You don't have any patients assigned yet. Patients will appear here after they book an appointment with you.
+                        </p>
                     </div>
                 </div>
-
-            </div >
+            }
         </>
     )
 }

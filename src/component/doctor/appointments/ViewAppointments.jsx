@@ -24,7 +24,14 @@ export default function ViewAppointments() {
         fetchPatients()
     }, [])
 
-
+    async function acceptAppointment(apptId) {
+        await AppointmentService.updateStatus(apptId, "Accepted");
+        fetchAppointments();
+    }
+     async function rejectAppointment(apptId) {
+        await AppointmentService.updateStatus(apptId, "Cancelled");
+        fetchAppointments();
+    }
 
     return (
         <>
@@ -55,7 +62,7 @@ export default function ViewAppointments() {
                     </div>
                 </nav>
             </div>
-            {!appointments ?
+            {appointments.length>0 ?
                 <div className="container">
 
                     <div className="d-flex justify-content-between my-3">
@@ -102,19 +109,34 @@ export default function ViewAppointments() {
                                                 {appt.appointmentDate}
                                             </td>
                                             <td>
-                                                {appt.appointmentStatus}
-                                            </td>
+                                                {appt.appointmentStatus === "Pending" && (
+                                                    <span className="badge bg-warning text-dark p-2">
+                                                        Pending
+                                                    </span>
+                                                )}
 
+                                                {appt.appointmentStatus === "Accepted" && (
+                                                    <span className="badge bg-success">
+                                                        Accepted
+                                                    </span>
+                                                )}
+
+                                                {appt.appointmentStatus === "Cancelled" && (
+                                                    <span className="badge bg-danger">
+                                                        Cancelled
+                                                    </span>
+                                                )}
+                                            </td>
                                             <td>
 
-                                                <button className="btn btn-outline-primary btn-sm rounded-circle me-2">
+                                                <button className="btn btn-outline-primary btn-sm rounded-circle me-2" onClick={() => acceptAppointment(appt.id)}>
                                                     <i className="bi bi-check-circle-fill"></i>
                                                 </button>
 
 
                                                 <button
-                                                    className="btn btn-outline-danger btn-sm rounded-circle"
-
+                                                    className="btn btn-outline-danger btn-sm rounded-circle "
+                                                    onClick={() => rejectAppointment(appt.id)}
                                                 >
                                                     <i className="bi bi-x-circle-fill"></i>
                                                 </button>

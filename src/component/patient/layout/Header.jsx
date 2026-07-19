@@ -7,9 +7,16 @@ export default function Header() {
     const [mobileOpen, setMobileOpen] = useState(false);
     const closeMenu = () => setMobileOpen(false);
 
-    const email = AuthService.email();
-    const userType = AuthService.userType();
-    const userId = AuthService.uid();
+    const [email, setEmail] = useState("");
+    const [userType, setUserType] = useState("");
+    const userId=AuthService.uid()
+    const [doctorId, setDoctorId] = useState("");
+
+    useEffect(() => {
+        setEmail(AuthService.email());
+        setUserType(AuthService.userType());
+        setDoctorId(AuthService.uid());
+    }, []);
 
     function logout() {
         AuthService.logout();
