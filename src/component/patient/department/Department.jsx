@@ -606,10 +606,7 @@ export default function Department() {
                                             <p>
                                                 {department.description}
                                             </p>
-                                            <a href="#!" className="learn-more">
-                                                <span>Learn More</span>
-                                                <i className="fas fa-arrow-right" />
-                                            </a>
+                                            
                                         </div>
                                     </div>
                                 </div>

@@ -29,7 +29,7 @@ export default function PatientProfile() {
     }
     useEffect(() => {
         fetchPatients()
-    },[])
+    }, [])
 
     async function updateProfile(e) {
         e.preventDefault()
@@ -236,7 +236,7 @@ export default function PatientProfile() {
             </section>
 
             {/* Quick Access */}
-            <section className="section pt-0">
+            <section className="section pt-3">
                 <div className="container">
 
                     <div className="row g-4">
@@ -265,13 +265,20 @@ export default function PatientProfile() {
                                         </div>
 
                                     </div>
-
-                                    <Link
-                                        to="/patient/appointments"
-                                        className="btn btn-primary mt-3"
-                                    >
-                                        View Appointments
-                                    </Link>
+                                    <div className="d-flex gap-4 justify-content-evenly pt-3">
+                                        <Link
+                                            to="/myAppt"
+                                            className="btn btn-primary"
+                                        >
+                                            Upcoming Appointments
+                                        </Link>
+                                        <Link
+                                            to="/myAppthistory"
+                                            className="btn btn-primary"
+                                        >
+                                            Appointment History
+                                        </Link>
+                                    </div>
 
                                 </div>
 

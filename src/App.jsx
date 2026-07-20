@@ -28,6 +28,8 @@ import ViewAppointments from "./component/doctor/appointments/ViewAppointments"
 import PatientsList from "./component/doctor/patients/PatientsList"
 import AppointmentHistory from "./component/doctor/appointments/AppointmnetHistory"
 import ManageAppointments from "./component/admin/appointment/ManageAppointment"
+import ViewMyAppointment from "./component/patient/appointment/ViewMyAppointment"
+import MyAppointmentHistory from "./component/patient/appointment/MyAppointmentHistory"
 
 
 
@@ -50,6 +52,9 @@ function App() {
           <Route path='login' element={<Login/>}></Route>
           <Route path='signup' element={<SignUp/>}></Route>
           <Route path='profile/:id' element={<PatientProfile/>}></Route>
+          <Route path='myAppt' element={<ViewMyAppointment/>}></Route>
+          <Route path='myAppthistory' element={<MyAppointmentHistory/>}></Route>
+          
           </Route>
 
           
