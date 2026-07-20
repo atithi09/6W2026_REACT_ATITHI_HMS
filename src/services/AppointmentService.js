@@ -29,8 +29,29 @@ class AppointmentService {
         return !snapshot.empty;
     }
 
+    async all(){
+        let appointmnet=[]
+        const querySnapshot= await getDocs(collection(db,"appointments"))
+        querySnapshot.forEach((doc) => {
+            // doc.data() is never undefined for query doc snapshots
+           
+            appointmnet.push({ id: doc.id, ...doc.data() })
+        });
+        return appointmnet
+    }
+
     async AppointmentByDoctor(doctorId) {
         const q = query(collection(db, "appointments"), where("doctorId", "==", doctorId),where("appointmentStatus","in",["Pending","Accepted"]))
+        const querySnapshot = await getDocs(q)
+        let appointments = []
+        querySnapshot.forEach((appt) => {
+            // doc.data() is never undefined for query doc snapshots
+            appointments.push({ id: appt.id, ...appt.data() })
+        });
+        return appointments
+    }
+    async AppointmentHistoryByDoctor(doctorId) {
+        const q = query(collection(db, "appointments"), where("doctorId", "==", doctorId),where("appointmentStatus","in",["Cancelled","Completed"]))
         const querySnapshot = await getDocs(q)
         let appointments = []
         querySnapshot.forEach((appt) => {

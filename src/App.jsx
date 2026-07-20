@@ -26,6 +26,8 @@ import ManagePatient from "./component/admin/managePatient/ManagePatient"
 import DoctorProfile from "./component/doctor/profile/DoctorProfile"
 import ViewAppointments from "./component/doctor/appointments/ViewAppointments"
 import PatientsList from "./component/doctor/patients/PatientsList"
+import AppointmentHistory from "./component/doctor/appointments/AppointmnetHistory"
+import ManageAppointments from "./component/admin/appointment/ManageAppointment"
 
 
 
@@ -61,6 +63,7 @@ function App() {
           <Route path='manageDepartment' element={<ManageDepartment/>}></Route>
           <Route path='editpatient/:id' element={<EditPatients/>}></Route>
           <Route path='managepatient' element={<ManagePatient/>}></Route>
+          <Route path='manageappts' element={<ManageAppointments/>}></Route>
           </Route>
 
           
@@ -68,7 +71,8 @@ function App() {
           <Route path='/doctor' element={<DoctorDashboard/>}></Route> 
           <Route path='doctorProfile/:id' element={<DoctorProfile/>}></Route>
           <Route path='viewpatient' element={<PatientsList/>}></Route>
-          <Route path='viewappt' element={<ViewAppointments/>}></Route>         
+          <Route path='viewappt' element={<ViewAppointments/>}></Route>  
+          <Route path='appthistory' element={<AppointmentHistory/>}></Route>        
           </Route>
           
         </Routes>

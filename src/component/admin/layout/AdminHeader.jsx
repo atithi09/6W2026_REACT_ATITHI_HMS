@@ -84,7 +84,7 @@ export default function AdminHeader() {
                                 </li>
 
                                 <li>
-                                    <Link to="/admin" onClick={closeMenu}>
+                                    <Link to="/admin/manageappts" onClick={closeMenu}>
                                         Appointmnets
                                     </Link>
                                 </li>

@@ -3,14 +3,16 @@ import { Link } from 'react-router-dom'
 import AppointmentService from '../../../services/AppointmentService'
 import AuthService from '../../../services/AuthService'
 import PatientService from '../../../services/PatientService'
+import DoctorService from '../../../services/DoctorServices'
 
-export default function ViewAppointments() {
-    const DoctorId = AuthService.uid()
+export default function ManageAppointments() {
+    
     const [appointments, setAppointments] = useState([])
     const [patients, setPatients] = useState([])
+    const [doctors, setDoctors] = useState([])
 
     async function fetchAppointments() {
-        let res = await AppointmentService.AppointmentByDoctor(DoctorId)
+        let res = await AppointmentService.all()
         setAppointments(res)
     }
 
@@ -19,19 +21,18 @@ export default function ViewAppointments() {
         setPatients(res)
     }
 
+    async function fetchDoctors() {
+        let res = await DoctorService.all()  
+        setDoctors(res)      
+    }
+
     useEffect(() => {
         fetchAppointments()
         fetchPatients()
+        fetchDoctors()
     }, [])
 
-    async function acceptAppointment(apptId) {
-        await AppointmentService.updateStatus(apptId, "Accepted");
-        fetchAppointments();
-    }
-    async function rejectAppointment(apptId) {
-        await AppointmentService.updateStatus(apptId, "Cancelled");
-        fetchAppointments();
-    }
+   
 
     return (
         <>
@@ -62,7 +63,7 @@ export default function ViewAppointments() {
                     </div>
                 </nav>
             </div>
-            {appointments.length > 0 ?
+            {appointments?
                 <div className="container">
 
                     <div className="d-flex justify-content-between my-3">
@@ -85,10 +86,10 @@ export default function ViewAppointments() {
                                     <tr>
                                         <th>Sr No.</th>
                                         <th>Patient Name</th>
+                                        <th>Doctor Name</th>
                                         <th>Time</th>
                                         <th>Date</th>
                                         <th>Status</th>
-                                        <th>Action</th>
                                     </tr>
                                 </thead>
 
@@ -98,6 +99,7 @@ export default function ViewAppointments() {
                                             <td>{index + 1}</td>
 
                                             <td>{patients.find((p) => p.id == appt.patientId)?.name}</td>
+                                            <td>{doctors.find((p) => p.id == appt.doctorId)?.name}</td>
 
                                             <td
                                                 className="description-cell"
@@ -121,33 +123,21 @@ export default function ViewAppointments() {
                                                     </span>
                                                 )}
 
+                                                {appt.appointmentStatus === "Cancelled" && (
+                                                    <span className="badge p-2 fs-6 bg-danger">
+                                                        Accepted
+                                                    </span>
+                                                )}
+
+                                                {appt.appointmentStatus === "Completed" && (
+                                                    <span className="badge p-2 fs-6 bg-success">
+                                                        Accepted
+                                                    </span>
+                                                )}
+
                                                 
                                             </td>
-                                            <td>
-                                                {appt.appointmentStatus === "Pending" && (
-                                                    <>
-                                                        <button
-                                                            className="btn btn-outline-primary btn-sm rounded-circle me-2"
-                                                            onClick={() => acceptAppointment(appt.id)}
-                                                        >
-                                                            <i className="bi bi-check-circle-fill"></i>
-                                                        </button>
-
-                                                        <button
-                                                            className="btn btn-outline-danger btn-sm rounded-circle"
-                                                            onClick={() => rejectAppointment(appt.id)}
-                                                        >
-                                                            <i className="bi bi-x-circle-fill"></i>
-                                                        </button>
-                                                    </>
-                                                )}
-
-                                                {appt.appointmentStatus === "Accepted" && (
-                                                    <button className="btn py-2 btn-primary btn-sm">
-                                                        Start Consultation
-                                                    </button>
-                                                )}
-                                            </td>
+                                            
                                         </tr>
                                     ))}
                                 </tbody>
@@ -167,8 +157,7 @@ export default function ViewAppointments() {
                             </h4>
 
                             <p className="text-muted mb-4">
-                                You don't have any appointments at the moment. Enjoy your free time or
-                                check back later for new bookings.
+                                You don't have any appointments at the moment. Check back later for new bookings.
                             </p>
 
                         </div>

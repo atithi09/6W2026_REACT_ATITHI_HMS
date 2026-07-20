@@ -48,7 +48,7 @@ export default function DoctorHeader() {
                                 <li><Link to="/doctor">Dashboard</Link></li>
                                 <li><Link to="/doctor/viewappt">View Appointments</Link></li>
                                 <li><Link to="/doctor/viewpatient">Patients </Link></li>
-                                <li><Link to="/services">Appointment History</Link></li>
+                                <li><Link to="/doctor/appthistory">Appointment History</Link></li>
                                 <li><Link to="/doctors">Earnings</Link></li>
                                 <li><Link to="/contact">Feedback</Link></li>
                             </ul>

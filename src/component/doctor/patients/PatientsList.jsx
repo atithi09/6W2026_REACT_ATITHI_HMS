@@ -59,7 +59,7 @@ export default function PatientsList() {
                     </div>
                 </nav>
             </div>
-            {patients.length>0 ?
+            {doctorPatients ?
                 <div className="container">
 
                     <div className="d-flex justify-content-between">

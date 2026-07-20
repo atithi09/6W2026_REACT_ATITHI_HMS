@@ -4,14 +4,15 @@ import AppointmentService from '../../../services/AppointmentService'
 import AuthService from '../../../services/AuthService'
 import PatientService from '../../../services/PatientService'
 
-export default function ViewAppointments() {
+export default function AppointmentHistory() {
     const DoctorId = AuthService.uid()
     const [appointments, setAppointments] = useState([])
     const [patients, setPatients] = useState([])
 
     async function fetchAppointments() {
-        let res = await AppointmentService.AppointmentByDoctor(DoctorId)
+        let res = await AppointmentService.AppointmentHistoryByDoctor(DoctorId)
         setAppointments(res)
+        
     }
 
     async function fetchPatients() {
@@ -24,14 +25,8 @@ export default function ViewAppointments() {
         fetchPatients()
     }, [])
 
-    async function acceptAppointment(apptId) {
-        await AppointmentService.updateStatus(apptId, "Accepted");
-        fetchAppointments();
-    }
-    async function rejectAppointment(apptId) {
-        await AppointmentService.updateStatus(apptId, "Cancelled");
-        fetchAppointments();
-    }
+
+
 
     return (
         <>
@@ -62,7 +57,7 @@ export default function ViewAppointments() {
                     </div>
                 </nav>
             </div>
-            {appointments.length > 0 ?
+            {appointments ?
                 <div className="container">
 
                     <div className="d-flex justify-content-between my-3">
@@ -88,7 +83,6 @@ export default function ViewAppointments() {
                                         <th>Time</th>
                                         <th>Date</th>
                                         <th>Status</th>
-                                        <th>Action</th>
                                     </tr>
                                 </thead>
 
@@ -109,45 +103,20 @@ export default function ViewAppointments() {
                                                 {appt.appointmentDate}
                                             </td>
                                             <td>
-                                                {appt.appointmentStatus === "Pending" && (
-                                                    <span className="badge bg-warning p-2 fs-6">
-                                                        Pending
+                                               
+                                                   {appt.appointmentStatus === "Completed" && (
+                                                    <span className="badge bg-success p-2 fs-6">
+                                                        Completed
                                                     </span>
                                                 )}
 
-                                                {appt.appointmentStatus === "Accepted" && (
-                                                    <span className="badge p-2 fs-6 bg-success">
-                                                        Accepted
+                                                {appt.appointmentStatus === "Cancelled" && (
+                                                    <span className="badge p-2 fs-6 bg-danger">
+                                                        Cancelled
                                                     </span>
                                                 )}
-
-                                                
                                             </td>
-                                            <td>
-                                                {appt.appointmentStatus === "Pending" && (
-                                                    <>
-                                                        <button
-                                                            className="btn btn-outline-primary btn-sm rounded-circle me-2"
-                                                            onClick={() => acceptAppointment(appt.id)}
-                                                        >
-                                                            <i className="bi bi-check-circle-fill"></i>
-                                                        </button>
 
-                                                        <button
-                                                            className="btn btn-outline-danger btn-sm rounded-circle"
-                                                            onClick={() => rejectAppointment(appt.id)}
-                                                        >
-                                                            <i className="bi bi-x-circle-fill"></i>
-                                                        </button>
-                                                    </>
-                                                )}
-
-                                                {appt.appointmentStatus === "Accepted" && (
-                                                    <button className="btn py-2 btn-primary btn-sm">
-                                                        Start Consultation
-                                                    </button>
-                                                )}
-                                            </td>
                                         </tr>
                                     ))}
                                 </tbody>
@@ -158,17 +127,17 @@ export default function ViewAppointments() {
                     <div className="card border-0 shadow-sm text-center py-5">
                         <div className="card-body">
                             <i
-                                className="bi bi-calendar2-x text-primary"
+                                className="bi bi-clock-history text-primary"
                                 style={{ fontSize: "4rem" }}
                             ></i>
 
                             <h4 className="mt-3 fw-bold">
-                                No Appointments Scheduled
+                                No Appointments History
                             </h4>
 
                             <p className="text-muted mb-4">
-                                You don't have any appointments at the moment. Enjoy your free time or
-                                check back later for new bookings.
+                                Your appointment history will appear here once consultations
+                                are completed or appointments are cancelled.
                             </p>
 
                         </div>
