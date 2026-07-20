@@ -1,22 +1,25 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import AuthService from "../../../services/AuthService";
 
 export default function Header() {
+    const location = useLocation()
     const nav = useNavigate()
     const [mobileOpen, setMobileOpen] = useState(false);
     const closeMenu = () => setMobileOpen(false);
 
     const [email, setEmail] = useState("");
     const [userType, setUserType] = useState("");
-    const userId=AuthService.uid()
+    const userId = AuthService.uid()
     const [doctorId, setDoctorId] = useState("");
 
     useEffect(() => {
+
         setEmail(AuthService.email());
         setUserType(AuthService.userType());
         setDoctorId(AuthService.uid());
-    }, []);
+
+    },[location.pathname]);
 
     function logout() {
         AuthService.logout();
