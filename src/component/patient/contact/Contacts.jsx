@@ -1,5 +1,54 @@
-import {Link} from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
+import DoctorServices from '../../../services/DoctorServices'
+import AuthService from '../../../services/AuthService'
+import { toast } from 'react-toastify'
+import FeedbackService from '../../../services/FeedbackService'
+
 export default function Contacts() {
+    const [name, setName] = useState('')
+    const [email, setEmail] = useState('')
+    const [experience, setExperience] = useState('')
+    const [review, setReview] = useState('')
+    const [doctors, setDoctors] = useState([])
+    const [doctorId, setDoctorId] = useState('')
+    const [rating, setRating] = useState(0)
+    const [patientId, setPatientId] = useState('')
+
+    function getPatientId() {
+        const patientId = AuthService.uid()
+        setPatientId(patientId)
+    }
+
+    async function fetchDoctors() {
+        let res = await DoctorServices.all()
+        setDoctors(res)
+    }
+
+    async function submitFeedback(e) {
+        e.preventDefault()
+        try {
+            let payload = {
+                patientId: patientId,
+                review: review,
+                rating: rating,
+                doctorId: doctorId,
+                experience: experience
+            }
+
+            let feedback = await FeedbackService.add(payload)
+            toast.success("Thank you for your feedback!")
+            console.log("payload",payload)
+
+        } catch (err) {
+            console.log("Error:", err)
+            toast.error("Something went wrong")
+        }
+    }
+    useEffect(() => {
+        fetchDoctors()
+        getPatientId()
+    }, [])
     return (
         <>
             <main className="main">
@@ -40,7 +89,7 @@ export default function Contacts() {
                                 <div className="contact-info-wrapper">
                                     <div
                                         className="contact-info-item"
-                                        
+
                                     >
                                         <div className="info-icon">
                                             <i className="bi bi-geo-alt" />
@@ -52,7 +101,7 @@ export default function Contacts() {
                                     </div>
                                     <div
                                         className="contact-info-item"
-                                        
+
                                     >
                                         <div className="info-icon">
                                             <i className="bi bi-envelope" />
@@ -65,7 +114,7 @@ export default function Contacts() {
                                     </div>
                                     <div
                                         className="contact-info-item"
-                                        
+
                                     >
                                         <div className="info-icon">
                                             <i className="bi bi-headset" />
@@ -81,17 +130,17 @@ export default function Contacts() {
                             <div className="col-lg-7">
                                 <div
                                     className="contact-form-card"
-                                   
+
                                 >
-                                    <h2>Send us a Message</h2>
+                                    <h2>Share your experience</h2>
                                     <p className="mb-4">
-                                        Have questions or want to learn more? Reach out to us and our team
-                                        will get back to you shortly.
+                                        We value your feedback! Your suggestions help us improve our healthcare services. Please take a minute to tell us about your experience.
                                     </p>
                                     <form
-                                        action="forms/contact.php"
-                                        method="post"
+                                        action=""
+                                        method=""
                                         className="php-email-form"
+                                        onSubmit={submitFeedback}
                                     >
                                         <div className="row g-4">
                                             <div className="col-md-6">
@@ -101,7 +150,9 @@ export default function Contacts() {
                                                     name="name"
                                                     id="name"
                                                     placeholder="Your Name"
-                                                    required=""
+                                                    required
+                                                    value={name}
+                                                    onChange={(e) => (setName(e.target.value))}
                                                 />
                                             </div>
                                             <div className="col-md-6">
@@ -111,40 +162,74 @@ export default function Contacts() {
                                                     name="email"
                                                     id="email"
                                                     placeholder="Your Email"
-                                                    required=""
+                                                    required
+                                                    onChange={(e) => (setEmail(e.target.value))}
                                                 />
                                             </div>
-                                            <div className="col-12">
-                                                <input
-                                                    type="text"
+                                            <div className="col-md-6">
+                                                <select
+                                                    name="doctors"
                                                     className="form-control"
-                                                    name="subject"
-                                                    id="subject"
-                                                    placeholder="Subject"
-                                                    required=""
-                                                />
+                                                    required
+                                                    onChange={(e) => setDoctorId(e.target.value)}
+                                                    value={doctorId}
+                                                >
+                                                    <option value="" selected disabled>Select Doctor</option>
+                                                    {doctors.map((doctor) => (
+                                                        <option key={doctor.id} value={doctor.id} >{doctor.name}</option>
+                                                    ))
+                                                    }
+
+                                                </select>
+                                            </div>
+                                            <div className="col-md-6">
+                                                <select
+                                                    name="ratings"
+                                                    className='form-control'
+                                                    required
+                                                    value={experience}
+                                                    onChange={(e) =>setExperience(e.target.value)}>
+                                                    <option value="" disabled selected>Select Experience</option>
+                                                    <option value="Excellent">Excellent</option>
+                                                    <option value="Good">Good</option>
+                                                    <option value="Average">Average</option>
+                                                    <option value="Poor">Poor</option>
+                                                </select>
+                                            </div>
+                                            <div className="mb-3">
+
+                                                <div>
+                                                    {[1, 2, 3, 4, 5].map((star) => (
+                                                        <i
+                                                            key={star}
+                                                            className={`bi ${star <= rating ? "bi-star-fill text-warning" : "bi-star"
+                                                                }`}
+                                                            style={{
+                                                                fontSize: "1.8rem",
+                                                                cursor: "pointer",
+                                                                marginRight: "8px",
+                                                            }}
+                                                            onClick={() => setRating(star)}
+                                                        ></i>
+                                                    ))}
+                                                </div>
                                             </div>
                                             <div className="col-12">
                                                 <textarea
                                                     className="form-control"
                                                     name="message"
                                                     id="message"
-                                                    placeholder="Your Message"
+                                                    placeholder="Share your experience"
                                                     rows={6}
                                                     required=""
-                                                    defaultValue={""}
+                                                    value={review}
+                                                    onChange={(e) => (setReview(e.target.value))}
                                                 />
                                             </div>
-                                            <div className="col-12">
-                                                <div className="loading">Loading</div>
-                                                <div className="error-message" />
-                                                <div className="sent-message">
-                                                    Your message has been sent. Thank you!
-                                                </div>
-                                            </div>
+
                                             <div className="col-12">
                                                 <button type="submit" className="btn btn-submit">
-                                                    Send Message
+                                                    Submit Feedback
                                                 </button>
                                             </div>
                                         </div>
@@ -155,7 +240,7 @@ export default function Contacts() {
                     </div>
                     <div
                         className="container-fluid map-container"
-                       
+
                     >
                         <div className="map-overlay" />
                         <iframe

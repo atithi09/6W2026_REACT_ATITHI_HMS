@@ -1,7 +1,8 @@
-class Feedback{
+export default class FeedbackModel{
     patientId=''
     doctorId=''
     rating=''
     review=''
-    createdAt=''
+    experience=''
+    createdAt=Date.now()
 }
