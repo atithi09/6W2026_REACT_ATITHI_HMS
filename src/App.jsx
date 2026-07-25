@@ -30,6 +30,7 @@ import AppointmentHistory from "./component/doctor/appointments/AppointmnetHisto
 import ManageAppointments from "./component/admin/appointment/ManageAppointment"
 import ViewMyAppointment from "./component/patient/appointment/ViewMyAppointment"
 import MyAppointmentHistory from "./component/patient/appointment/MyAppointmentHistory"
+import ManageFeedback from "./component/admin/feedback/ManageFeedback"
 
 
 
@@ -69,6 +70,7 @@ function App() {
           <Route path='editpatient/:id' element={<EditPatients/>}></Route>
           <Route path='managepatient' element={<ManagePatient/>}></Route>
           <Route path='manageappts' element={<ManageAppointments/>}></Route>
+          <Route path='managefeedback' element={<ManageFeedback/>}></Route>
           </Route>
 
           

@@ -1,5 +1,5 @@
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth"
-import { auth, db } from "../firebase/firebaseConfig"
+import { auth, db } from "../firebase/FirebaseConfig"
 import UserModel from "../models/UserModel"
 import { doc, setDoc, getDoc } from "firebase/firestore"
 import AuthService from "./AuthService"

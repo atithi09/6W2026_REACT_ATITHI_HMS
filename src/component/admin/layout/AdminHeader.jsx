@@ -108,7 +108,7 @@ export default function AdminHeader() {
                                 </li>
 
                                 <li>
-                                    <Link to="/admin" onClick={closeMenu}>
+                                    <Link to="managefeedback" onClick={closeMenu}>
                                         Feedback
                                     </Link>
                                 </li>

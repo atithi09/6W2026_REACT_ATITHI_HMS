@@ -15,7 +15,7 @@ export default function PatientsList() {
     );
 
     async function fetchAppointments() {
-        let res = await AppointmentService.AppointmentByDoctor(doctorId)
+        let res = await AppointmentService.AppointmentPatientDoctor(doctorId)
         setAppointments(res)
     }
 

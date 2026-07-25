@@ -50,6 +50,16 @@ class AppointmentService {
         });
         return appointments
     }
+    async AppointmentPatientDoctor(doctorId) {
+        const q = query(collection(db, "appointments"), where("doctorId", "==", doctorId),where("appointmentStatus","in",["Pending","Accepted","Completed"]))
+        const querySnapshot = await getDocs(q)
+        let appointments = []
+        querySnapshot.forEach((appt) => {
+            // doc.data() is never undefined for query doc snapshots
+            appointments.push({ id: appt.id, ...appt.data() })
+        });
+        return appointments
+    }
     async AppointmentByPatient(patientId) {
         const q = query(collection(db, "appointments"), where("patientId", "==", patientId),where("appointmentStatus","in",["Pending","Accepted"]))
         const querySnapshot = await getDocs(q)

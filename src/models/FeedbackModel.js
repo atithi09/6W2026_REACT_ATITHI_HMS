@@ -1,4 +1,6 @@
 export default class FeedbackModel{
+    name=''
+    email=''
     patientId=''
     doctorId=''
     rating=''

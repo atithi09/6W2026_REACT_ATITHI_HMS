@@ -53,7 +53,7 @@ export default function Appointment() {
                 "currency": "INR",
                 "name": "clinic", //your business name
                 "description": "Test Transaction",
-                "image": "https://example.com/your_logo",
+                "image": "assets/img/Modern healthcare clinic logo design.png",
                 "handler": async function (response) {
                     alert(response.razorpay_order_id);
                     alert(response.razorpay_signature)
@@ -68,7 +68,7 @@ export default function Appointment() {
                         }
                         await AppointmentService.add(payload);
                         toast.success("Appointment booked successfully");
-                    }
+                       }
                     catch (err) {
                         console.log("error:", err)
                         toast.error("Something went wrong")
@@ -89,16 +89,17 @@ export default function Appointment() {
                 }
             };
             var rzp1 = new Razorpay(options);
-            rzp1.on('payment.failed', function (response) {
-                alert(response.error.code);
-                alert(response.error.description);
-                alert(response.error.source);
-                alert(response.error.step);
-                alert(response.error.reason);
-                alert(response.error.metadata.order_id);
-                alert(response.error.metadata.payment_id);
-            });
             rzp1.open();
+
+            rzp1.on('payment.failed', function (response) {
+                // alert(response.error.code);
+                toast.error(response.error.description);
+                // alert(response.error.source);
+                // alert(response.error.step);
+                // alert(response.error.reason);
+                // alert(response.error.metadata.order_id);
+                // alert(response.error.metadata.payment_id);
+            });
 
 
 

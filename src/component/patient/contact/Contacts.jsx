@@ -30,6 +30,8 @@ export default function Contacts() {
         try {
             let payload = {
                 patientId: patientId,
+                name: name,
+                email: email,
                 review: review,
                 rating: rating,
                 doctorId: doctorId,
@@ -38,7 +40,7 @@ export default function Contacts() {
 
             let feedback = await FeedbackService.add(payload)
             toast.success("Thank you for your feedback!")
-            console.log("payload",payload)
+            console.log("payload", payload)
 
         } catch (err) {
             console.log("Error:", err)
@@ -127,12 +129,12 @@ export default function Contacts() {
                                     </div>
                                 </div>
                             </div>
-                            <div className="col-lg-7">
+                            <div className="col-lg-7 ">
                                 <div
                                     className="contact-form-card"
 
                                 >
-                                    <h2>Share your experience</h2>
+                                    <h2 className="text-center fs-2 fw-bolder">Share your experience</h2>
                                     <p className="mb-4">
                                         We value your feedback! Your suggestions help us improve our healthcare services. Please take a minute to tell us about your experience.
                                     </p>
@@ -166,54 +168,58 @@ export default function Contacts() {
                                                     onChange={(e) => (setEmail(e.target.value))}
                                                 />
                                             </div>
-                                            <div className="col-md-6">
-                                                <select
-                                                    name="doctors"
-                                                    className="form-control"
-                                                    required
-                                                    onChange={(e) => setDoctorId(e.target.value)}
-                                                    value={doctorId}
-                                                >
-                                                    <option value="" selected disabled>Select Doctor</option>
-                                                    {doctors.map((doctor) => (
-                                                        <option key={doctor.id} value={doctor.id} >{doctor.name}</option>
-                                                    ))
-                                                    }
+                                            {(patientId) && 
+                                                <>
+                                                    <div className="col-md-6">
+                                                        <select
+                                                            name="doctors"
+                                                            className="form-control"
+                                                            required
+                                                            onChange={(e) => setDoctorId(e.target.value)}
+                                                            value={doctorId}
+                                                        >
+                                                            <option value="" selected disabled>Select Doctor</option>
+                                                            {doctors.map((doctor) => (
+                                                                <option key={doctor.id} value={doctor.id} >{doctor.name}</option>
+                                                            ))
+                                                            }
 
-                                                </select>
-                                            </div>
-                                            <div className="col-md-6">
-                                                <select
-                                                    name="ratings"
-                                                    className='form-control'
-                                                    required
-                                                    value={experience}
-                                                    onChange={(e) =>setExperience(e.target.value)}>
-                                                    <option value="" disabled selected>Select Experience</option>
-                                                    <option value="Excellent">Excellent</option>
-                                                    <option value="Good">Good</option>
-                                                    <option value="Average">Average</option>
-                                                    <option value="Poor">Poor</option>
-                                                </select>
-                                            </div>
-                                            <div className="mb-3">
+                                                        </select>
+                                                    </div>
+                                                    <div className="col-md-6">
+                                                        <select
+                                                            name="ratings"
+                                                            className='form-control'
+                                                            required
+                                                            value={experience}
+                                                            onChange={(e) => setExperience(e.target.value)}>
+                                                            <option value="" disabled selected>Select Experience</option>
+                                                            <option value="Excellent">Excellent</option>
+                                                            <option value="Good">Good</option>
+                                                            <option value="Average">Average</option>
+                                                            <option value="Poor">Poor</option>
+                                                        </select>
+                                                    </div>
+                                                    <div className="mb-3">
 
-                                                <div>
-                                                    {[1, 2, 3, 4, 5].map((star) => (
-                                                        <i
-                                                            key={star}
-                                                            className={`bi ${star <= rating ? "bi-star-fill text-warning" : "bi-star"
-                                                                }`}
-                                                            style={{
-                                                                fontSize: "1.8rem",
-                                                                cursor: "pointer",
-                                                                marginRight: "8px",
-                                                            }}
-                                                            onClick={() => setRating(star)}
-                                                        ></i>
-                                                    ))}
-                                                </div>
-                                            </div>
+                                                        <div>
+                                                            {[1, 2, 3, 4, 5].map((star) => (
+                                                                <i
+                                                                    key={star}
+                                                                    className={`bi ${star <= rating ? "bi-star-fill text-warning" : "bi-star"
+                                                                        }`}
+                                                                    style={{
+                                                                        fontSize: "1.8rem",
+                                                                        cursor: "pointer",
+                                                                        marginRight: "8px",
+                                                                    }}
+                                                                    onClick={() => setRating(star)}
+                                                                ></i>
+                                                            ))}
+                                                        </div>
+                                                    </div>
+                                                </>
+                                            }
                                             <div className="col-12">
                                                 <textarea
                                                     className="form-control"
@@ -221,7 +227,7 @@ export default function Contacts() {
                                                     id="message"
                                                     placeholder="Share your experience"
                                                     rows={6}
-                                                    required=""
+                                                    required
                                                     value={review}
                                                     onChange={(e) => (setReview(e.target.value))}
                                                 />

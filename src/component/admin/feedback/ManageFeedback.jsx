@@ -1,19 +1,19 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import AppointmentService from '../../../services/AppointmentService'
 import AuthService from '../../../services/AuthService'
 import PatientService from '../../../services/PatientService'
 import DoctorService from '../../../services/DoctorServices'
+import FeedbackService from '../../../services/FeedbackService'
 
-export default function ManageAppointments() {
+export default function ManageFeedback() {
     
-    const [appointments, setAppointments] = useState([])
+    const [feedbacks, setfeedbacks] = useState([])
     const [patients, setPatients] = useState([])
     const [doctors, setDoctors] = useState([])
 
-    async function fetchAppointments() {
-        let res = await AppointmentService.all()
-        setAppointments(res)
+    async function fetchFeedbacks() {
+        let res = await FeedbackService.all()
+        setfeedbacks(   res)
     }
 
     async function fetchPatients() {
@@ -27,7 +27,7 @@ export default function ManageAppointments() {
     }
 
     useEffect(() => {
-        fetchAppointments()
+        fetchFeedbacks()
         fetchPatients()
         fetchDoctors()
     }, [])
@@ -41,7 +41,7 @@ export default function ManageAppointments() {
                     <div className="container">
                         <div className="row d-flex justify-content-center text-center">
                             <div className="col-lg-8">
-                                <h1 className="heading-title ">Appointments</h1>
+                                <h1 className="heading-title ">Feedbacks</h1>
                                 <p className="mb-0">
                                     Odio et unde deleniti. Deserunt numquam exercitationem. Officiis
                                     quo odio sint voluptas consequatur ut a odio voluptatem. Sit
@@ -58,18 +58,18 @@ export default function ManageAppointments() {
                             <li>
                                 <Link to='/'>Home</Link>
                             </li>
-                            <li className="current">Appointments</li>
+                            <li className="current">Feedbacks</li>
                         </ol>
                     </div>
                 </nav>
             </div>
-            {appointments?
+            {feedbacks?
                 <div className="container">
 
                     <div className="d-flex justify-content-between my-3">
 
                         <div className="mt-4 mb-2">
-                            <h3>Appointments</h3>
+                            <h3>Feedbacks</h3>
                         </div>
 
                     </div>
@@ -87,56 +87,30 @@ export default function ManageAppointments() {
                                         <th>Sr No.</th>
                                         <th>Patient Name</th>
                                         <th>Doctor Name</th>
-                                        <th>Time</th>
+                                        <th>Ratings</th>
                                         <th>Date</th>
-                                        <th>Status</th>
+                                        <th>Reviews</th>
                                     </tr>
                                 </thead>
 
                                 <tbody>
-                                    {appointments.map((appt, index) => (
-                                        <tr key={appt.id}>
+                                    {feedbacks.map((feedback, index) => (
+                                        <tr key={feedback.id}>
                                             <td>{index + 1}</td>
 
-                                            <td>{patients.find((p) => p.id == appt.patientId)?.name}</td>
-                                            <td>{doctors.find((p) => p.id == appt.doctorId)?.name}</td>
+                                            <td>{patients.find((p) => p.id == feedback.patientId)?.name}</td>
+                                            <td>{doctors.find((p) => p.id == feedback.doctorId)?.name}</td>
 
                                             <td
                                                 className="description-cell"
                                             >
-                                                {appt.appointmentTime}
+                                                {feedback.rating}
                                             </td>
 
                                             <td>
-                                                {appt.appointmentDate}
+                                                {new Date(feedback.createdAt).toLocaleDateString()}
                                             </td>
-                                            <td>
-                                                {appt.appointmentStatus === "Pending" && (
-                                                    <span className="badge bg-warning p-2 fs-6">
-                                                        Pending
-                                                    </span>
-                                                )}
-
-                                                {appt.appointmentStatus === "Accepted" && (
-                                                    <span className="badge p-2 fs-6 bg-success">
-                                                        Accepted
-                                                    </span>
-                                                )}
-
-                                                {appt.appointmentStatus === "Cancelled" && (
-                                                    <span className="badge p-2 fs-6 bg-danger">
-                                                        Cancelled
-                                                    </span>
-                                                )}
-
-                                                {appt.appointmentStatus === "Completed" && (
-                                                    <span className="badge p-2 fs-6 bg-success">
-                                                        Completed
-                                                    </span>
-                                                )}
-
-                                                
-                                            </td>
+                                            <td>{feedback.review}</td>
                                             
                                         </tr>
                                     ))}
@@ -153,11 +127,11 @@ export default function ManageAppointments() {
                             ></i>
 
                             <h4 className="mt-3 fw-bold">
-                                No Appointments Scheduled
+                                No Feedbacks yet
                             </h4>
 
                             <p className="text-muted mb-4">
-                                You don't have any appointments at the moment. Check back later for new bookings.
+                                You don't have any feedback at the moment. Check back later.
                             </p>
 
                         </div>
