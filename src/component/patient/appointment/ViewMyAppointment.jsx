@@ -62,7 +62,7 @@ export default function ViewMyAppointment() {
                     </div>
                 </nav>
             </div>
-{appointments?
+{appointments.length>0?
             <div className="container my-5">
                 <div className="row ">
                     {appointments.map((appt) => (

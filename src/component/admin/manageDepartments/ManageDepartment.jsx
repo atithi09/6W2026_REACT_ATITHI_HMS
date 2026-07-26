@@ -2,13 +2,27 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import DepartmentServices from '../../../services/DepartmentServices'
 import Swal from 'sweetalert2'
+import { RingLoader } from "react-spinners";
+import { toast } from 'react-toastify';
+
+const override = {
+  display: "block",
+  margin: "0 auto",
+  borderColor: "red",
+};
 
 export default function ManageDepartment() {
-
+    let [loading, setLoading] = useState(true);
     const [departments, setDepartments] = useState([])
     async function fetchDepartments() {
+        try{
         let res = await DepartmentServices.all()
-        setDepartments(res)
+        setDepartments(res)}
+        catch(err){
+            toast.error("Something went wrong")
+        }finally{
+            setLoading(false)
+        }
     }
     useEffect(() => {
         fetchDepartments()
@@ -41,6 +55,7 @@ export default function ManageDepartment() {
 
     return (
         <>
+        
             <div className="page-title">
                 <div className="heading">
                     <div className="container">
@@ -68,6 +83,16 @@ export default function ManageDepartment() {
                     </div>
                 </nav>
             </div>
+             {loading ?
+        (
+    <div className="d-flex justify-content-center my-5">
+        <RingLoader
+            color="#0D6EFD"
+            loading={loading}
+            size={70}
+        />
+    </div>
+) :
             <div className="container">
 
                 <div className="d-flex justify-content-between my-3">
@@ -169,6 +194,7 @@ export default function ManageDepartment() {
                     </div>
                 </div>
             </div>
+            }
         </>
     )
 }

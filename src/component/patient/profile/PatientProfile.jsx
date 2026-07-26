@@ -268,7 +268,7 @@ export default function PatientProfile() {
                                     <div className="d-flex gap-4 justify-content-evenly pt-3">
                                         <Link
                                             to="/myAppt"
-                                            className="btn btn-primary"
+                                            className="btn  btn-primary"
                                         >
                                             Upcoming Appointments
                                         </Link>

@@ -53,7 +53,7 @@ export default function Appointment() {
                 "currency": "INR",
                 "name": "clinic", //your business name
                 "description": "Test Transaction",
-                "image": "assets/img/Modern healthcare clinic logo design.png",
+                "image": "https://res.cloudinary.com/aiuasol7/image/upload/v1785062015/Modern_healthcare_clinic_logo_design_ic0ci4.png",
                 "handler": async function (response) {
                     alert(response.razorpay_order_id);
                     alert(response.razorpay_signature)

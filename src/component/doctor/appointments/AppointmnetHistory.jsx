@@ -57,7 +57,7 @@ export default function AppointmentHistory() {
                     </div>
                 </nav>
             </div>
-            {appointments ?
+            {appointments.length>0 ?
                 <div className="container">
 
                     <div className="d-flex justify-content-between my-3">
