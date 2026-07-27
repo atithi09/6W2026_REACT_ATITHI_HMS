@@ -3,16 +3,31 @@ import { Link } from 'react-router-dom'
 import AppointmentService from '../../../services/AppointmentService'
 import AuthService from '../../../services/AuthService'
 import PatientService from '../../../services/PatientService'
+import { RingLoader } from 'react-spinners'
+import { toast } from 'react-toastify'
+
+const override = {
+    display: "block",
+    margin: "0 auto",
+}
 
 export default function AppointmentHistory() {
     const DoctorId = AuthService.uid()
     const [appointments, setAppointments] = useState([])
     const [patients, setPatients] = useState([])
+    const [loading, setLoading] = useState(true)
 
     async function fetchAppointments() {
-        let res = await AppointmentService.AppointmentHistoryByDoctor(DoctorId)
-        setAppointments(res)
-        
+        try {
+            let res = await AppointmentService.AppointmentHistoryByDoctor(DoctorId)
+            setAppointments(res)
+        }
+        catch (err) {
+            toast.error("Something went wrong")
+        }
+        finally {
+            setLoading(false)
+        }
     }
 
     async function fetchPatients() {
@@ -25,7 +40,21 @@ export default function AppointmentHistory() {
         fetchPatients()
     }, [])
 
-
+    if (loading) {
+        return (
+            <div
+                className="d-flex justify-content-center align-items-center"
+                style={{ minHeight: "80vh" }}
+            >
+                <RingLoader
+                    color="#0D6EFD"
+                    loading={loading}
+                    cssOverride={override}
+                    size={70}
+                />
+            </div>
+        )
+    }
 
 
     return (
@@ -57,7 +86,7 @@ export default function AppointmentHistory() {
                     </div>
                 </nav>
             </div>
-            {appointments.length>0 ?
+            {appointments ?
                 <div className="container">
 
                     <div className="d-flex justify-content-between my-3">
@@ -103,8 +132,8 @@ export default function AppointmentHistory() {
                                                 {appt.appointmentDate}
                                             </td>
                                             <td>
-                                               
-                                                   {appt.appointmentStatus === "Completed" && (
+
+                                                {appt.appointmentStatus === "Completed" && (
                                                     <span className="badge bg-success p-2 fs-6">
                                                         Completed
                                                     </span>

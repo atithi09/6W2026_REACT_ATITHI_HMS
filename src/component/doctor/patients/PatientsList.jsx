@@ -4,12 +4,20 @@ import PatientService from "../../../services/PatientService"
 import Swal from "sweetalert2"
 import AppointmentService from "../../../services/AppointmentService"
 import AuthService from "../../../services/AuthService"
+import { RingLoader } from "react-spinners"
+import { toast } from "react-toastify"
 
+const override = {
+    display: "block",
+    margin: "0 auto",
+}
 
 export default function PatientsList() {
     const [patients, setPatients] = useState([])
     const doctorId = AuthService.uid()
     const [appointments, setAppointments] = useState([])
+    const [loading, setLoading] = useState(true)
+
     const doctorPatients = patients.filter((patient) =>
         appointments.some((appointment) => appointment.patientId === patient.id)
     );
@@ -20,8 +28,16 @@ export default function PatientsList() {
     }
 
     async function fetchPatients() {
-        let res = await PatientService.all()
-        setPatients(res)
+        try {
+            let res = await PatientService.all()
+            setPatients(res)
+        }
+        catch (err) {
+            toast.error("Something went wrong")
+        }
+         finally{
+            setLoading(false)
+        }
     }
 
     useEffect(() => {
@@ -29,7 +45,21 @@ export default function PatientsList() {
         fetchAppointments()
     }, [])
 
-
+    if (loading) {
+        return (
+            <div
+                className="d-flex justify-content-center align-items-center"
+                style={{ minHeight: "80vh" }}
+            >
+                <RingLoader
+                    color="#0D6EFD"
+                    loading={loading}
+                    cssOverride={override}
+                    size={70}
+                />
+            </div>
+        )
+    }
     return (
         <>
             <div className="page-title">
@@ -59,7 +89,7 @@ export default function PatientsList() {
                     </div>
                 </nav>
             </div>
-            {doctorPatients ?
+            {doctorPatients.length>0 ?
                 <div className="container">
 
                     <div className="d-flex justify-content-between">

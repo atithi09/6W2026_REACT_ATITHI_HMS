@@ -3,15 +3,30 @@ import { Link } from 'react-router-dom'
 import AppointmentService from '../../../services/AppointmentService'
 import AuthService from '../../../services/AuthService'
 import PatientService from '../../../services/PatientService'
+import { toast } from 'react-toastify'
+import { RingLoader } from 'react-spinners'
+
+const override = {
+    display: "block",
+    margin: "0 auto",
+}
 
 export default function ViewAppointments() {
     const DoctorId = AuthService.uid()
     const [appointments, setAppointments] = useState([])
     const [patients, setPatients] = useState([])
+    const [loading, setLoading] = useState(true)
 
     async function fetchAppointments() {
+        try{
         let res = await AppointmentService.AppointmentByDoctor(DoctorId)
-        setAppointments(res)
+        setAppointments(res)}
+        catch(Err){
+            toast.error("Soemthing went wrong")
+        }
+        finally{
+            setLoading(false)
+        }
     }
 
     async function fetchPatients() {
@@ -31,6 +46,21 @@ export default function ViewAppointments() {
     async function rejectAppointment(apptId) {
         await AppointmentService.updateStatus(apptId, "Cancelled");
         fetchAppointments();
+    }
+    if (loading) {
+        return (
+            <div
+                className="d-flex justify-content-center align-items-center"
+                style={{ minHeight: "80vh" }}
+            >
+                <RingLoader
+                    color="#0D6EFD"
+                    loading={loading}
+                    cssOverride={override}
+                    size={70}
+                />
+            </div>
+        )
     }
 
     return (
