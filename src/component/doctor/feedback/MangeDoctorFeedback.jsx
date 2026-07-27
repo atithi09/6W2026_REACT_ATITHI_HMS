@@ -12,19 +12,19 @@ const override = {
     margin: "0 auto",
 }
 
-export default function ManageFeedback() {
+export default function MangeDoctorFeedback() {
     const [loading, setLoading] = useState(true)
     const [feedbacks, setfeedbacks] = useState([])
     const [patients, setPatients] = useState([])
-    const [doctors, setDoctors] = useState([])
-
+    const id=AuthService.uid()
     async function fetchFeedbacks() {
         try {
-            let res = await FeedbackService.all()
+            let res = await FeedbackService.FeedbackByDoctor(id)
             setfeedbacks(res)
         }
         catch (err) {
             toast.error("Something went wrong")
+            console.log(err)
         }
         finally {
             setLoading(false)
@@ -36,15 +36,11 @@ export default function ManageFeedback() {
         setPatients(res)
     }
 
-    async function fetchDoctors() {
-        let res = await DoctorService.all()
-        setDoctors(res)
-    }
+    
 
     useEffect(() => {
         fetchFeedbacks()
         fetchPatients()
-        fetchDoctors()
     }, [])
 
     if (loading) {
@@ -115,7 +111,6 @@ export default function ManageFeedback() {
                                     <tr>
                                         <th>Sr No.</th>
                                         <th>Patient Name</th>
-                                        <th>Doctor Name</th>
                                         <th>Ratings</th>
                                         <th>Experience</th>
                                         <th>Date</th>
@@ -129,8 +124,6 @@ export default function ManageFeedback() {
                                             <td>{index + 1}</td>
 
                                             <td>{patients.find((p) => p.id == feedback.patientId)?.name}</td>
-                                            <td>{doctors.find((p) => p.id == feedback.doctorId)?.name}</td>
-
                                             <td
                                                 className="description-cell"
                                             >

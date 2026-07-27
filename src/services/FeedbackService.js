@@ -1,4 +1,4 @@
-import { addDoc, collection, getDocs } from "firebase/firestore"
+import { addDoc, collection, getDocs, query, where } from "firebase/firestore"
 import FeedbackModel from "../models/FeedbackModel"
 import { db } from "../firebase/FirebaseConfig"
 
@@ -25,7 +25,16 @@ async all(){
     })
     return feedback
 }
-
+async FeedbackByDoctor(doctorId) {
+        const q = query(collection(db, "feedback"), where("doctorId", "==", doctorId))
+        const querySnapshot = await getDocs(q)
+        let feedback = []
+        querySnapshot.forEach((appt) => {
+            // doc.data() is never undefined for query doc snapshots
+            feedback.push({ id: appt.id, ...appt.data() })
+        });
+        return feedback
+    }
 
 
 
