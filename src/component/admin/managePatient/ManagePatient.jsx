@@ -2,14 +2,29 @@ import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import PatientService from "../../../services/PatientService"
 import Swal from "sweetalert2"
+import { RingLoader } from "react-spinners"
 
+const override = {
+    display: "block",
+    margin: "0 auto",
+    borderColor: "red",
+};
 
 export default function ManagePatient() {
     const [patients, setPatients] = useState([])
+    const [loading, setLoading] = useState(true)
 
     async function fetchPatients() {
-        let res = await PatientService.all()
-        setPatients(res)
+        try {
+            let res = await PatientService.all()
+            setPatients(res)
+        }
+        catch (err) {
+            toast.error("Something went wrong")
+        }
+        finally {
+            setLoading(false)
+        }
     }
 
     useEffect(() => {
@@ -70,79 +85,90 @@ export default function ManagePatient() {
                     </div>
                 </nav>
             </div>
-            <div className="container">
-
-                <div className="d-flex justify-content-between">
-
-                    <div className="mt-4 mb-2">
-                        <h3>Patients</h3>
+            {loading ?
+                (
+                    <div className="d-flex justify-content-center my-5">
+                        <RingLoader
+                            color="#0D6EFD"
+                            loading={loading}
+                            size={70}
+                        />
                     </div>
+                ) :
+                <div className="container">
+
+                    <div className="d-flex justify-content-between">
+
+                        <div className="mt-4 mb-2">
+                            <h3>Patients</h3>
+                        </div>
 
 
-                </div>
-                <div
-                    style={{
-                        marginBottom: "20px"
-                    }}
-                >
-                    <div className="table-responsive shadow-sm rounded-4">
-                        <table className="table table-hover align-middle text-center mb-0">
-                            <thead className="table-primary">
-                                <tr>
-                                    <th>Sr No.</th>
-                                    <th>Name</th>
-                                    <th>Status</th>
-                                    <th>Date</th>
-                                    <th width="170">Action</th>
-                                </tr>
-                            </thead>
-
-                            <tbody>
-                                {patients.map((patients, index) => (
-                                    <tr key={patients.id}>
-                                        <td>{index + 1}</td>
-
-                                        <td className="fw-semibold">
-                                            {patients.name}
-                                        </td>
-
-                                        <td>
-                                            <span
-                                                className={`badge ${patients.status
-                                                    ? "bg-success"
-                                                    : "bg-danger"
-                                                    }`}
-                                            >
-                                                {patients.status ? "Active" : "Inactive"}
-                                            </span>
-                                        </td>
-
-                                        <td>
-                                            {new Date(patients.createdAt).toLocaleDateString()}
-                                        </td>
-
-                                        <td>
-                                            <Link to={`/admin/editPatient/${patients.id}`}>
-                                                <button className="btn btn-outline-primary btn-sm rounded-circle me-2">
-                                                    <i className="bi bi-pencil-fill"></i>
-                                                </button>
-                                            </Link>
-
-                                            <button
-                                                className="btn btn-outline-danger btn-sm rounded-circle"
-                                                onClick={() => deletePatients(patients.id)}
-                                            >
-                                                <i className="bi bi-trash-fill"></i>
-                                            </button>
-                                        </td>
+                    </div>
+                    <div
+                        style={{
+                            marginBottom: "20px"
+                        }}
+                    >
+                        <div className="table-responsive shadow-sm rounded-4">
+                            <table className="table table-hover align-middle text-center mb-0">
+                                <thead className="table-primary">
+                                    <tr>
+                                        <th>Sr No.</th>
+                                        <th>Name</th>
+                                        <th>Status</th>
+                                        <th>Date</th>
+                                        <th width="170">Action</th>
                                     </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+                                </thead>
 
-            </div >
+                                <tbody>
+                                    {patients.map((patients, index) => (
+                                        <tr key={patients.id}>
+                                            <td>{index + 1}</td>
+
+                                            <td className="fw-semibold">
+                                                {patients.name}
+                                            </td>
+
+                                            <td>
+                                                <span
+                                                    className={`badge ${patients.status
+                                                        ? "bg-success"
+                                                        : "bg-danger"
+                                                        }`}
+                                                >
+                                                    {patients.status ? "Active" : "Inactive"}
+                                                </span>
+                                            </td>
+
+                                            <td>
+                                                {new Date(patients.createdAt).toLocaleDateString()}
+                                            </td>
+
+                                            <td>
+                                                <Link to={`/admin/editPatient/${patients.id}`}>
+                                                    <button className="btn btn-outline-primary btn-sm rounded-circle me-2">
+                                                        <i className="bi bi-pencil-fill"></i>
+                                                    </button>
+                                                </Link>
+
+                                                <button
+                                                    className="btn btn-outline-danger btn-sm rounded-circle"
+                                                    onClick={() => deletePatients(patients.id)}
+                                                >
+                                                    <i className="bi bi-trash-fill"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div >
+            }
         </>
     )
 }
