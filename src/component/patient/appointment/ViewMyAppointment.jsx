@@ -4,15 +4,31 @@ import AppointmentService from "../../../services/AppointmentService"
 import PatientService from "../../../services/PatientService"
 import DoctorServices from "../../../services/DoctorServices"
 import AuthService from "../../../services/AuthService"
+import { toast } from "react-toastify"
+import { RingLoader } from "react-spinners"
 export default function ViewMyAppointment() {
     const userUid = AuthService.uid()
     const [appointments, setAppointments] = useState([])
     const [doctors, setDoctors] = useState([])
     const [patients, setPatients] = useState([])
+    const [loading, setLoading] = useState(true)
 
+    const override = {
+        display: "block",
+        margin: "0 auto",
+    }
+    
     async function fetchAppointments() {
-        let res = await AppointmentService.AppointmentByPatient(userUid)
-        setAppointments(res)
+        try {
+            let res = await AppointmentService.AppointmentByPatient(userUid)
+            setAppointments(res)
+        }
+        catch (Err) {
+            toast.error("Something went wrong")
+        }
+        finally {
+            setLoading(false)
+        }
     }
 
     async function fetchPatients() {
@@ -32,6 +48,22 @@ export default function ViewMyAppointment() {
         fetchPatients()
         fetchDoctors()
     }, [])
+
+    if (loading) {
+        return (
+            <div
+                className="d-flex justify-content-center align-items-center"
+                style={{ minHeight: "80vh" }}
+            >
+                <RingLoader
+                    color="#0D6EFD"
+                    loading={loading}
+                    cssOverride={override}
+                    size={70}
+                />
+            </div>
+        )
+    }
 
     return (
         <>
@@ -62,59 +94,59 @@ export default function ViewMyAppointment() {
                     </div>
                 </nav>
             </div>
-{appointments.length>0?
-            <div className="container my-5">
-                <div className="row ">
-                    {appointments.map((appt) => (
-                        <div className="col-md-8 col-lg-6 mb-4" key={appt.id}>
-                            <div className="card shadow border-0 rounded-4">
-                                <div className="card-body p-4">
+            {appointments.length > 0 ?
+                <div className="container my-5">
+                    <div className="row ">
+                        {appointments.map((appt) => (
+                            <div className="col-md-8 col-lg-6 mb-4" key={appt.id}>
+                                <div className="card shadow border-0 rounded-4">
+                                    <div className="card-body p-4">
 
-                                    <div className="d-flex justify-content-between align-items-center">
-                                        <div>
-                                            <h5 className="fw-bold mb-1">
-                                                {doctors.find((p) => p.id == appt.doctorId)?.name}
-                                            </h5>
-                                        </div>
+                                        <div className="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <h5 className="fw-bold mb-1">
+                                                    {doctors.find((p) => p.id == appt.doctorId)?.name}
+                                                </h5>
+                                            </div>
 
-                                        <span >{appt.appointmentStatus === "Pending" && (
-                                            <span className="badge bg-warning p-2 fs-6">
-                                                Pending
-                                            </span>
-                                        )}
-
-                                            {appt.appointmentStatus === "Accepted" && (
-                                                <span className="badge p-2 fs-6 bg-success">
-                                                    Accepted
+                                            <span >{appt.appointmentStatus === "Pending" && (
+                                                <span className="badge bg-warning p-2 fs-6">
+                                                    Pending
                                                 </span>
                                             )}
-                                        </span>
+
+                                                {appt.appointmentStatus === "Accepted" && (
+                                                    <span className="badge p-2 fs-6 bg-success">
+                                                        Accepted
+                                                    </span>
+                                                )}
+                                            </span>
+                                        </div>
+
+                                        <hr />
+
+                                        <div className="mb-2">
+                                            <i className="bi bi-calendar-event me-2 text-primary"></i>
+                                            <strong>Date:</strong> {appt.appointmentDate}
+                                        </div>
+
+                                        <div className="mb-2">
+                                            <i className="bi bi-clock me-2 text-primary"></i>
+                                            <strong>Time:</strong> {appt.appointmentTime}
+                                        </div>
+
+                                        <div>
+                                            <i className="bi bi-chat-left-text me-2 text-primary"></i>
+                                            <strong>Reason:</strong> {appt.reason || "not mentioned"}
+                                        </div>
+
                                     </div>
-
-                                    <hr />
-
-                                    <div className="mb-2">
-                                        <i className="bi bi-calendar-event me-2 text-primary"></i>
-                                        <strong>Date:</strong> {appt.appointmentDate}
-                                    </div>
-
-                                    <div className="mb-2">
-                                        <i className="bi bi-clock me-2 text-primary"></i>
-                                        <strong>Time:</strong> {appt.appointmentTime}
-                                    </div>
-
-                                    <div>
-                                        <i className="bi bi-chat-left-text me-2 text-primary"></i>
-                                        <strong>Reason:</strong> {appt.reason|| "not mentioned"}
-                                    </div>
-
                                 </div>
                             </div>
-                        </div>
-                    ))}
-                </div>
-            </div>: 
-            (<div className="col-12">
+                        ))}
+                    </div>
+                </div> :
+                (<div className="col-12">
                     <div className="card border-0 shadow-sm text-center py-5">
                         <div className="card-body">
                             <i
@@ -134,7 +166,7 @@ export default function ViewMyAppointment() {
                         </div>
                     </div>
                 </div>)
-}
+            }
         </>
     )
 }
