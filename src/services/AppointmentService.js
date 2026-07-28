@@ -17,17 +17,29 @@ class AppointmentService {
     }
 
     async isSlotBooked(doctorId, appointmentDate, appointmentTime) {
-        const q = query(
-            collection(db, "appointments"),
-            where("doctorId", "==", doctorId),
-            where("appointmentDate", "==", appointmentDate),
-            where("appointmentTime", "==", appointmentTime)
-        );
+    const q = query(
+        collection(db, "appointments"),
+        where("doctorId", "==", doctorId),
+        where("appointmentDate", "==", appointmentDate),
+        where("appointmentTime", "==", appointmentTime)
+    );
 
-        const snapshot = await getDocs(q);
+    const snapshot = await getDocs(q);
 
-        return !snapshot.empty;
-    }
+    let appointments = [];
+
+    snapshot.forEach((doc) => {
+        appointments.push(doc.data());
+    });
+
+    const bookedStatuses = ["Pending", "Accepted", "Completed"];
+
+    const isBooked = appointments.some((appointment) =>
+        bookedStatuses.includes(appointment.appointmentStatus)
+    );
+
+    return isBooked;
+}
 
     async all(){
         let appointmnet=[]

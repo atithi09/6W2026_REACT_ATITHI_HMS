@@ -19,6 +19,7 @@ export default function Appointment() {
     const [time, setTime] = useState('')
     const [doctorid, setDoctorid] = useState('')
     const [reason, setReason] = useState('')
+   const  userType=AuthService.userType();
 
     function getEmail() {
         const email = AuthService.email();
@@ -35,6 +36,10 @@ export default function Appointment() {
             toast.error("Login or Sign Up to book appointments")
             return;
         }
+        if(userType!=="3"){
+            toast.info("Only patients can book appointments. Please log in with a patient account.")
+            return;
+        }
         const slotBooked = await AppointmentService.isSlotBooked(
             doctorid,
             date,
@@ -45,7 +50,7 @@ export default function Appointment() {
             return;
         }
 
-        if (selectedDoctor && mobile && name) {
+        if (selectedDoctor && mobile && name&& userType=='3') {
 
             var options = {
                 "key": "rzp_test_TEsYc8A2eTFXl2", // Enter the Key ID generated from the Dashboard
@@ -54,6 +59,7 @@ export default function Appointment() {
                 "name": "clinic", //your business name
                 "description": "Test Transaction",
                 "image": "https://res.cloudinary.com/aiuasol7/image/upload/v1785062015/Modern_healthcare_clinic_logo_design_ic0ci4.png",
+                
                 "handler": async function (response) {
                     alert(response.razorpay_order_id);
                     alert(response.razorpay_signature)
@@ -272,7 +278,8 @@ export default function Appointment() {
                                                         type="date"
                                                         name="date"
                                                         className="form-control"
-                                                        required=""
+                                                        required
+                                                        placeholder="Select Date"
                                                         value={date}
                                                         min={todayString}
                                                         onChange={(e) => setDate(e.target.value)}
@@ -284,7 +291,8 @@ export default function Appointment() {
                                                         type="time"
                                                         name="time"
                                                         className="form-control"
-                                                        required=""
+                                                        required
+                                                        placeholder="Select Time"
                                                         value={time}
                                                         onChange={(e) => setTime(e.target.value)}
                                                     />
@@ -316,7 +324,6 @@ export default function Appointment() {
                                     </div>
                                     <div
                                         className="emergency-info"
-
                                     >
                                         <p>
                                             <i className="bi bi-exclamation-triangle" /> For medical
