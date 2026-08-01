@@ -143,6 +143,7 @@ export default function ConsultationForm() {
                                                             id="age"
                                                             type="text"
                                                             className="form-control"
+                                                            value=""
                                                         />
                                                     </div>
 
@@ -168,7 +169,7 @@ export default function ConsultationForm() {
 
                                                         <textarea
                                                             id="symptoms"
-                                                            className="form-control fw-bold fs-5"
+                                                            className="form-control "
                                                             rows="4"
                                                             placeholder="Enter patient's symptoms..."
                                                         ></textarea>
