@@ -92,7 +92,7 @@ export default function ManageFeedback() {
                     </div>
                 </nav>
             </div>
-            {feedbacks ?
+            {feedbacks.length>0 ?
                 <div className="container">
 
                     <div className="d-flex justify-content-between my-3">
@@ -115,6 +115,7 @@ export default function ManageFeedback() {
                                     <tr>
                                         <th className='text-nowrap'>Sr No.</th>
                                         <th className='text-nowrap'>Patient Name</th>
+                                        <th className='text-nowrap'>Email</th>
                                         <th className='text-nowrap'>Doctor Name</th>
                                         <th className='text-nowrap'>Ratings</th>
                                         <th className='text-nowrap'>Experience</th>
@@ -128,8 +129,9 @@ export default function ManageFeedback() {
                                         <tr key={feedback.id}>
                                             <td>{index + 1}</td>
 
-                                            <td className='text-nowrap'>{patients.find((p) => p.id == feedback.patientId)?.name}</td>
-                                            <td className='text-nowrap'>{doctors.find((p) => p.id == feedback.doctorId)?.name}</td>
+                                            <td className='text-nowrap'>{patients.find((p) => p.id == feedback.patientId)?.name || feedback.name }</td>
+                                            <td className="text-nowrap">{feedback.email}</td>
+                                            <td className='text-nowrap'>{doctors.find((p) => p.id == feedback.doctorId)?.name || "N/A"}</td>
 
                                             <td
                                                 className="description-cell text-nowrap"

@@ -169,7 +169,7 @@ export default function Contacts() {
                                                 />
                                             </div>
                                             {(patientId) && 
-                                                <>
+                                                
                                                     <div className="col-md-6">
                                                         <select
                                                             name="doctors"
@@ -185,7 +185,8 @@ export default function Contacts() {
                                                             }
 
                                                         </select>
-                                                    </div>
+                                                    </div>}
+
                                                     <div className="col-md-6">
                                                         <select
                                                             name="ratings"
@@ -200,7 +201,8 @@ export default function Contacts() {
                                                             <option value="Poor">Poor</option>
                                                         </select>
                                                     </div>
-                                                    <div className="mb-3">
+
+                                                    <div className="mb-3 col-md-6">
 
                                                         <div>
                                                             {[1, 2, 3, 4, 5].map((star) => (
@@ -218,8 +220,8 @@ export default function Contacts() {
                                                             ))}
                                                         </div>
                                                     </div>
-                                                </>
-                                            }
+                                                
+                                            
                                             <div className="col-12">
                                                 <textarea
                                                     className="form-control"

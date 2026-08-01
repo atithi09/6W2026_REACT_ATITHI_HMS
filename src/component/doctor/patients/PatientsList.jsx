@@ -112,7 +112,7 @@ export default function PatientsList() {
                                         <th className="text-nowrap">Sr No.</th>
                                         <th className="text-nowrap">Name</th>
                                         <th className="text-nowrap">Status</th>
-                                        <th className="text-nowrap">Date</th>
+                                        <th className="text-nowrap">Gender</th>
                                         <th width="170">Action</th>
                                     </tr>
                                 </thead>
@@ -138,20 +138,14 @@ export default function PatientsList() {
                                             </td>
 
                                             <td className="text-nowrap">
-                                                {new Date(patients.createdAt).toLocaleDateString()}
+                                                {patients.gender || "not Mentioned"}
                                             </td>
 
                                             <td>
 
-                                                <button className="btn btn-outline-primary btn-sm rounded-circle me-1 me-md-2 mb-0 mb-md-2">
-                                                    <i className="bi bi-pencil-fill"></i>
-                                                </button>
-
-                                                <button
-                                                    className="btn btn-outline-danger btn-sm rounded-circle"
-                                                >
-                                                    <i className="bi bi-trash-fill"></i>
-                                                </button>
+                                                 <button className="btn  btn-primary btn-sm appBadge">
+                                                        View Records
+                                                    </button>
                                             </td>
                                         </tr>
                                     ))}
