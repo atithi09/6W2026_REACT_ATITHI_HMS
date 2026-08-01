@@ -5,30 +5,45 @@ import AuthService from "../../../services/AuthService"
 import { toast } from "react-toastify"
 import { useNavigate, useParams } from "react-router-dom"
 import AppointmentService from "../../../services/AppointmentService"
+import PatientService from "../../../services/PatientService"
 import { Link } from "react-router-dom"
 
 export default function ConsultationForm() {
-    let param=useParams()
-    const [patientName,setPatientName]=useState('')
-    const [doctortName,setDoctorName]=useState('')
-    const [age,setAge]=useState(0)
-    const [gender,setGender]=useState('')
-    const [apptDate,setApptDate]=useState('')
-    const [diagnosis,setDiagnosis]=useState('')
-    const [symptoms,setSymptoms]=useState('')
-    const [treatment,setTreatment]=useState('')
-    const [notes,setNotes]=useState('')
+    let param = useParams()
+    const [appointments, SetAppointments] = useState([])
+    const [patientName, setPatientName] = useState('')
+    const [doctortName, setDoctorName] = useState('')
+    const [age, setAge] = useState(0)
+    const [gender, setGender] = useState('')
+    const [apptDate, setApptDate] = useState('')
+    const [diagnosis, setDiagnosis] = useState('')
+    const [symptoms, setSymptoms] = useState('')
+    const [treatment, setTreatment] = useState('')
+    const [notes, setNotes] = useState('')
+    const [doctors, setDoctors] = useState([])
+    const [patients, setPatients] = useState([])
 
-    async function getAppointment(){
-       let res = await AppointmentService.getSingle(param.id)
-       if(res){
-        setApptDate(res.appointmentDate)
-       }
+    async function fetchDoctors() {
+        let res = await DoctorServices.all()
+        setDoctors(res)
+    }
+    async function fetchPateints() {
+        let res = await PatientService.all()
+        setPatients(res)
+    }
+    async function getAppointment() {
+        let res = await AppointmentService.getSingle(param.id)
+        if (res) {
+            SetAppointments(res)
+            setApptDate(res.appointmentDate)
+        }
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         getAppointment()
-    },[])
+        fetchDoctors()
+        fetchPateints()
+    }, [])
 
     return (
         <>
@@ -82,49 +97,38 @@ export default function ConsultationForm() {
 
                                                     {/* Patient Details */}
 
-                                                    <div className="col-md-6">
-                                                        <label className="form-label fw-bold fs-5">Patient Name</label>
-                                                        <input
-                                                            type="text"
-                                                            className="form-control"
-                                                            value=""
-                                                            readOnly
-                                                        />
-                                                    </div>
+                                                    
 
                                                     <div className="col-md-6">
-                                                        <label className="form-label fw-bold fs-5">Doctor Name</label>
+                                                        <label for="pname" className="form-label fw-bold fs-5">Doctor Name</label>
                                                         <input
+                                                            id="pname"
                                                             type="text"
                                                             className="form-control"
-                                                            value=""
+                                                            value={
+                                                                doctors.find((p) => p.id === appointments.doctorId)?.name || ""
+                                                            }
                                                             readOnly
                                                         />
                                                     </div>
 
-                                                    <div className="col-md-4">
-                                                        <label className="form-label fw-bold fs-5">Age</label>
+                                                    <div className="col-md-6">
+                                                        <label for="dname" className="form-label fw-bold fs-5">Patient Name</label>
                                                         <input
+                                                            id="dname"
                                                             type="text"
                                                             className="form-control"
-                                                            value=""
-                                                            readOnly
+                                                            value={
+                                                                patients.find((p) => p.id === appointments.patientId)?.name || ""
+                                                            }
                                                         />
                                                     </div>
 
-                                                    <div className="col-md-4">
-                                                        <label className="form-label fw-bold fs-5">Gender</label>
-                                                        <input
-                                                            type="text"
-                                                            className="form-control"
-                                                            value=""
-                                                            readOnly
-                                                        />
-                                                    </div>
 
-                                                    <div className="col-md-4">
-                                                        <label className="form-label fw-bold fs-5">Appointment Date</label>
+                                                     <div className="col-md-4">
+                                                        <label for="date" className="form-label fw-bold fs-5">Appointment Date</label>
                                                         <input
+                                                            id="date"
                                                             type="text"
                                                             className="form-control"
                                                             value={apptDate}
@@ -132,13 +136,38 @@ export default function ConsultationForm() {
                                                         />
                                                     </div>
 
+                                                    
+                                                    <div className="col-md-4">
+                                                        <label for="age" className="form-label fw-bold fs-5">Age</label>
+                                                        <input
+                                                            id="age"
+                                                            type="text"
+                                                            className="form-control"
+                                                        />
+                                                    </div>
+
+                                                    <div className="col-md-4">
+                                                        <label for="gender" className="form-label fw-bold fs-5">Gender</label>
+                                                        <input
+                                                            id="gender"
+                                                            type="text"
+                                                            className="form-control"
+                                                            value={
+                                                                doctors.find((p) => p.id === appointments.doctorId)?.gender || ""
+                                                            }
+                                                        />
+                                                    </div>
+
+                                                   
+
 
                                                     <div className="col-12">
-                                                        <label className="form-label fw-bold fs-5">
+                                                        <label for="symptoms" className="form-label fw-bold fs-5">
                                                             Symptoms
                                                         </label>
 
                                                         <textarea
+                                                            id="symptoms"
                                                             className="form-control fw-bold fs-5"
                                                             rows="4"
                                                             placeholder="Enter patient's symptoms..."
@@ -147,11 +176,12 @@ export default function ConsultationForm() {
 
 
                                                     <div className="col-12">
-                                                        <label className="form-label fw-bold fs-5">
+                                                        <label for="diagnosis" className="form-label fw-bold fs-5">
                                                             Diagnosis
                                                         </label>
 
                                                         <textarea
+                                                            id="diagnosis"
                                                             className="form-control"
                                                             rows="4"
                                                             placeholder="Enter diagnosis..."
@@ -160,11 +190,12 @@ export default function ConsultationForm() {
 
 
                                                     <div className="col-12">
-                                                        <label className="form-label fw-bold fs-5">
+                                                        <label for="treatement" className="form-label fw-bold fs-5">
                                                             Treatment
                                                         </label>
 
                                                         <textarea
+                                                            id="treatment"
                                                             className="form-control"
                                                             rows="4"
                                                             placeholder="Enter treatment details..."
@@ -173,11 +204,12 @@ export default function ConsultationForm() {
 
 
                                                     <div className="col-12">
-                                                        <label className="form-label fw-bold fs-5">
+                                                        <label for="notes" className="form-label fw-bold fs-5">
                                                             Clinical Notes
                                                         </label>
 
                                                         <textarea
+                                                            id="notes"
                                                             className="form-control"
                                                             rows="4"
                                                             placeholder="Additional notes..."
@@ -188,11 +220,11 @@ export default function ConsultationForm() {
                                                 <div className="row my-4 justify-content-between">
                                                     <div className="col-auto">
                                                         <button
-                                                                type="button"
-                                                                className="btn btn-outline-success"
-                                                            >
-                                                                Generate Prescription
-                                                            </button>
+                                                            type="button"
+                                                            className="btn btn-outline-success"
+                                                        >
+                                                            Generate Prescription
+                                                        </button>
                                                     </div>
                                                     <div className="col-auto">
                                                         <button
@@ -205,15 +237,15 @@ export default function ConsultationForm() {
                                                     </div>
                                                 </div>
 
-                                                    <div className="col-12 d-flex justify-content-between flex-wrap gap-2 my-3">
-                                                            <button
-                                                                type="submit"
-                                                                className="btn-book"
-                                                            >
-                                                                End Consultation
-                                                            </button>
+                                                <div className="col-12 d-flex justify-content-between flex-wrap gap-2 my-3">
+                                                    <button
+                                                        type="submit"
+                                                        className="btn-book"
+                                                    >
+                                                        End Consultation
+                                                    </button>
 
-                                                    </div>
+                                                </div>
 
 
                                             </form>
