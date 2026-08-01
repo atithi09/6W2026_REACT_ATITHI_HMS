@@ -3,133 +3,32 @@ import DepartmentServices from "../../../services/DepartmentServices"
 import DoctorServices from "../../../services/DoctorServices"
 import AuthService from "../../../services/AuthService"
 import { toast } from "react-toastify"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import AppointmentService from "../../../services/AppointmentService"
+import { Link } from "react-router-dom"
 
 export default function ConsultationForm() {
-    let nav = useNavigate()
-    const [departments, setDepartments] = useState([])
-    const [doctors, setDoctors] = useState([])
-    const todayString = new Date().toISOString().split("T")[0];
-    const [patientid, setPatientid] = useState('')
-    const [name, setName] = useState('')
-    const [email, setEmail] = useState('')
-    const [mobile, setMobile] = useState('')
-    const [date, setDate] = useState('')
-    const [time, setTime] = useState('')
-    const [doctorid, setDoctorid] = useState('')
-    const [reason, setReason] = useState('')
-   const  userType=AuthService.userType();
+    let param=useParams()
+    const [patientName,setPatientName]=useState('')
+    const [doctortName,setDoctorName]=useState('')
+    const [age,setAge]=useState(0)
+    const [gender,setGender]=useState('')
+    const [apptDate,setApptDate]=useState('')
+    const [diagnosis,setDiagnosis]=useState('')
+    const [symptoms,setSymptoms]=useState('')
+    const [treatment,setTreatment]=useState('')
+    const [notes,setNotes]=useState('')
 
-    function getEmail() {
-        const email = AuthService.email();
-        setEmail(email);
-    }
-    function getUid() {
-        const uid = AuthService.uid()
-        setPatientid(uid)
-    }
-    async function security(e) {
-        e.preventDefault()
-        let selectedDoctor = doctors.find((d) => d.id == doctorid)
-        if (!email) {
-            toast.error("Login or Sign Up to book appointments")
-            return;
-        }
-        if(userType!=="3"){
-            toast.info("Only patients can book appointments. Please log in with a patient account.")
-            return;
-        }
-        const slotBooked = await AppointmentService.isSlotBooked(
-            doctorid,
-            date,
-            time
-        );
-        if (slotBooked) {
-            toast.error("This slot is already booked.");
-            return;
-        }
-
-        if (selectedDoctor && mobile && name&& userType=='3') {
-
-            var options = {
-                "key": "rzp_test_TEsYc8A2eTFXl2", // Enter the Key ID generated from the Dashboard
-                "amount": selectedDoctor.consultationFee * 100, // Amount is in currency subunits.
-                "currency": "INR",
-                "name": "clinic", //your business name
-                "description": "Test Transaction",
-                "image": "https://res.cloudinary.com/aiuasol7/image/upload/v1785062015/Modern_healthcare_clinic_logo_design_ic0ci4.png",
-                
-                "handler": async function (response) {
-                    alert(response.razorpay_order_id);
-                    alert(response.razorpay_signature)
-
-                    try {
-                        let payload = {
-                            patientId: patientid,
-                            doctorId: doctorid,
-                            appointmentDate: date,
-                            appointmentTime: time,
-                            reason: reason,
-                        }
-                        await AppointmentService.add(payload);
-                        toast.success("Appointment booked successfully");
-                       }
-                    catch (err) {
-                        console.log("error:", err)
-                        toast.error("Something went wrong")
-                    }
-                },
-                 //We recommend using the prefill parameter to auto-fill customer's contact information, especially their phone number
-                    prefill: {
-                        name: name,
-                        email: email,
-                        contact: mobile
-                    }  //Provide the customer's phone number for better conversion rates 
-                ,
-                "notes": {
-                    "address": "Razorpay Corporate Office"
-                },
-                "theme": {
-                    "color": "#0D6EFD"
-                }
-            };
-            var rzp1 = new Razorpay(options);
-            rzp1.open();
-
-            rzp1.on('payment.failed', function (response) {
-                // alert(response.error.code);
-                toast.error(response.error.description);
-                // alert(response.error.source);
-                // alert(response.error.step);
-                // alert(response.error.reason);
-                // alert(response.error.metadata.order_id);
-                // alert(response.error.metadata.payment_id);
-            });
-
-
-
-        }
-        else {
-            toast.info("Fill the required information")
-        }
+    async function getAppointment(){
+       let res = await AppointmentService.getSingle(param.id)
+       if(res){
+        setApptDate(res.appointmentDate)
+       }
     }
 
-    async function fetchDoctors() {
-        let res = await DoctorServices.all()
-        setDoctors(res)
-    }
-
-    async function fetchDepartments() {
-        let res = await DepartmentServices.all()
-        setDepartments(res)
-    }
-    useEffect(() => {
-        fetchDepartments();
-        fetchDoctors();
-        getUid()
-        getEmail()
-    }, [])
+    useEffect(()=>{
+        getAppointment()
+    },[])
 
     return (
         <>
@@ -143,7 +42,7 @@ export default function ConsultationForm() {
                                     <h1 className="heading-title">Consultation Form</h1>
                                     <p className="mb-0">
                                         Odio et unde deleniti. Deserunt numquam exercitationem. Officiis
-                                        quo odio sint voluptas consequatur ut a odio voluptatem. Sit
+                                        quo odio sint voluptas consequatur ut Link odio voluptatem. Sit
                                         dolorum debitis veritatis natus dolores. Quasi ratione sint. Sit
                                         quaerat ipsum dolorem.
                                     </p>
@@ -155,7 +54,7 @@ export default function ConsultationForm() {
                         <div className="container">
                             <ol>
                                 <li>
-                                    <a href="index.html">Home</a>
+                                    <Link to="index.html">Home</Link>
                                 </li>
                                 <li className="current">Consultation Form</li>
                             </ol>
@@ -164,143 +63,176 @@ export default function ConsultationForm() {
                 </div>
                 {/* End Page Title */}
                 {/* Appointmnet Section */}
-                <section id="appointmnet" className="appointmnet section">
-                    <div className="container" >
-                        <div className="row">
-                            <div className="col-lg-8 mx-auto">
-                                <div className="booking-wrapper">
-                                    <div
-                                        className="booking-header text-center"
+                <main className="main">
+                    {/* Consultation Section */}
+                    <section id="appointment" className="appointmnet section">
+                        <div className="container">
+                            <div className="row" key={param.id}>
+                                <div className="col-lg-10 mx-auto">
+                                    <div className="booking-wrapper">
 
-                                    >
-                                        <h2>Consultation</h2>
-                                       
-                                    </div>
-                                    
-                                    <div
-                                        className="appointment-form"
+                                        <div className="booking-header text-center">
+                                            <h2>Patient Consultation</h2>
+                                        </div>
 
-                                    >
-                                        <form
-                                            action=""
-                                            method=""
-                                            className="php-email-form"
-                                            onSubmit={security}
-                                        >
-                                            <div className="row gy-4">
-                                                <div className="col-md-6">
-                                                    <input
-                                                        type="text"
-                                                        name="name"
-                                                        className="form-control"
-                                                        placeholder="Full Name"
-                                                        required
-                                                        value={name}
-                                                        onChange={(e) => setName(e.target.value)}
-                                                    />
-                                                </div>
-                                                <div className="col-md-6">
-                                                    <input
-                                                        type="email"
-                                                        name="email"
-                                                        className="form-control"
-                                                        placeholder="Email Address"
-                                                        required
-                                                        value={email}
-                                                    />
-                                                </div>
-                                                <div className="col-md-6">
-                                                    <input
-                                                        type="tel"
-                                                        name="phone"
-                                                        className="form-control"
-                                                        placeholder="Phone Number"
-                                                        required
-                                                        value={mobile}
-                                                        onChange={(e) => setMobile(e.target.value)}
-                                                    />
-                                                </div>
+                                        <div className="appointment-form">
+                                            <form className="php-email-form">
 
-                                                <div className="col-md-6">
-                                                    <select
-                                                        name="doctors"
-                                                        className="form-select"
-                                                        required
-                                                        onChange={(e) => setDoctorid(e.target.value)}
-                                                        value={doctorid}
-                                                    >
-                                                        <option value="" selected disabled>Select Doctor</option>
-                                                        {doctors.map((doctor) => (
-                                                            <option value={doctor.id} >{doctor.name}</option>
-                                                        ))
-                                                        }
+                                                <div className="row gy-4">
 
-                                                    </select>
-                                                </div>
+                                                    {/* Patient Details */}
 
-                                                <div className="col-md-6">
-                                                    <input
-                                                        type="date"
-                                                        name="date"
-                                                        className="form-control"
-                                                        required
-                                                        placeholder="Select Date"
-                                                        value={date}
-                                                        min={todayString}
-                                                        onChange={(e) => setDate(e.target.value)}
-                                                    />
-                                                </div>
-
-                                                <div className="col-md-6">
-                                                    <input
-                                                        type="time"
-                                                        name="time"
-                                                        className="form-control"
-                                                        required
-                                                        placeholder="Select Time"
-                                                        value={time}
-                                                        onChange={(e) => setTime(e.target.value)}
-                                                    />
-                                                </div>
-                                                <div className="col-12">
-                                                    <textarea
-                                                        name="message"
-                                                        className="form-control"
-                                                        rows={4}
-                                                        placeholder="Additional notes or symptoms (optional)"
-                                                        value={reason}
-                                                        onChange={(e) => setReason(e.target.value)}
-                                                    />
-                                                </div>
-                                                <div className="col-12 mt-4">
-                                                    <div className="loading">Loading</div>
-                                                    <div className="error-message" />
-                                                    <div className="sent-message">
-                                                        Your appointment has been scheduled. Thank you!
+                                                    <div className="col-md-6">
+                                                        <label className="form-label fw-bold fs-5">Patient Name</label>
+                                                        <input
+                                                            type="text"
+                                                            className="form-control"
+                                                            value=""
+                                                            readOnly
+                                                        />
                                                     </div>
-                                                    <button type="submit" className="btn-book" >
-                                                        Book Appointment
-                                                    </button>
+
+                                                    <div className="col-md-6">
+                                                        <label className="form-label fw-bold fs-5">Doctor Name</label>
+                                                        <input
+                                                            type="text"
+                                                            className="form-control"
+                                                            value=""
+                                                            readOnly
+                                                        />
+                                                    </div>
+
+                                                    <div className="col-md-4">
+                                                        <label className="form-label fw-bold fs-5">Age</label>
+                                                        <input
+                                                            type="text"
+                                                            className="form-control"
+                                                            value=""
+                                                            readOnly
+                                                        />
+                                                    </div>
+
+                                                    <div className="col-md-4">
+                                                        <label className="form-label fw-bold fs-5">Gender</label>
+                                                        <input
+                                                            type="text"
+                                                            className="form-control"
+                                                            value=""
+                                                            readOnly
+                                                        />
+                                                    </div>
+
+                                                    <div className="col-md-4">
+                                                        <label className="form-label fw-bold fs-5">Appointment Date</label>
+                                                        <input
+                                                            type="text"
+                                                            className="form-control"
+                                                            value={apptDate}
+                                                            readOnly
+                                                        />
+                                                    </div>
+
+
+                                                    <div className="col-12">
+                                                        <label className="form-label fw-bold fs-5">
+                                                            Symptoms
+                                                        </label>
+
+                                                        <textarea
+                                                            className="form-control fw-bold fs-5"
+                                                            rows="4"
+                                                            placeholder="Enter patient's symptoms..."
+                                                        ></textarea>
+                                                    </div>
+
+
+                                                    <div className="col-12">
+                                                        <label className="form-label fw-bold fs-5">
+                                                            Diagnosis
+                                                        </label>
+
+                                                        <textarea
+                                                            className="form-control"
+                                                            rows="4"
+                                                            placeholder="Enter diagnosis..."
+                                                        ></textarea>
+                                                    </div>
+
+
+                                                    <div className="col-12">
+                                                        <label className="form-label fw-bold fs-5">
+                                                            Treatment
+                                                        </label>
+
+                                                        <textarea
+                                                            className="form-control"
+                                                            rows="4"
+                                                            placeholder="Enter treatment details..."
+                                                        ></textarea>
+                                                    </div>
+
+
+                                                    <div className="col-12">
+                                                        <label className="form-label fw-bold fs-5">
+                                                            Clinical Notes
+                                                        </label>
+
+                                                        <textarea
+                                                            className="form-control"
+                                                            rows="4"
+                                                            placeholder="Additional notes..."
+                                                        ></textarea>
+                                                    </div>
                                                 </div>
 
+                                                <div className="row my-4 justify-content-between">
+                                                    <div className="col-auto">
+                                                        <button
+                                                                type="button"
+                                                                className="btn btn-outline-success"
+                                                            >
+                                                                Generate Prescription
+                                                            </button>
+                                                    </div>
+                                                    <div className="col-auto">
+                                                        <button
+                                                            type="button"
+                                                            className="btn btn-outline-primary"
+                                                        >
+                                                            <i className="bi bi-stars me-2"></i>
+                                                            Generate with AI
+                                                        </button>
+                                                    </div>
+                                                </div>
 
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <div
-                                        className="emergency-info"
-                                    >
-                                        <p>
-                                            <i className="bi bi-exclamation-triangle" /> For medical
-                                            emergencies, please call <strong>911</strong>
-                                            or go to the nearest emergency room.
-                                        </p>
+                                                    <div className="col-12 d-flex justify-content-between flex-wrap gap-2 my-3">
+                                                            <button
+                                                                type="submit"
+                                                                className="btn-book"
+                                                            >
+                                                                End Consultation
+                                                            </button>
+
+                                                    </div>
+
+
+                                            </form>
+                                        </div>
+
+                                        <div className="emergency-info">
+                                            <p>
+                                                <i className="bi bi-info-circle"></i>
+                                                Review all consultation details carefully before ending the
+                                                consultation.
+                                            </p>
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </section>
+                    </section>
+                </main>
                 {/* /Appointmnet Section */}
             </main>
 

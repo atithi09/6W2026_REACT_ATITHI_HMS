@@ -173,7 +173,7 @@ export default function ViewAppointments() {
                                                 )}
 
                                                 {appt.appointmentStatus === "Accepted" && (
-                                                    <Link to="/doctor/consultationForm">
+                                                    <Link to={`/doctor/consultationForm/${appt.id}`}>
                                                     <button className="btn btn-primary btn-sm appBadge">
                                                         Start Consultation
                                                     </button>

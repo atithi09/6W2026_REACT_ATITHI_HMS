@@ -83,7 +83,7 @@ function App() {
           <Route path='viewappt' element={<ViewAppointments/>}></Route>  
           <Route path='appthistory' element={<AppointmentHistory/>}></Route>  
           <Route path='docfeedback' element={<MangeDoctorFeedback/>}></Route>  
-          <Route path='consultationForm' element={<ConsultationForm/>}></Route>  
+          <Route path='consultationForm/:id' element={<ConsultationForm/>}></Route>  
 
           </Route>
           

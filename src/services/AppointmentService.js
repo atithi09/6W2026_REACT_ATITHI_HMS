@@ -1,4 +1,4 @@
-import { addDoc, collection, doc, getDocs, query, updateDoc, where } from "firebase/firestore";
+import { addDoc, collection, doc, getDoc, getDocs, query, updateDoc, where } from "firebase/firestore";
 import AppointmentModel from "../models/AppointmentModel";
 import { db } from "../firebase/FirebaseConfig";
 import AuthService from "./AuthService";
@@ -50,6 +50,20 @@ class AppointmentService {
             appointmnet.push({ id: doc.id, ...doc.data() })
         });
         return appointmnet
+    }
+
+    async getSingle(id){
+        const docRef = doc(db, "appointments", id);
+                const docSnap = await getDoc(docRef);
+        
+                if (docSnap.exists()) {
+                    return { id: docSnap.id, ...docSnap.data() }
+                    // docSnap.data() will be undefined in this case
+                }
+                else {
+                    console.log("no such document exist")
+                    return false
+                }
     }
 
     async AppointmentByDoctor(doctorId) {
