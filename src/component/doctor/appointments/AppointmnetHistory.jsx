@@ -107,8 +107,8 @@ export default function AppointmentHistory() {
                             <table className="table table-hover align-middle text-center mb-0">
                                 <thead className="table-primary">
                                     <tr>
-                                        <th>Sr No.</th>
-                                        <th>Patient Name</th>
+                                        <th className='text-nowrap'>Sr No.</th>
+                                        <th className='text-nowrap'>Patient Name</th>
                                         <th>Time</th>
                                         <th>Date</th>
                                         <th>Status</th>
@@ -120,27 +120,27 @@ export default function AppointmentHistory() {
                                         <tr key={appt.id}>
                                             <td>{index + 1}</td>
 
-                                            <td>{patients.find((p) => p.id == appt.patientId)?.name}</td>
+                                            <td className='text-nowrap'>{patients.find((p) => p.id == appt.patientId)?.name}</td>
 
                                             <td
-                                                className="description-cell"
+                                                className="description-cell text-nowrap"
                                             >
                                                 {appt.appointmentTime}
                                             </td>
 
-                                            <td>
+                                            <td className='text-nowrap'>
                                                 {appt.appointmentDate}
                                             </td>
                                             <td>
 
                                                 {appt.appointmentStatus === "Completed" && (
-                                                    <span className="badge bg-success p-2 fs-6">
+                                                    <span className="badge bg-success appBadge fs-6">
                                                         Completed
                                                     </span>
                                                 )}
 
                                                 {appt.appointmentStatus === "Cancelled" && (
-                                                    <span className="badge p-2 fs-6 bg-danger">
+                                                    <span className="badge p-2 fs-6 appBadge bg-danger">
                                                         Cancelled
                                                     </span>
                                                 )}

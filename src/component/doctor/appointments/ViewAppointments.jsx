@@ -113,10 +113,10 @@ export default function ViewAppointments() {
                             <table className="table table-hover align-middle text-center mb-0">
                                 <thead className="table-primary">
                                     <tr>
-                                        <th>Sr No.</th>
-                                        <th>Patient Name</th>
+                                        <th className='text-nowrap'>Sr No.</th>
+                                        <th className='text-nowrap'>Patient Name</th>
                                         <th>Time</th>
-                                        <th>Date</th>
+                                        <th className='text-nowrap'>Date</th>
                                         <th>Status</th>
                                         <th>Action</th>
                                     </tr>
@@ -127,26 +127,26 @@ export default function ViewAppointments() {
                                         <tr key={appt.id}>
                                             <td>{index + 1}</td>
 
-                                            <td>{patients.find((p) => p.id == appt.patientId)?.name}</td>
+                                            <td className='text-nowrap'>{patients.find((p) => p.id == appt.patientId)?.name}</td>
 
                                             <td
-                                                className="description-cell"
+                                                className="description-cell text-nowrap"
                                             >
                                                 {appt.appointmentTime}
                                             </td>
 
-                                            <td>
+                                            <td className='text-nowrap'>
                                                 {appt.appointmentDate}
                                             </td>
                                             <td>
                                                 {appt.appointmentStatus === "Pending" && (
-                                                    <span className="badge bg-warning p-2 fs-6">
+                                                    <span className="badge appBadge bg-warning fs-6">
                                                         Pending
                                                     </span>
                                                 )}
 
                                                 {appt.appointmentStatus === "Accepted" && (
-                                                    <span className="badge p-2 fs-6 bg-success">
+                                                    <span className="badge appBadge fs-6 bg-success">
                                                         Accepted
                                                     </span>
                                                 )}
@@ -157,14 +157,14 @@ export default function ViewAppointments() {
                                                 {appt.appointmentStatus === "Pending" && (
                                                     <>
                                                         <button
-                                                            className="btn btn-outline-primary btn-sm rounded-circle me-2"
+                                                            className="btn btn-outline-primary btn-sm rounded-circle me-2 appBagde"
                                                             onClick={() => acceptAppointment(appt.id)}
                                                         >
                                                             <i className="bi bi-check-circle-fill"></i>
                                                         </button>
 
                                                         <button
-                                                            className="btn btn-outline-danger btn-sm rounded-circle"
+                                                            className="btn btn-outline-danger btn-sm rounded-circle "
                                                             onClick={() => rejectAppointment(appt.id)}
                                                         >
                                                             <i className="bi bi-x-circle-fill"></i>
@@ -173,7 +173,7 @@ export default function ViewAppointments() {
                                                 )}
 
                                                 {appt.appointmentStatus === "Accepted" && (
-                                                    <button className="btn py-2 btn-primary btn-sm">
+                                                    <button className="btn  btn-primary btn-sm appBadge">
                                                         Start Consultation
                                                     </button>
                                                 )}

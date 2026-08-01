@@ -110,9 +110,9 @@ export default function ManageAppointments() {
                                 <thead className="table-primary">
                                     <tr>
                                         <th>Sr No.</th>
-                                        <th>Patient Name</th>
-                                        <th>Doctor Name</th>
-                                        <th>Time</th>
+                                        <th className='text-nowrap'>Patient Name</th>
+                                        <th className='text-nowrap'>Doctor Name</th>
+                                        <th className='date-column'>Time</th>
                                         <th>Date</th>
                                         <th>Status</th>
                                     </tr>
@@ -124,39 +124,39 @@ export default function ManageAppointments() {
 
                                             <td>{index + 1}</td>
 
-                                            <td>
+                                            <td className='text-nowrap'>
                                                 {patients.find((p) => p.id === appt.patientId)?.name}
                                             </td>
 
-                                            <td>
+                                            <td className='text-nowrap'>
                                                 {doctors.find((d) => d.id === appt.doctorId)?.name}
                                             </td>
 
-                                            <td>{appt.appointmentTime}</td>
+                                            <td >{appt.appointmentTime}</td>
 
-                                            <td>{appt.appointmentDate}</td>
+                                            <td className='text-nowrap'>{appt.appointmentDate}</td>
 
                                             <td>
                                                 {appt.appointmentStatus === "Pending" && (
-                                                    <span className="badge bg-warning p-2 fs-6">
+                                                    <span className="badge appBadge bg-warning  fs-6">
                                                         Pending
                                                     </span>
                                                 )}
 
                                                 {appt.appointmentStatus === "Accepted" && (
-                                                    <span className="badge bg-success p-2 fs-6">
+                                                    <span className="badge appBadge bg-success fs-6">
                                                         Accepted
                                                     </span>
                                                 )}
 
                                                 {appt.appointmentStatus === "Cancelled" && (
-                                                    <span className="badge bg-danger p-2 fs-6">
+                                                    <span className="badge appBadge bg-danger fs-6">
                                                         Cancelled
                                                     </span>
                                                 )}
 
                                                 {appt.appointmentStatus === "Completed" && (
-                                                    <span className="badge bg-success p-2 fs-6">
+                                                    <span className="badge appBadge bg-success  fs-6">
                                                         Completed
                                                     </span>
                                                 )}

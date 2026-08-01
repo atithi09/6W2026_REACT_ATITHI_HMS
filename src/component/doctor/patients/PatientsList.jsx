@@ -109,10 +109,10 @@ export default function PatientsList() {
                             <table className="table table-hover align-middle text-center mb-0">
                                 <thead className="table-primary">
                                     <tr>
-                                        <th>Sr No.</th>
-                                        <th>Name</th>
-                                        <th>Status</th>
-                                        <th>Date</th>
+                                        <th className="text-nowrap">Sr No.</th>
+                                        <th className="text-nowrap">Name</th>
+                                        <th className="text-nowrap">Status</th>
+                                        <th className="text-nowrap">Date</th>
                                         <th width="170">Action</th>
                                     </tr>
                                 </thead>
@@ -122,7 +122,7 @@ export default function PatientsList() {
                                         <tr key={patients.id}>
                                             <td>{index + 1}</td>
 
-                                            <td className="fw-semibold">
+                                            <td className="fw-semibold text-nowrap">
                                                 {patients.name}
                                             </td>
 
@@ -137,13 +137,13 @@ export default function PatientsList() {
                                                 </span>
                                             </td>
 
-                                            <td>
+                                            <td className="text-nowrap">
                                                 {new Date(patients.createdAt).toLocaleDateString()}
                                             </td>
 
                                             <td>
 
-                                                <button className="btn btn-outline-primary btn-sm rounded-circle me-2">
+                                                <button className="btn btn-outline-primary btn-sm rounded-circle me-1 me-md-2 mb-0 mb-md-2">
                                                     <i className="bi bi-pencil-fill"></i>
                                                 </button>
 

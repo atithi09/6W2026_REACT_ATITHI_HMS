@@ -100,13 +100,7 @@ export default function AdminHeader() {
                                         Payments
                                     </Link>
                                 </li>
-
-                                <li>
-                                    <Link to="/admin" onClick={closeMenu}>
-                                        Reports
-                                    </Link>
-                                </li>
-
+                                
                                 <li>
                                     <Link to="managefeedback" onClick={closeMenu}>
                                         Feedback

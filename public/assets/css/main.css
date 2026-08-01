@@ -6444,3 +6444,12 @@ thead tr{
 .profile-option-card .btn{
     font-weight:600;
 }
+
+.appBadge{
+  min-width: 100px;
+  height: 40px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  line-height:15px;
+}

@@ -109,12 +109,12 @@ export default function MangeDoctorFeedback() {
                             <table className="table table-hover align-middle text-center mb-0">
                                 <thead className="table-primary">
                                     <tr>
-                                        <th>Sr No.</th>
-                                        <th>Patient Name</th>
-                                        <th>Ratings</th>
-                                        <th>Experience</th>
-                                        <th>Date</th>
-                                        <th>Reviews</th>
+                                        <th className='text-nowrap'>Sr No.</th>
+                                        <th className='text-nowrap'>Patient Name</th>
+                                        <th className='text-nowrap'>Ratings</th>
+                                        <th className='text-nowrap'>Experience</th>
+                                        <th className='text-nowrap'>Date</th>
+                                        <th className='text-nowrap'>Reviews</th>
                                     </tr>
                                 </thead>
 
@@ -123,14 +123,14 @@ export default function MangeDoctorFeedback() {
                                         <tr key={feedback.id}>
                                             <td>{index + 1}</td>
 
-                                            <td>{patients.find((p) => p.id == feedback.patientId)?.name}</td>
+                                            <td className='text-nowrap'>{patients.find((p) => p.id == feedback.patientId)?.name}</td>
                                             <td
-                                                className="description-cell"
+                                                className="description-cell text-nowrap"
                                             >
                                                 {feedback.rating}
                                             </td>
                                             <td>{feedback.experience}</td>
-                                            <td>
+                                            <td className='text-nowrap'>
                                                 {new Date(feedback.createdAt).toLocaleDateString()}
                                             </td>
                                             <td>{feedback.review}</td>

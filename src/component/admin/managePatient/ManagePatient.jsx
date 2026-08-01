@@ -114,7 +114,7 @@ export default function ManagePatient() {
                             <table className="table table-hover align-middle text-center mb-0">
                                 <thead className="table-primary">
                                     <tr>
-                                        <th>Sr No.</th>
+                                        <th className='text-nowrap'>Sr No.</th>
                                         <th>Name</th>
                                         <th>Status</th>
                                         <th>Date</th>
@@ -127,7 +127,7 @@ export default function ManagePatient() {
                                         <tr key={patients.id}>
                                             <td>{index + 1}</td>
 
-                                            <td className="fw-semibold">
+                                            <td className="fw-semibold text-nowrap">
                                                 {patients.name}
                                             </td>
 
@@ -142,13 +142,13 @@ export default function ManagePatient() {
                                                 </span>
                                             </td>
 
-                                            <td>
+                                            <td className='text-nowrap'>
                                                 {new Date(patients.createdAt).toLocaleDateString()}
                                             </td>
 
                                             <td>
                                                 <Link to={`/admin/editPatient/${patients.id}`}>
-                                                    <button className="btn btn-outline-primary btn-sm rounded-circle me-2">
+                                                    <button className="btn btn-outline-primary btn-sm rounded-circle me-md-2 me-1">
                                                         <i className="bi bi-pencil-fill"></i>
                                                     </button>
                                                 </Link>

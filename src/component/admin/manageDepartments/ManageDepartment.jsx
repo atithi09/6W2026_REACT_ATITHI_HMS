@@ -119,9 +119,9 @@ export default function ManageDepartment() {
                         <table className="table table-hover align-middle text-center mb-0">
                             <thead className="table-primary">
                                 <tr>
-                                    <th>Sr No.</th>
+                                    <th className='text-nowrap'>Sr No.</th>
                                     <th>Image</th>
-                                    <th>Name</th>
+                                    <th className='text-nowrap'>Name</th>
                                     <th style={{ width: "300px" }}>Description</th>
                                     <th>Status</th>
                                     <th>Date</th>
@@ -147,12 +147,12 @@ export default function ManageDepartment() {
                                             />
                                         </td>
 
-                                        <td className="fw-semibold">
+                                        <td className="fw-semibold text-nowrap">
                                             {department.name}
                                         </td>
 
                                         <td
-                                            className="description-cell"
+                                            className="description-cell text-start"
                                             title={department.description}
                                         >
                                             {department.description}
@@ -175,7 +175,7 @@ export default function ManageDepartment() {
 
                                         <td>
                                             <Link to={`/admin/editDepartment/${department.id}`}>
-                                                <button className="btn btn-outline-primary btn-sm rounded-circle me-2">
+                                                <button className="btn btn-outline-primary btn-sm rounded-circle me-0 me-md-2 mb-2 mb-md-0">
                                                     <i className="bi bi-pencil-fill"></i>
                                                 </button>
                                             </Link>
