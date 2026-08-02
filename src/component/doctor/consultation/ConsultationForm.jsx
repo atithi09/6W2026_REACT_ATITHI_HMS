@@ -39,6 +39,17 @@ export default function ConsultationForm() {
         }
     }
 
+    function saveRecord(payload){
+        try{
+            let payload={
+                name:name,
+            }
+        }
+        catch(err){
+
+        }
+    }
+
     useEffect(() => {
         getAppointment()
         fetchDoctors()
@@ -121,6 +132,7 @@ export default function ConsultationForm() {
                                                             value={
                                                                 patients.find((p) => p.id === appointments.patientId)?.name || ""
                                                             }
+                                                            onChange={(e)=>setPatientName(e.target.value)}
                                                         />
                                                     </div>
 
@@ -144,6 +156,8 @@ export default function ConsultationForm() {
                                                             type="text"
                                                             className="form-control"
                                                             value=""
+                                                            onChange={(e)=>setAge(e.target.value)}
+
                                                         />
                                                     </div>
 
@@ -156,6 +170,8 @@ export default function ConsultationForm() {
                                                             value={
                                                                 doctors.find((p) => p.id === appointments.doctorId)?.gender || ""
                                                             }
+                                                            onChange={(e)=>setGender(e.target.value)}
+
                                                         />
                                                     </div>
 
@@ -172,6 +188,8 @@ export default function ConsultationForm() {
                                                             className="form-control "
                                                             rows="4"
                                                             placeholder="Enter patient's symptoms..."
+                                                            onChange={(e)=>setSymptoms(e.target.value)}
+
                                                         ></textarea>
                                                     </div>
 
@@ -186,6 +204,8 @@ export default function ConsultationForm() {
                                                             className="form-control"
                                                             rows="4"
                                                             placeholder="Enter diagnosis..."
+                                                            onChange={(e)=>setDiagnosis(e.target.value)}
+
                                                         ></textarea>
                                                     </div>
 
@@ -200,6 +220,8 @@ export default function ConsultationForm() {
                                                             className="form-control"
                                                             rows="4"
                                                             placeholder="Enter treatment details..."
+                                                            onChange={(e)=>setTreatment(e.target.value)}
+
                                                         ></textarea>
                                                     </div>
 
@@ -214,6 +236,8 @@ export default function ConsultationForm() {
                                                             className="form-control"
                                                             rows="4"
                                                             placeholder="Additional notes..."
+                                                            onChange={(e)=>setNotes(e.target.value)}
+
                                                         ></textarea>
                                                     </div>
                                                 </div>

@@ -1,4 +1,4 @@
-class MedicalRecord{
+export class MedicalRecord{
     appointmentId=''
     patientId=''
     doctorId=''
