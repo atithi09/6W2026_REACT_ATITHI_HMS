@@ -9,7 +9,7 @@ import PatientService from "../../../services/PatientService"
 import { Link } from "react-router-dom"
 import MedicalRecordServices from "../../../services/MedicalRecordServices"
 
-export default function ConsultationForm() {
+export default function PrescriptionForm() {
     let param = useParams()
     let nav = useNavigate()
     const [appointment, SetAppointment] = useState([])
@@ -17,7 +17,7 @@ export default function ConsultationForm() {
     const [doctortName, setDoctorName] = useState('')
     const [age, setAge] = useState("")
     const [gender, setGender] = useState('')
-    const [apptDate, setApptDate] = useState('')
+    const [nextDate, setNextDate] = useState('')
     const [diagnosis, setDiagnosis] = useState('')
     const [symptoms, setSymptoms] = useState('')
     const [treatment, setTreatment] = useState('')
@@ -43,7 +43,7 @@ export default function ConsultationForm() {
         }
     }
 
-    async function GenerateRecord(e) {
+    async function GeneratePrescription(e) {
         e.preventDefault()
         if (!patientName.trim() ||
             !doctorName.trim() ||
@@ -92,7 +92,7 @@ export default function ConsultationForm() {
                         <div className="container">
                             <div className="row d-flex justify-content-center text-center">
                                 <div className="col-lg-8">
-                                    <h1 className="heading-title">Consultation Form</h1>
+                                    <h1 className="heading-title">Prescription Form</h1>
                                     <p className="mb-0">
                                         Odio et unde deleniti. Deserunt numquam exercitationem. Officiis
                                         quo odio sint voluptas consequatur ut Link odio voluptatem. Sit
@@ -109,7 +109,7 @@ export default function ConsultationForm() {
                                 <li>
                                     <Link to="index.html">Home</Link>
                                 </li>
-                                <li className="current">Consultation Form</li>
+                                <li className="current">Prescription Form</li>
                             </ol>
                         </div>
                     </nav>
@@ -125,11 +125,11 @@ export default function ConsultationForm() {
                                     <div className="booking-wrapper">
 
                                         <div className="booking-header text-center">
-                                            <h2>Patient Consultation</h2>
+                                            <h2>Add Prescription</h2>
                                         </div>
 
                                         <div className="appointment-form">
-                                            <form className="php-email-form" onSubmit={GenerateRecord}>
+                                            <form className="php-email-form" onSubmit={GeneratePrescription}>
 
                                                 <div className="row gy-4">
 
@@ -165,46 +165,14 @@ export default function ConsultationForm() {
 
 
                                                     <div className="col-md-4">
-                                                        <label for="date" className="form-label fw-bold fs-5">Appointment Date</label>
+                                                        <label for="date" className="form-label fw-bold fs-5">Next Visit Date</label>
                                                         <input
                                                             id="date"
                                                             type="text"
                                                             className="form-control"
-                                                            value={apptDate}
-                                                            readOnly
+                                                            value={nextDate}
                                                         />
                                                     </div>
-
-
-                                                    <div className="col-md-4">
-                                                        <label for="age" className="form-label fw-bold fs-5">Age</label>
-                                                        <input
-                                                            id="age"
-                                                            type="text"
-                                                            className="form-control"
-                                                            value={age}
-                                                            onChange={(e) => setAge(e.target.value)}
-
-                                                        />
-                                                    </div>
-
-                                                    <div className="col-md-4">
-                                                        <label for="gender" className="form-label fw-bold fs-5">Gender</label>
-                                                        <input
-                                                            id="gender"
-                                                            type="text"
-                                                            className="form-control"
-                                                            value={
-                                                                doctors.find((p) => p.id === appointment.doctorId)?.gender || ""
-                                                            }
-                                                            onChange={(e) => setGender(e.target.value)}
-
-                                                        />
-                                                    </div>
-
-
-
-
                                                     <div className="col-12">
                                                         <label for="symptoms" className="form-label fw-bold fs-5">
                                                             Symptoms

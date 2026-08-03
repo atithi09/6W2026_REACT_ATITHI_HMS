@@ -33,6 +33,7 @@ import MyAppointmentHistory from "./component/patient/appointment/MyAppointmentH
 import ManageFeedback from "./component/admin/feedback/ManageFeedback"
 import MangeDoctorFeedback from "./component/doctor/feedback/MangeDoctorFeedback"
 import ConsultationForm from "./component/doctor/consultation/ConsultationForm"
+import PrescriptionForm from "./component/doctor/consultation/PrescriptionForm"
 
 
 
@@ -84,6 +85,7 @@ function App() {
           <Route path='appthistory' element={<AppointmentHistory/>}></Route>  
           <Route path='docfeedback' element={<MangeDoctorFeedback/>}></Route>  
           <Route path='consultationForm/:id' element={<ConsultationForm/>}></Route>  
+          <Route path='PrescriptionForm' element={<PrescriptionForm/>}></Route>  
 
           </Route>
           
