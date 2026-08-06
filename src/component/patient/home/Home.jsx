@@ -12,18 +12,19 @@ export default function Home() {
                 <div className="hero-content">
                   <div
                     className="trust-badges mb-4"
-
                   >
                     <div className="badge-item">
                       <i className="bi bi-shield-check" />
                       <span>Accredited</span>
                     </div>
-                    <div className="badge-item">
-                      <i className="bi bi-clock" />
+
+                    <div className="badge-item d-flex align-items-center gap-1">
+                      <i className="bi bi-clock"></i>
                       <span>24/7 Emergency</span>
                     </div>
-                    <div className="badge-item">
-                      <i className="bi bi-star-fill" />
+
+                    <div className="badge-item d-flex align-items-center gap-1">
+                      <i className="bi bi-star-fill"></i>
                       <span>4.9/5 Rating</span>
                     </div>
                   </div>
@@ -32,7 +33,7 @@ export default function Home() {
                     Compassionate Care
                   </h1>
                   <p
-                    className="hero-description"
+                    className="hero-description text-center"
 
                   >
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
@@ -40,20 +41,19 @@ export default function Home() {
                     enim ad minim veniam, quis nostrud exercitation.
                   </p>
                   <div
-                    className="hero-stats mb-4"
+                    className="hero-stats mb-4 d-flex justify-content-evenly"
 
                   >
                     <div className="stat-item">
                       <h3>
                         <span
-
                           className="purecounter"
                         />
                         25+
                       </h3>
                       <p>Years Experience</p>
                     </div>
-                    <div className="stat-item">
+                    <div className=" stat-item">
                       <h3>
                         <span
 
@@ -75,19 +75,13 @@ export default function Home() {
                     </div>
                   </div>
                   <div
-                    className="hero-actions"
+                    className="hero-actions d-flex justify-content-center justify-content-md-evenly"
 
                   >
                     <Link to="/appointment" className="btn btn-primary">
                       Book Appointment
                     </Link>
-                    <Link
-                      to="https://www.youtube.com/watch?v=Y7f98aduVJ8"
-                      className="btn btn-outline glightbox"
-                    >
-                      <i className="bi bi-play-circle me-2" />
-                      Watch Our Story
-                    </Link>
+                    
                   </div>
                   <div
                     className="emergency-contact"
@@ -176,30 +170,30 @@ export default function Home() {
                   <div className="stats-grid">
                     <div className="stat-item">
                       <div
-                      
-                      
+
+
                       />
                       15000
                       <div className="stat-label"> Patients Served</div>
                     </div>
                     <div className="stat-item">
                       <div
-                       
-                    
+
+
                       />
                       25+
                       <div className="stat-label">  Years of Excellence</div>
                     </div>
                     <div className="stat-item">
                       <div
-                       
+
 
                       />
                       50+
                       <div className="stat-label">  Medical Specialists</div>
                     </div>
                   </div>
-                  <div className="cta-section">
+                  <div className="d-flex justify-content-center justify-content-md-start cta-section">
                     <Link to="/about" className="btn-primary">
                       Learn More About Us
                     </Link>
@@ -226,10 +220,10 @@ export default function Home() {
                       </div>
                     </div>
                   </div>
-                  <div className="experience-badge">
-                    <div className="badge-content">
+                  <div className="experience-badge mt-3 mt-md-0">
+                    <div className="badge-content ">
                       <span className="years">25+</span>
-                      <span className="text">Years of Trusted Care</span>
+                      <span className="text ">Years of Trusted Care</span>
                     </div>
                   </div>
                 </div>
@@ -636,11 +630,11 @@ export default function Home() {
                           <option value="oncology">Oncology</option>
                         </select>
                       </div>
-                      <div className='d-flex flex-columns'>
-                      <button type="submit" className="btn btn-primary text-white ">
-                        <i className="bi bi-search" />
-                        &nbsp;Find Doctors
-                      </button>
+                      <div className='d-flex flex-columns justify-content-center justify-content-md-start'>
+                        <button type="submit" className="  btn btn-primary text-white ">
+                          <i className="bi bi-search" />
+                          &nbsp;Find Doctors
+                        </button>
                       </div>
                     </div>
                   </form>
@@ -889,7 +883,7 @@ export default function Home() {
               </div>
               {/* End Doctor Profile */}
             </div>
-            
+
             <div className="text-center mt-5" >
               <Link to="/doctors" className="btn-view-all">
                 View All Doctors
