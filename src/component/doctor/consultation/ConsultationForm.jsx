@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react"
-import DepartmentServices from "../../../services/DepartmentServices"
 import DoctorServices from "../../../services/DoctorServices"
 import AuthService from "../../../services/AuthService"
 import { toast } from "react-toastify"
@@ -14,7 +13,6 @@ export default function ConsultationForm() {
     let nav = useNavigate()
     const [appointment, SetAppointment] = useState([])
     const [patientName, setPatientName] = useState('')
-    const [doctortName, setDoctorName] = useState('')
     const [age, setAge] = useState("")
     const [gender, setGender] = useState('')
     const [apptDate, setApptDate] = useState('')
@@ -26,6 +24,7 @@ export default function ConsultationForm() {
     const [patients, setPatients] = useState([])
     const patientId = appointment.patientId
     const doctorId = appointment.doctorId
+    const appointmentId = param.id
 
     async function fetchDoctors() {
         let res = await DoctorServices.all()
@@ -36,7 +35,7 @@ export default function ConsultationForm() {
         setPatients(res)
     }
     async function getAppointment() {
-        let res = await AppointmentService.getSingle(param.id)
+        let res = await AppointmentService.getSingle(appointmentId)
         if (res) {
             SetAppointment(res)
             setApptDate(res.appointmentDate)
@@ -45,13 +44,13 @@ export default function ConsultationForm() {
 
     async function GenerateRecord(e) {
         e.preventDefault()
-        if (!patientName.trim() ||
-            !doctorName.trim() ||
+        if (
+            !patientName.trim() ||
             !age.trim() ||
             !gender.trim() ||
             !diagnosis.trim() ||
             !symptoms.trim() ||
-            treatment.trim() ||
+            !treatment.trim() ||
             !notes.trim()) {
             toast.info("All fields are required.")
             return
@@ -59,6 +58,7 @@ export default function ConsultationForm() {
         try {
             let payload = {
                 appointmentId: param.id,
+                patientName: patientName,
                 patientId: patientId,
                 doctorId: doctorId,
                 diagnosis: diagnosis,
@@ -67,15 +67,16 @@ export default function ConsultationForm() {
                 notes: notes
             }
 
-            await MedicalRecordServices.add(payload)
+            let docref = await MedicalRecordServices.add(payload)
             toast.success("Record saved successfully.")
-            nav("/doctor/PrescriptionForm")
+            nav(`/doctor/PrescriptionForm/${docref.id}`)
         }
         catch (err) {
             console.log("error:", err)
             toast.error("Something went wrong.")
         }
     }
+    
 
     useEffect(() => {
         getAppointment()
@@ -156,9 +157,6 @@ export default function ConsultationForm() {
                                                             id="dname"
                                                             type="text"
                                                             className="form-control"
-                                                            value={
-                                                                patients.find((p) => p.id === appointment.patientId)?.name || ""
-                                                            }
                                                             onChange={(e) => setPatientName(e.target.value)}
                                                         />
                                                     </div>
@@ -194,9 +192,6 @@ export default function ConsultationForm() {
                                                             id="gender"
                                                             type="text"
                                                             className="form-control"
-                                                            value={
-                                                                doctors.find((p) => p.id === appointment.doctorId)?.gender || ""
-                                                            }
                                                             onChange={(e) => setGender(e.target.value)}
 
                                                         />
@@ -271,6 +266,7 @@ export default function ConsultationForm() {
 
                                                 <div className="row my-4 justify-content-between">
                                                     <div className="col-auto">
+
                                                         <button
                                                             type="submit"
                                                             className="btn btn-outline-success"
@@ -293,6 +289,7 @@ export default function ConsultationForm() {
                                                     <button
                                                         type="button"
                                                         className="btn-book"
+                                                        
                                                     >
                                                         End Consultation
                                                     </button>

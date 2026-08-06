@@ -69,6 +69,13 @@ export default function Header() {
                 {/* Branding */}
                 <div className="branding d-flex align-items-center">
                     <div className="container position-relative d-flex align-items-center justify-content-between">
+                       
+                            <i
+                                className={`mobile-nav-toggle d-xl-none bi ${mobileOpen ? "bi-x" : "bi-list"
+                                    }`}
+                                onClick={() => setMobileOpen(!mobileOpen)}
+                            ></i>
+                       
                         <Link to="/" className="logo d-flex align-items-center">
                             <h1 className="sitename">Clinic</h1>
                         </Link>
@@ -129,13 +136,7 @@ export default function Header() {
                                 </Link>
                             </div>)
                         }
-                        <div>
-                            <i
-                                className={`mobile-nav-toggle d-xl-none bi ${mobileOpen ? "bi-x" : "bi-list"
-                                    }`}
-                                onClick={() => setMobileOpen(!mobileOpen)}
-                            ></i>
-                        </div>
+                        
                     </div>
                 </div>
             </header>

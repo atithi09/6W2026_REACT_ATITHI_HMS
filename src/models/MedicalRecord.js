@@ -1,6 +1,7 @@
 export class MedicalRecord{
     appointmentId=''
     patientId=''
+    patientName=''
     doctorId=''
     diagnosis=''
     symptoms=''

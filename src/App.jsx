@@ -85,7 +85,7 @@ function App() {
           <Route path='appthistory' element={<AppointmentHistory/>}></Route>  
           <Route path='docfeedback' element={<MangeDoctorFeedback/>}></Route>  
           <Route path='consultationForm/:id' element={<ConsultationForm/>}></Route>  
-          <Route path='PrescriptionForm' element={<PrescriptionForm/>}></Route>  
+          <Route path='PrescriptionForm/:id' element={<PrescriptionForm/>}></Route>  
 
           </Route>
           

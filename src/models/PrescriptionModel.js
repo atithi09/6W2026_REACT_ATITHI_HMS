@@ -1,4 +1,4 @@
-class Prescription{
+export default class Prescription{
     medicalRecordId=''
     patientId=''
     doctorId=''

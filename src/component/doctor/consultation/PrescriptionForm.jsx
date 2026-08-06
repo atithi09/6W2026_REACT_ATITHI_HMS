@@ -1,31 +1,28 @@
 import { useEffect, useState } from "react"
-import DepartmentServices from "../../../services/DepartmentServices"
 import DoctorServices from "../../../services/DoctorServices"
 import AuthService from "../../../services/AuthService"
 import { toast } from "react-toastify"
 import { useNavigate, useParams } from "react-router-dom"
-import AppointmentService from "../../../services/AppointmentService"
 import PatientService from "../../../services/PatientService"
 import { Link } from "react-router-dom"
 import MedicalRecordServices from "../../../services/MedicalRecordServices"
+import PrescriptionServices from "../../../services/PrescriptionServices"
+import AppointmentService from "../../../services/AppointmentService"
 
 export default function PrescriptionForm() {
     let param = useParams()
     let nav = useNavigate()
-    const [appointment, SetAppointment] = useState([])
     const [patientName, setPatientName] = useState('')
     const [doctortName, setDoctorName] = useState('')
-    const [age, setAge] = useState("")
-    const [gender, setGender] = useState('')
     const [nextDate, setNextDate] = useState('')
-    const [diagnosis, setDiagnosis] = useState('')
-    const [symptoms, setSymptoms] = useState('')
-    const [treatment, setTreatment] = useState('')
-    const [notes, setNotes] = useState('')
+    const [instructions, setInstructions] = useState('')
+    const [medicines, setMedicines] = useState('')
     const [doctors, setDoctors] = useState([])
     const [patients, setPatients] = useState([])
-    const patientId = appointment.patientId
-    const doctorId = appointment.doctorId
+    const [medicalRecord, SetMedicalRecord] = useState([])
+    const patientId = medicalRecord.patientId
+    const doctorId = medicalRecord.doctorId
+    let apptId= medicalRecord.appointmentId
 
     async function fetchDoctors() {
         let res = await DoctorServices.all()
@@ -35,41 +32,36 @@ export default function PrescriptionForm() {
         let res = await PatientService.all()
         setPatients(res)
     }
-    async function getAppointment() {
-        let res = await AppointmentService.getSingle(param.id)
-        if (res) {
-            SetAppointment(res)
-            setApptDate(res.appointmentDate)
-        }
+    async function getRecord() {
+        let res = await MedicalRecordServices.single(param.id)
+        SetMedicalRecord(res)
     }
 
     async function GeneratePrescription(e) {
         e.preventDefault()
-        if (!patientName.trim() ||
-            !doctorName.trim() ||
-            !age.trim() ||
-            !gender.trim() ||
-            !diagnosis.trim() ||
-            !symptoms.trim() ||
-            treatment.trim() ||
-            !notes.trim()) {
+        if (
+            !medicines.trim() ||
+            !instructions.trim() ||
+            !nextDate.trim()) {
             toast.info("All fields are required.")
             return
         }
         try {
             let payload = {
-                appointmentId: param.id,
+                medicalRecordId: param.id,
                 patientId: patientId,
                 doctorId: doctorId,
-                diagnosis: diagnosis,
-                symptoms: symptoms,
-                treatment: treatment,
-                notes: notes
-            }
+                instructions: instructions,
+                medicines: medicines,
+                nextVisitDate:nextDate
+               }
 
-            await MedicalRecordServices.add(payload)
+            await PrescriptionServices.add(payload)
             toast.success("Record saved successfully.")
-            nav("/doctor/PrescriptionForm")
+            
+            await AppointmentService.updateStatus(apptId, "Completed");
+            
+            
         }
         catch (err) {
             console.log("error:", err)
@@ -78,9 +70,9 @@ export default function PrescriptionForm() {
     }
 
     useEffect(() => {
-        getAppointment()
         fetchDoctors()
         fetchPateints()
+        getRecord()
     }, [])
 
     return (
@@ -144,86 +136,40 @@ export default function PrescriptionForm() {
                                                             type="text"
                                                             className="form-control"
                                                             value={
-                                                                doctors.find((p) => p.id === appointment.doctorId)?.name || ""
+                                                                doctors.find((p) => p.id === medicalRecord.doctorId)?.name || ""
                                                             }
+                                                            onChange={(e) => setDoctorName(e.target.value)}
                                                             readOnly
                                                         />
                                                     </div>
 
                                                     <div className="col-md-6">
                                                         <label for="dname" className="form-label fw-bold fs-5">Patient Name</label>
-                                                        <input
+                                                        <
+                                                            input
                                                             id="dname"
                                                             type="text"
                                                             className="form-control"
-                                                            value={
-                                                                patients.find((p) => p.id === appointment.patientId)?.name || ""
-                                                            }
-                                                            onChange={(e) => setPatientName(e.target.value)}
+                                                            value={medicalRecord.patientName}
+                                                            readOnly
                                                         />
                                                     </div>
 
 
-                                                    <div className="col-md-4">
+                                                    <div className="col-md-6">
                                                         <label for="date" className="form-label fw-bold fs-5">Next Visit Date</label>
                                                         <input
                                                             id="date"
-                                                            type="text"
+                                                            type="date"
                                                             className="form-control"
                                                             value={nextDate}
+                                                            onChange={(e) => setNextDate(e.target.value)}
                                                         />
                                                     </div>
-                                                    <div className="col-12">
-                                                        <label for="symptoms" className="form-label fw-bold fs-5">
-                                                            Symptoms
-                                                        </label>
-
-                                                        <textarea
-                                                            id="symptoms"
-                                                            className="form-control "
-                                                            rows="4"
-                                                            placeholder="Enter patient's symptoms..."
-                                                            onChange={(e) => setSymptoms(e.target.value)}
-
-                                                        ></textarea>
-                                                    </div>
-
-
-                                                    <div className="col-12">
-                                                        <label for="diagnosis" className="form-label fw-bold fs-5">
-                                                            Diagnosis
-                                                        </label>
-
-                                                        <textarea
-                                                            id="diagnosis"
-                                                            className="form-control"
-                                                            rows="4"
-                                                            placeholder="Enter diagnosis..."
-                                                            onChange={(e) => setDiagnosis(e.target.value)}
-
-                                                        ></textarea>
-                                                    </div>
-
-
-                                                    <div className="col-12">
-                                                        <label for="treatement" className="form-label fw-bold fs-5">
-                                                            Treatment
-                                                        </label>
-
-                                                        <textarea
-                                                            id="treatment"
-                                                            className="form-control"
-                                                            rows="4"
-                                                            placeholder="Enter treatment details..."
-                                                            onChange={(e) => setTreatment(e.target.value)}
-
-                                                        ></textarea>
-                                                    </div>
-
 
                                                     <div className="col-12">
                                                         <label for="notes" className="form-label fw-bold fs-5">
-                                                            Clinical Notes
+                                                            Medicines
                                                         </label>
 
                                                         <textarea
@@ -231,38 +177,35 @@ export default function PrescriptionForm() {
                                                             className="form-control"
                                                             rows="4"
                                                             placeholder="Additional notes..."
-                                                            onChange={(e) => setNotes(e.target.value)}
+                                                            value={medicines}
+                                                            onChange={(e) => setMedicines(e.target.value)}
+
+                                                        ></textarea>
+                                                    </div>
+
+                                                    <div className="col-12">
+                                                        <label for="medicines" className="form-label fw-bold fs-5">
+                                                            Instructions
+                                                        </label>
+
+                                                        <textarea
+                                                            id="medicines"
+                                                            className="form-control "
+                                                            rows="4"
+                                                            placeholder="Enter patient's medicines..."
+                                                            value={instructions}
+                                                            onChange={(e) => setInstructions(e.target.value)}
 
                                                         ></textarea>
                                                     </div>
                                                 </div>
 
-                                                <div className="row my-4 justify-content-between">
-                                                    <div className="col-auto">
-                                                        <button
-                                                            type="submit"
-                                                            className="btn btn-outline-success"
-                                                        >
-                                                            Generate Prescription
-                                                        </button>
-                                                    </div>
-                                                    <div className="col-auto">
-                                                        <button
-                                                            type="button"
-                                                            className="btn btn-outline-primary"
-                                                        >
-                                                            <i className="bi bi-stars me-2"></i>
-                                                            Generate with AI
-                                                        </button>
-                                                    </div>
-                                                </div>
-
-                                                <div className="col-12 d-flex justify-content-between flex-wrap gap-2 my-3">
+                                                <div className="col-12 d-flex justify-content-between flex-wrap gap-2 my-5">
                                                     <button
-                                                        type="button"
+                                                        type="submit"
                                                         className="btn-book"
                                                     >
-                                                        End Consultation
+                                                        Save Prescription
                                                     </button>
 
                                                 </div>
@@ -274,8 +217,7 @@ export default function PrescriptionForm() {
                                         <div className="emergency-info">
                                             <p>
                                                 <i className="bi bi-info-circle"></i>
-                                                Review all consultation details carefully before ending the
-                                                consultation.
+                                                Review all instructions details carefully before saving the prescriptions.
                                             </p>
                                         </div>
 
