@@ -34,10 +34,7 @@ export default function Doctors() {
                 <div className="col-lg-8">
                   <h1 className="heading-title">Doctors</h1>
                   <p className="mb-0">
-                    Odio et unde deleniti. Deserunt numquam exercitationem. Officiis
-                    quo odio sint voluptas consequatur ut Link odio voluptatem. Sit
-                    dolorum debitis veritatis natus dolores. Quasi ratione sint. Sit
-                    quaerat ipsum dolorem.
+                    Our experienced and dedicated doctors are committed to providing compassionate, high-quality healthcare. With expertise across various specialties, they ensure personalized treatment and the best possible care for every patient.
                   </p>
                 </div>
               </div>

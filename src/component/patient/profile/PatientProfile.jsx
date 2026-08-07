@@ -69,7 +69,7 @@ export default function PatientProfile() {
                             <div className="col-lg-8">
                                 <h1 className="heading-title">My Profile</h1>
                                 <p className="mb-0">
-                                    Manage your personal information.
+                                   Manage your personal information, update your contact details, and keep your profile up to date. Your profile helps us provide a personalized, secure, and seamless healthcare experience.
                                 </p>
                             </div>
                         </div>
@@ -314,7 +314,7 @@ export default function PatientProfile() {
                                     </div>
                                     <div className="d-flex align-items-center justify-content-center">
                                         <Link
-                                            to="/patient/history"
+                                            to="/history"
                                             className="btn btn-primary w-50 mt-3 btnProfile"
                                         >
                                             View Medical History

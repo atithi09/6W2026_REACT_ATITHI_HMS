@@ -23,10 +23,7 @@ export default function Department() {
                                 <div className="col-lg-8">
                                     <h1 className="heading-title">Departments</h1>
                                     <p className="mb-0">
-                                        Odio et unde deleniti. Deserunt numquam exercitationem. Officiis
-                                        quo odio sint voluptas consequatur ut a odio voluptatem. Sit
-                                        dolorum debitis veritatis natus dolores. Quasi ratione sint. Sit
-                                        quaerat ipsum dolorem.
+                                        Our hospital offers a wide range of specialized departments, each staffed by experienced healthcare professionals dedicated to providing expert diagnosis, treatment, and compassionate care across various medical specialties.
                                     </p>
                                 </div>
                             </div>

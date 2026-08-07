@@ -62,10 +62,7 @@ export default function Contacts() {
                                 <div className="col-lg-8">
                                     <h1 className="heading-title">Contact</h1>
                                     <p className="mb-0">
-                                        Odio et unde deleniti. Deserunt numquam exercitationem. Officiis
-                                        quo odio sint voluptas consequatur ut a odio voluptatem. Sit
-                                        dolorum debitis veritatis natus dolores. Quasi ratione sint. Sit
-                                        quaerat ipsum dolorem.
+                                        Have questions or need assistance? We're here to help. Reach out to our team for support, inquiries, or feedback, and we'll get back to you as soon as possible. Your health and satisfaction are our top priorities.
                                     </p>
                                 </div>
                             </div>

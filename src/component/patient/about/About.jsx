@@ -12,10 +12,7 @@ export default function About(){
           <div className="col-lg-8">
             <h1 className="heading-title">About</h1>
             <p className="mb-0">
-              Odio et unde deleniti. Deserunt numquam exercitationem. Officiis
-              quo odio sint voluptas consequatur ut a odio voluptatem. Sit
-              dolorum debitis veritatis natus dolores. Quasi ratione sint. Sit
-              quaerat ipsum dolorem.
+             Our Hospital Management System is a smart, AI-assisted healthcare platform that simplifies hospital operations by managing appointments, medical records, consultations, and prescriptions in one secure place. It enhances efficiency, reduces paperwork, and provides a seamless experience for both patients and healthcare professionals.
             </p>
           </div>
         </div>

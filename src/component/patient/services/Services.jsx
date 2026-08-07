@@ -1,4 +1,4 @@
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 export default function Services() {
     return (
@@ -12,10 +12,7 @@ export default function Services() {
                                 <div className="col-lg-8">
                                     <h1 className="heading-title">Services</h1>
                                     <p className="mb-0">
-                                        Odio et unde deleniti. Deserunt numquam exercitationem. Officiis
-                                        quo odio sint voluptas consequatur ut Link odio voluptatem. Sit
-                                        dolorum debitis veritatis natus dolores. Quasi ratione sint. Sit
-                                        quaerat ipsum dolorem.
+                                        We offer a wide range of healthcare services designed to meet your medical needs. From appointment booking and doctor consultations to digital medical records and prescription management, our platform ensures convenient, efficient, and reliable healthcare services.
                                     </p>
                                 </div>
                             </div>
@@ -25,7 +22,7 @@ export default function Services() {
                         <div className="container">
                             <ol>
                                 <li>
-                                     <Link to='/'>Home</Link>
+                                    <Link to='/'>Home</Link>
                                 </li>
                                 <li className="current">Services</li>
                             </ol>
@@ -39,7 +36,7 @@ export default function Services() {
                         <div className="row gy-4">
                             <div
                                 className="col-lg-4 col-md-6"
-                               
+
                             >
                                 <div className="service-item">
                                     <div className="service-image">
@@ -113,7 +110,7 @@ export default function Services() {
                             {/* End Service Item */}
                             <div
                                 className="col-lg-4 col-md-6"
-                                
+
                             >
                                 <div className="service-item">
                                     <div className="service-image">
@@ -150,7 +147,7 @@ export default function Services() {
                             {/* End Service Item */}
                             <div
                                 className="col-lg-4 col-md-6"
-                                
+
                             >
                                 <div className="service-item">
                                     <div className="service-image">
@@ -187,7 +184,7 @@ export default function Services() {
                             {/* End Service Item */}
                             <div
                                 className="col-lg-4 col-md-6"
-                                
+
                             >
                                 <div className="service-item">
                                     <div className="service-image">
@@ -224,7 +221,7 @@ export default function Services() {
                             {/* End Service Item */}
                             <div
                                 className="col-lg-4 col-md-6"
-                                
+
                             >
                                 <div className="service-item">
                                     <div className="service-image">

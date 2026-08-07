@@ -140,13 +140,8 @@ export default function Appointment() {
                         <div className="container">
                             <div className="row d-flex justify-content-center text-center">
                                 <div className="col-lg-8">
-                                    <h1 className="heading-title">Appointment</h1>
-                                    <p className="mb-0">
-                                        Odio et unde deleniti. Deserunt numquam exercitationem. Officiis
-                                        quo odio sint voluptas consequatur ut a odio voluptatem. Sit
-                                        dolorum debitis veritatis natus dolores. Quasi ratione sint. Sit
-                                        quaerat ipsum dolorem.
-                                    </p>
+                                    <h1 className="heading-title">Book Appointment</h1>
+                                   
                                 </div>
                             </div>
                         </div>
