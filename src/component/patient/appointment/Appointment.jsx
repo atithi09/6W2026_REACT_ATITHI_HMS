@@ -140,8 +140,10 @@ export default function Appointment() {
                         <div className="container">
                             <div className="row d-flex justify-content-center text-center">
                                 <div className="col-lg-8">
-                                    <h1 className="heading-title">Book Appointment</h1>
-                                   
+                                    <h1 className="heading-title">Appointment</h1>
+                                    <p className="mb-0">
+                                        Schedule your appointment with ease by selecting your preferred doctor, date, and time. Our simple booking process ensures quick access to quality healthcare at your convenience.
+                                    </p>
                                 </div>
                             </div>
                         </div>

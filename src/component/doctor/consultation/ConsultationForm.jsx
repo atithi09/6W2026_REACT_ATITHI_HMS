@@ -285,26 +285,13 @@ export default function ConsultationForm() {
                                                     </div>
                                                 </div>
 
-                                                <div className="col-12 d-flex justify-content-between flex-wrap gap-2 my-3">
-                                                    <button
-                                                        type="button"
-                                                        className="btn-book"
-                                                        
-                                                    >
-                                                        End Consultation
-                                                    </button>
-
-                                                </div>
-
-
                                             </form>
                                         </div>
 
                                         <div className="emergency-info">
                                             <p>
                                                 <i className="bi bi-info-circle"></i>
-                                                Review all consultation details carefully before ending the
-                                                consultation.
+                                                Review all consultation details carefully before generating the prescription.
                                             </p>
                                         </div>
 
