@@ -268,13 +268,13 @@ export default function PatientProfile() {
                                     <div className="d-flex gap-4 justify-content-evenly pt-3">
                                         <Link
                                             to="/myAppt"
-                                            className="btn  btn-primary"
+                                            className="btn  btn-primary btnProfile"
                                         >
                                             Upcoming Appointments
                                         </Link>
                                         <Link
                                             to="/myAppthistory"
-                                            className="btn btn-primary"
+                                            className="btn btn-primary btnProfile"
                                         >
                                             Appointment History
                                         </Link>
@@ -312,13 +312,15 @@ export default function PatientProfile() {
                                         </div>
 
                                     </div>
+                                    <div className="d-flex align-items-center justify-content-center">
+                                        <Link
+                                            to="/patient/history"
+                                            className="btn btn-primary w-50 mt-3 btnProfile"
+                                        >
+                                            View Medical History
+                                        </Link>
+                                    </div>
 
-                                    <Link
-                                        to="/patient/history"
-                                        className="btn btn-primary mt-3"
-                                    >
-                                        View Medical History
-                                    </Link>
 
                                 </div>
 

@@ -45,6 +45,10 @@ export default function PatientsList() {
         fetchAppointments()
     }, [])
 
+    async function viewRecord(){
+        
+    }
+
     if (loading) {
         return (
             <div
@@ -143,7 +147,7 @@ export default function PatientsList() {
 
                                             <td>
 
-                                                 <button className="btn  btn-primary btn-sm appBadge">
+                                                 <button className="btn  btn-primary btn-sm appBadge" onClick={viewRecord}>
                                                         View Records
                                                     </button>
                                             </td>

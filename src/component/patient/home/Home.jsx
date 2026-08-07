@@ -75,10 +75,10 @@ export default function Home() {
                     </div>
                   </div>
                   <div
-                    className="hero-actions d-flex justify-content-center justify-content-md-evenly"
+                    className="hero-actions d-flex justify-content-center "
 
                   >
-                    <Link to="/appointment" className="btn btn-primary">
+                    <Link to="/appointment" className="btn-primary btn w-100 d-flex align-items-center justify-content-center ">
                       Book Appointment
                     </Link>
                     

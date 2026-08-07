@@ -107,11 +107,11 @@ export default function MyAppointmentHistory() {
                             <table className="table table-hover align-middle text-center mb-0">
                                 <thead className="table-primary">
                                     <tr>
-                                        <th>Sr No.</th>
-                                        <th>Doctor Name</th>
-                                        <th>Time</th>
-                                        <th>Date</th>
-                                        <th>Status</th>
+                                        <th className='text-nowrap'>Sr No.</th>
+                                        <th className='text-nowrap'>Doctor Name</th>
+                                        <th className='text-nowrap'>Time</th>
+                                        <th className='text-nowrap'>Date</th>
+                                        <th className='text-nowrap'>Status</th>
                                     </tr>
                                 </thead>
 
@@ -122,13 +122,13 @@ export default function MyAppointmentHistory() {
 
                                             <td>{doctors.find((p) => p.id == appt.doctorId)?.name}</td>
 
-                                            <td
+                                            <td className="text-nowrap"
                                                 className="description-cell"
                                             >
                                                 {appt.appointmentTime}
                                             </td>
 
-                                            <td>
+                                            <td className="text-nowrap">
                                                 {appt.appointmentDate}
                                             </td>
                                             <td>
