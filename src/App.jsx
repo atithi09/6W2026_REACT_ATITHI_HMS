@@ -36,11 +36,7 @@ import ConsultationForm from "./component/doctor/consultation/ConsultationForm"
 import PrescriptionForm from "./component/doctor/consultation/PrescriptionForm"
 import RecordHistory from "./component/patient/appointment/RecordHistory"
 
-
-
-
 function App() {
-
 
   return (
     <>
@@ -60,7 +56,6 @@ function App() {
           <Route path='myAppt' element={<ViewMyAppointment/>}></Route>
           <Route path='myAppthistory' element={<MyAppointmentHistory/>}></Route>
           <Route path='history' element={<RecordHistory/>}></Route>
-          
           </Route>
 
           

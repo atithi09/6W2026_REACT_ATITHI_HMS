@@ -7,6 +7,31 @@ import AppointmentService from "../../../services/AppointmentService"
 import PatientService from "../../../services/PatientService"
 import { Link } from "react-router-dom"
 import MedicalRecordServices from "../../../services/MedicalRecordServices"
+import React from 'react';
+import ReactDOM from 'react-dom';
+import Modal from 'react-modal';
+import Groq from "groq-sdk";
+
+const customStyles = {
+    content: {
+        top: '50%',
+        left: '50%',
+        right: 'auto',
+        bottom: 'auto',
+        marginRight: '-50%',
+        transform: 'translate(-50%, -50%)',
+        width: '600px',
+        maxWidth: '90vw',
+        borderRadius: '12px',
+        padding: '24px',
+        border: 'none',
+        boxShadow: '0 10px 40px rgba(0,0,0,0.2)',
+    },
+    overlay: {
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        zIndex: 1050,
+    },
+};
 
 export default function ConsultationForm() {
     let param = useParams()
@@ -25,6 +50,130 @@ export default function ConsultationForm() {
     const patientId = appointment.patientId
     const doctorId = appointment.doctorId
     const appointmentId = param.id
+
+    const [question, setQuestion] = useState("");
+    const [loading, setLoading] = useState(false);
+
+    const groq = new Groq({
+        apiKey: import.meta.env.VITE_GROQ_API_KEY,
+        dangerouslyAllowBrowser: true
+    });
+    const askAI = async () => {
+
+        if (!question.trim()) return;
+
+        setLoading(true);
+
+        try {
+            const completion = await groq.chat.completions.create({
+
+                messages: [
+                    {
+                        role: "system",
+                        content: `
+You are a Clinical Consultation Assistant integrated into a Hospital Management System.
+
+You assist licensed doctors by analyzing the symptoms and/or diagnosis they describe 
+and generating a structured clinical consultation draft. You do NOT replace clinical 
+judgment and you MUST NOT prescribe medication. The doctor is solely responsible for 
+selecting and prescribing any drugs, dosages, or treatments.
+
+Return ONLY valid JSON in exactly this format, with no text outside the JSON and no markdown:
+
+
+
+{
+    "patientName":"",
+    "age":"",
+    "gender":"",
+    "symptoms": "",
+    "diagnosis": "",
+    "treatment": "",
+    "notes": ""
+}
+
+FIELD RULES:
+
+- symptoms: Restate the symptoms described by the doctor in clear clinical terms, as a 
+  comma-separated list. Do not add symptoms that weren't mentioned or implied.
+
+- diagnosis: State the most likely clinical diagnosis based ONLY on the given information. 
+  If the picture is ambiguous, give the primary diagnosis followed by 1-2 differential 
+  diagnoses in parentheses. Do not overstate certainty for vague or incomplete input.
+
+- treatment: Provide a structured treatment plan as a single readable string, including:
+  medicine name (generic, with common brand in parentheses), dosage, route, frequency 
+  (e.g. OD/BD/TDS), and duration for each drug, separated by semicolons. Follow with 
+  brief non-pharmacological advice (rest, hydration, diet, activity) if relevant. Use 
+  standard dosing conventions. Do not suggest controlled substances or high-risk drugs 
+  without flagging them clearly as needing extra scrutiny.
+
+- notes: Include, where relevant:
+  1. Any red-flag or emergency symptoms requiring immediate/in-person care.
+  2. Key contraindications or drug interactions to verify (allergies, pregnancy, renal/ 
+     hepatic impairment, age-specific dosing).
+  3. Missing information that limits the reliability of this draft (e.g. no age/weight, 
+     no allergy history).
+  4. A closing disclaimer: "AI-generated draft — doctor must verify diagnosis, dosage, 
+     and interactions before finalizing."
+
+GENERAL RULES:
+- Do not invent patient information not present in the input.
+- If a field cannot be determined from the input, leave it as an empty string "" rather 
+  than guessing.
+- Use precise, professional clinical language — this is a medical document, not casual text.
+- If the input is too vague to produce a safe diagnosis or treatment (e.g. a single 
+  nonspecific symptom), say so explicitly inside "notes" and leave "diagnosis" and/or 
+  "treatment" empty rather than fabricating one.
+- Never present this output as final or doctor-approved.
+`
+                    },
+
+                    {
+                        role: "user",
+                        content: question
+                    }
+                ],
+
+                model: "llama-3.3-70b-versatile",
+
+                temperature: 0.2,
+
+                response_format: {
+                    type: "json_object"
+                }
+
+            });
+            const result = JSON.parse(
+                completion.choices[0].message.content
+            );
+
+            // Put AI response directly into form fields
+            setPatientName(result.patientName || "");
+            setAge(result.age || "");
+            setGender(result.gender || "");
+            setSymptoms(result.symptoms || "");
+            setDiagnosis(result.diagnosis || "");
+            setTreatment(result.treatment || "");
+            setNotes(result.notes || "");
+
+            // Close modal
+            closeModal();
+
+            toast.success("AI generated consultation details.");
+
+        } catch (error) {
+
+            console.error("AI Error:", error);
+
+            toast.error("AI could not generate the consultation details.");
+
+        } finally {
+
+            setLoading(false);
+
+        }
+    };
 
     async function fetchDoctors() {
         let res = await DoctorServices.all()
@@ -76,13 +225,29 @@ export default function ConsultationForm() {
             toast.error("Something went wrong.")
         }
     }
-    
+
 
     useEffect(() => {
         getAppointment()
         fetchDoctors()
         fetchPateints()
     }, [])
+
+    let subtitle;
+    const [modalIsOpen, setIsOpen] = React.useState(false);
+
+    function openModal() {
+        setIsOpen(true);
+    }
+
+    function afterOpenModal() {
+        // references are now sync'd and can be accessed.
+        subtitle.style.color = '#f00';
+    }
+
+    function closeModal() {
+        setIsOpen(false);
+    }
 
     return (
         <>
@@ -152,11 +317,12 @@ export default function ConsultationForm() {
                                                     </div>
 
                                                     <div className="col-md-6">
-                                                        <label for="dname" className="form-label fw-bold fs-5">Patient Name</label>
+                                                        <label for="name" className="form-label fw-bold fs-5">Patient Name</label>
                                                         <input
-                                                            id="dname"
+                                                            id="name"
                                                             type="text"
                                                             className="form-control"
+                                                            value={patientName}
                                                             onChange={(e) => setPatientName(e.target.value)}
                                                         />
                                                     </div>
@@ -192,6 +358,7 @@ export default function ConsultationForm() {
                                                             id="gender"
                                                             type="text"
                                                             className="form-control"
+                                                            value={gender}
                                                             onChange={(e) => setGender(e.target.value)}
 
                                                         />
@@ -210,6 +377,7 @@ export default function ConsultationForm() {
                                                             className="form-control "
                                                             rows="4"
                                                             placeholder="Enter patient's symptoms..."
+                                                            value={symptoms}
                                                             onChange={(e) => setSymptoms(e.target.value)}
 
                                                         ></textarea>
@@ -226,6 +394,7 @@ export default function ConsultationForm() {
                                                             className="form-control"
                                                             rows="4"
                                                             placeholder="Enter diagnosis..."
+                                                            value={diagnosis}
                                                             onChange={(e) => setDiagnosis(e.target.value)}
 
                                                         ></textarea>
@@ -242,6 +411,7 @@ export default function ConsultationForm() {
                                                             className="form-control"
                                                             rows="4"
                                                             placeholder="Enter treatment details..."
+                                                            value={treatment}
                                                             onChange={(e) => setTreatment(e.target.value)}
 
                                                         ></textarea>
@@ -258,6 +428,7 @@ export default function ConsultationForm() {
                                                             className="form-control"
                                                             rows="4"
                                                             placeholder="Additional notes..."
+                                                            value={notes}
                                                             onChange={(e) => setNotes(e.target.value)}
 
                                                         ></textarea>
@@ -278,6 +449,7 @@ export default function ConsultationForm() {
                                                         <button
                                                             type="button"
                                                             className="btn btn-outline-primary"
+                                                            onClick={openModal}
                                                         >
                                                             <i className="bi bi-stars me-2"></i>
                                                             Generate with AI
@@ -303,7 +475,53 @@ export default function ConsultationForm() {
                 </main>
                 {/* /Appointmnet Section */}
             </main>
+            <div>
+                <Modal
+                    isOpen={modalIsOpen}
+                    onAfterOpen={afterOpenModal}
+                    onRequestClose={closeModal}
+                    style={customStyles}
+                    ariaHideApp={false}
+                >
+                    <div className="d-flex justify-content-between align-items-center mb-3 pb-3 border-bottom">
+                        <h4 className="mb-0 fw-bold">Groq AI Chat</h4>
+                        <button
+                            type="button"
+                            className="btn-close"
+                            onClick={closeModal}
+                            aria-label="Close"
+                        ></button>
+                    </div>
 
+                    <div className="mb-3">
+                        <textarea
+                            className="form-control"
+                            rows="5"
+                            placeholder="Ask something..."
+                            value={question}
+                            onChange={(e) => setQuestion(e.target.value)}
+                            disabled={loading}
+                        />
+                    </div>
+
+                    <div className="d-flex justify-content-end">
+                        <button
+                            className="btn btn-primary px-4"
+                            onClick={askAI}
+                            disabled={loading}
+                        >
+                            {loading ? (
+                                <>
+                                    <span className="spinner-border spinner-border-sm me-2" role="status" />
+                                    Thinking...
+                                </>
+                            ) : (
+                                "Ask AI"
+                            )}
+                        </button>
+                    </div>
+                </Modal>
+            </div>
         </>
     )
 }

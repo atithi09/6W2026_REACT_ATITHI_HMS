@@ -88,7 +88,7 @@ export default function MangeDoctorFeedback() {
                     </div>
                 </nav>
             </div>
-            {feedbacks ?
+            {feedbacks.length >0 ?
                 <div className="container">
 
                     <div className="d-flex justify-content-between my-3">
