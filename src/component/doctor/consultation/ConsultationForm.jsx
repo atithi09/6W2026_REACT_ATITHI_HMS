@@ -50,7 +50,7 @@ export default function ConsultationForm() {
     const patientId = appointment.patientId
     const doctorId = appointment.doctorId
     const appointmentId = param.id
-
+    const [aiGenerated, setAiGenerated] = useState(false);
     const [question, setQuestion] = useState("");
     const [loading, setLoading] = useState(false);
 
@@ -60,7 +60,10 @@ export default function ConsultationForm() {
     });
     const askAI = async () => {
 
-        if (!question.trim()) return;
+        if (!question.trim()) {
+            toast.info("Cannot send empty prompt.")
+            return;
+        }
 
         setLoading(true);
 
@@ -102,10 +105,8 @@ FIELD RULES:
   diagnoses in parentheses. Do not overstate certainty for vague or incomplete input.
 
 - treatment: Provide a structured treatment plan as a single readable string, including:
-  medicine name (generic, with common brand in parentheses), dosage, route, frequency 
-  (e.g. OD/BD/TDS), and duration for each drug, separated by semicolons. Follow with 
-  brief non-pharmacological advice (rest, hydration, diet, activity) if relevant. Use 
-  standard dosing conventions. Do not suggest controlled substances or high-risk drugs 
+  brief non-pharmacological and pharmacological advice (rest, hydration, diet, activity) if relevant.Describe the process of possible treatment, commonly used medicines in that and duration without listing medicines. Use 
+  standard dosing conventions. Do not suggest medicines and controlled substances or high-risk drugs 
   without flagging them clearly as needing extra scrutiny.
 
 - notes: Include, where relevant:
@@ -114,9 +115,7 @@ FIELD RULES:
      hepatic impairment, age-specific dosing).
   3. Missing information that limits the reliability of this draft (e.g. no age/weight, 
      no allergy history).
-  4. A closing disclaimer: "AI-generated draft — doctor must verify diagnosis, dosage, 
-     and interactions before finalizing."
-
+ 
 GENERAL RULES:
 - Do not invent patient information not present in the input.
 - If a field cannot be determined from the input, leave it as an empty string "" rather 
@@ -157,11 +156,13 @@ GENERAL RULES:
             setTreatment(result.treatment || "");
             setNotes(result.notes || "");
 
+            
+
             // Close modal
             closeModal();
 
             toast.success("AI generated consultation details.");
-
+            setAiGenerated(true);
         } catch (error) {
 
             console.error("AI Error:", error);
@@ -503,6 +504,7 @@ GENERAL RULES:
                             disabled={loading}
                         />
                     </div>
+                    
 
                     <div className="d-flex justify-content-end">
                         <button
@@ -522,6 +524,20 @@ GENERAL RULES:
                     </div>
                 </Modal>
             </div>
+            {aiGenerated && (
+                        <div className=" container w-75 mb-5 alert alert-warning d-flex align-items-start gap-2">
+                            <i className="bi bi-robot fs-5"></i>
+
+                            <div>
+                                <strong>AI-Assisted Prescription Draft</strong>
+                                <p className="mb-0 mt-1">
+                                    This prescription draft was generated with the assistance of AI.
+                                    Please review and verify all medicines, dosages, and instructions
+                                    before saving.
+                                </p>
+                            </div>
+                        </div>
+                    )}
         </>
     )
 }
