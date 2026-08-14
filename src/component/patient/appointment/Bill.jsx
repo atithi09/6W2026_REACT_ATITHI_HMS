@@ -28,7 +28,6 @@ export default function Bills() {
 
         }
     }
-
     useEffect(() => {
         fetchBills();
     }, []);
@@ -112,13 +111,15 @@ export default function Bills() {
 
                                             </div>
 
-
                                             <span className="badge p-2 fs-6 bg-success">
                                                 {bill.paymentStatus}
                                             </span>
 
                                         </div>
-
+                                        <div>
+                                            <strong>Appointment Date: </strong>
+                                            <span>{bill.createdAt?.toDate().toLocaleDateString()}</span>
+                                        </div>
 
                                         <hr />
 
