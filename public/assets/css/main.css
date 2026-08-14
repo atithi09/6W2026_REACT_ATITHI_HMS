@@ -6454,13 +6454,15 @@ thead tr{
   line-height:15px;
 }
 
-.btnProfile{
-  min-width:220px;
-  height:45px;
+.btnProfile {
+    width: 220px;
+    min-width: 220px;
+    height: 45px;
 }
-@media (max-width: 576px) {
-    .btnProfile{
-        min-width: 180px;
-        font-size: 14px;
+
+@media (max-width: 767px) {
+    .btnProfile {
+        width: 100%;
+        min-width: 0;
     }
 }

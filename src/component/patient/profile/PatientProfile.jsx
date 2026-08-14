@@ -265,7 +265,7 @@ export default function PatientProfile() {
                                         </div>
 
                                     </div>
-                                    <div className="d-flex gap-4 justify-content-evenly pt-3">
+                                    <div className="d-flex gap-4 justify-content-evenly flex-column flex-md-row">
                                         <Link
                                             to="/myAppt"
                                             className="btn  btn-primary btnProfile"
@@ -293,31 +293,37 @@ export default function PatientProfile() {
 
                                 <div className="card-body p-4">
 
-                                    <div className="d-flex align-items-center mb-3">
+                                    <div className="d-flex gap-4 justify-content-evenly flex-column flex-md-row">
 
                                         <div className="icon-box me-3">
                                             <i className="bi bi-file-earmark-medical"></i>
                                         </div>
 
-                                        <div>
+                                        <div className="mb-2">
 
                                             <h4 className="mb-1">
                                                 Medical History
                                             </h4>
 
-                                            <p className="text-muted mb-0">
+                                            <p className="text-muted">
                                                 View prescriptions, diagnoses and treatment records.
                                             </p>
 
                                         </div>
 
                                     </div>
-                                    <div className="d-flex align-items-center justify-content-center">
+                                    <div className="d-flex gap-4 justify-content-evenly flex-column flex-md-row">
                                         <Link
                                             to="/history"
-                                            className="btn btn-primary w-50 mt-3 btnProfile"
+                                            className="btn btn-primary btnProfile "
                                         >
                                             View Medical History
+                                        </Link>
+                                        <Link
+                                            to="/bill"
+                                            className="btn btn-primary btnProfile"
+                                        >
+                                            View Bills
                                         </Link>
                                     </div>
 

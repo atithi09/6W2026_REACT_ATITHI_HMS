@@ -1,4 +1,4 @@
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../firebase/FirebaseConfig";
 import BillModel from "../models/BillModel";
 
@@ -23,6 +23,17 @@ class BillService {
         );
 
         return docRef.id;
+    }
+
+    async BillByPatient(patientId){
+        const q = query(collection(db, "Bills"), where("patientId", "==", patientId))
+                const querySnapshot = await getDocs(q)
+                let Bills = []
+                querySnapshot.forEach((bill) => {
+                    // doc.data() is never undefined for query doc snapshots
+                    Bills.push({ id: bill.id, ...bill.data() })
+                });
+                return Bills
     }
 }
 
