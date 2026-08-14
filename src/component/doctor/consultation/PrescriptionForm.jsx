@@ -19,7 +19,7 @@ export default function PrescriptionForm() {
     const [medicines, setMedicines] = useState('')
     const [doctors, setDoctors] = useState([])
     const [patients, setPatients] = useState([])
-    const [medicalRecord, SetMedicalRecord] = useState([])
+    const [medicalRecord, SetMedicalRecord] = useState({})
     const patientId = medicalRecord.patientId
     const doctorId = medicalRecord.doctorId
     let apptId= medicalRecord.appointmentId

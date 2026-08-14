@@ -13,7 +13,7 @@ class AppointmentService {
         newApment.appointmentTime = data.appointmentTime
         newApment.reason = data.reason
         const docRef = addDoc(collection(db, "appointments"), { ...newApment });
-        return docRef;
+        return (await docRef).id;
     }
 
     async isSlotBooked(doctorId, appointmentDate, appointmentTime) {

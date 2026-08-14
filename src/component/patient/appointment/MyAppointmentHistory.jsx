@@ -123,13 +123,13 @@ export default function MyAppointmentHistory() {
                                             <td>
                                                
                                                    {appt.appointmentStatus === "Completed" && (
-                                                    <span className="badge bg-success p-2 fs-6">
+                                                    <span className="badge appBadge bg-success p-2 fs-6">
                                                         Completed
                                                     </span>
                                                 )}
 
                                                 {appt.appointmentStatus === "Cancelled" && (
-                                                    <span className="badge p-2 fs-6 bg-danger">
+                                                    <span className="badge appBadge p-2 fs-6 bg-danger">
                                                         Cancelled
                                                     </span>
                                                 )}

@@ -5,6 +5,7 @@ import AuthService from "../../../services/AuthService"
 import { toast } from "react-toastify"
 import { useNavigate } from "react-router-dom"
 import AppointmentService from "../../../services/AppointmentService"
+import BillService from "../../../services/BillService"
 
 export default function Appointment() {
     let nav = useNavigate()
@@ -19,7 +20,7 @@ export default function Appointment() {
     const [time, setTime] = useState('')
     const [doctorid, setDoctorid] = useState('')
     const [reason, setReason] = useState('')
-   const  userType=AuthService.userType();
+    const userType = AuthService.userType();
 
     function getEmail() {
         const email = AuthService.email();
@@ -36,7 +37,7 @@ export default function Appointment() {
             toast.error("Login or Sign Up to book appointments")
             return;
         }
-        if(userType!=="3"){
+        if (userType !== "3") {
             toast.info("Only patients can book appointments. Please log in with a patient account.")
             return;
         }
@@ -50,7 +51,7 @@ export default function Appointment() {
             return;
         }
 
-        if (selectedDoctor && mobile && name&& userType=='3') {
+        if (selectedDoctor && mobile && name && userType == '3') {
 
             var options = {
                 "key": "rzp_test_TEsYc8A2eTFXl2", // Enter the Key ID generated from the Dashboard
@@ -59,11 +60,8 @@ export default function Appointment() {
                 "name": "clinic", //your business name
                 "description": "Test Transaction",
                 "image": "https://res.cloudinary.com/aiuasol7/image/upload/v1785062015/Modern_healthcare_clinic_logo_design_ic0ci4.png",
-                
-                "handler": async function (response) {
-                    alert(response.razorpay_order_id);
-                    alert(response.razorpay_signature)
 
+                "handler": async function (response) {
                     try {
                         let payload = {
                             patientId: patientid,
@@ -72,20 +70,41 @@ export default function Appointment() {
                             appointmentTime: time,
                             reason: reason,
                         }
-                        await AppointmentService.add(payload);
+
+                        const appointmentId = await AppointmentService.add(payload);
+                        const billPayload = {
+                            appointmentId: appointmentId,
+                            patientId: patientid,
+                            doctorId: doctorid,
+
+                            invoiceNumber: `INV-${Date.now()}`,
+
+                            consultationFee: selectedDoctor.consultationFee,
+                            totalAmount: selectedDoctor.consultationFee,
+
+                            paymentId: response.razorpay_payment_id,
+
+                            paymentMethod: "Razorpay",
+                            paymentStatus: "Paid",
+
+                            createdAt: new Date()
+                        };
+
+                        await BillService.add(billPayload);
+
                         toast.success("Appointment booked successfully");
-                       }
+                    }
                     catch (err) {
                         console.log("error:", err)
                         toast.error("Something went wrong")
                     }
                 },
-                 //We recommend using the prefill parameter to auto-fill customer's contact information, especially their phone number
-                    prefill: {
-                        name: name,
-                        email: email,
-                        contact: mobile
-                    }  //Provide the customer's phone number for better conversion rates 
+                //We recommend using the prefill parameter to auto-fill customer's contact information, especially their phone number
+                prefill: {
+                    name: name,
+                    email: email,
+                    contact: mobile
+                }  //Provide the customer's phone number for better conversion rates 
                 ,
                 "notes": {
                     "address": "Razorpay Corporate Office"
