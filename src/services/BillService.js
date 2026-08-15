@@ -29,9 +29,9 @@ class BillService {
         const q = query(collection(db, "Bills"), where("patientId", "==", patientId))
                 const querySnapshot = await getDocs(q)
                 let Bills = []
-                querySnapshot.forEach((bill) => {
+                querySnapshot.forEach((doc) => {
                     // doc.data() is never undefined for query doc snapshots
-                    Bills.push({ id: bill.id, ...bill.data() })
+                    Bills.push({ id: doc.id, ...doc.data() })
                 });
                 return Bills
     }
@@ -40,12 +40,23 @@ class BillService {
         const q = query(collection(db, "Bills"), where("doctorId", "==", doctorId))
                 const querySnapshot = await getDocs(q)
                 let Bills = []
-                querySnapshot.forEach((bill) => {
+                querySnapshot.forEach((doc) => {
                     // doc.data() is never undefined for query doc snapshots
-                    Bills.push({ id: bill.id, ...bill.data() })
+                    Bills.push({ id: doc.id, ...doc.data() })
                 });
                 return Bills
 
+    }
+
+   async allBills() {
+        let bills = []
+        const querySnapshot = await getDocs(collection(db, "Bills"));
+        querySnapshot.forEach((doc) => {
+            // doc.data() is never undefined for query doc snapshots
+           
+            bills.push({ id: doc.id, ...doc.data() })
+        });
+        return bills
     }
 }
 

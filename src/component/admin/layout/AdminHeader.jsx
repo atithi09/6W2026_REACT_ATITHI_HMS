@@ -97,14 +97,8 @@ export default function AdminHeader() {
                                 </li>
 
                                 <li>
-                                    <Link to="/contact" onClick={closeMenu}>
+                                    <Link to="/admin/managebills" onClick={closeMenu}>
                                         Bills
-                                    </Link>
-                                </li>
-
-                                <li>
-                                    <Link to="/admin" onClick={closeMenu}>
-                                        Payments
                                     </Link>
                                 </li>
                                 

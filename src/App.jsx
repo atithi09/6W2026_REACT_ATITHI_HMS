@@ -37,6 +37,7 @@ import PrescriptionForm from "./component/doctor/consultation/PrescriptionForm"
 import RecordHistory from "./component/patient/appointment/RecordHistory"
 import Bill from "./component/patient/appointment/Bill"
 import Earnings from "./component/doctor/earnings/Earnings"
+import ManageBills from "./component/admin/bills/ManageBills"
 
 function App() {
 
@@ -74,6 +75,7 @@ function App() {
           <Route path='managepatient' element={<ManagePatient/>}></Route>
           <Route path='manageappts' element={<ManageAppointments/>}></Route>
           <Route path='managefeedback' element={<ManageFeedback/>}></Route>
+          <Route path='managebills' element={<ManageBills/>}></Route>
           </Route>
 
           
