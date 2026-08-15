@@ -36,6 +36,7 @@ import ConsultationForm from "./component/doctor/consultation/ConsultationForm"
 import PrescriptionForm from "./component/doctor/consultation/PrescriptionForm"
 import RecordHistory from "./component/patient/appointment/RecordHistory"
 import Bill from "./component/patient/appointment/Bill"
+import Earnings from "./component/doctor/earnings/Earnings"
 
 function App() {
 
@@ -58,7 +59,6 @@ function App() {
           <Route path='myAppthistory' element={<MyAppointmentHistory/>}></Route>
           <Route path='history' element={<RecordHistory/>}></Route>
           <Route path='bill' element={<Bill/>}></Route>
-
           </Route>
 
           
@@ -86,7 +86,7 @@ function App() {
           <Route path='docfeedback' element={<MangeDoctorFeedback/>}></Route>  
           <Route path='consultationForm/:id' element={<ConsultationForm/>}></Route>  
           <Route path='PrescriptionForm/:id' element={<PrescriptionForm/>}></Route>  
-
+          <Route path='earnings' element={<Earnings/>}></Route>
           </Route>
           
         </Routes>

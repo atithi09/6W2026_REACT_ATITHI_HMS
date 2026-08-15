@@ -16,7 +16,6 @@ export default function PatientProfile() {
 
     async function fetchPatients() {
         let data = await PatientService.getSingle(params.id)
-        console.log(data)
         if (data) {
             setName(data.name);
             setEmail(data.email);
@@ -239,12 +238,12 @@ export default function PatientProfile() {
             <section className="section pt-3">
                 <div className="container">
 
-                    <div className="row g-4">
+                    <div className="row g-4 mb-4 mb-md-2">
 
                         {/* Appointments */}
                         <div className="col-lg-6">
 
-                            <div className="card border-0 shadow h-100 profile-option-card">
+                            <div className="card  shadow h-100 profile-option-card">
 
                                 <div className="card-body p-4">
 
@@ -287,13 +286,13 @@ export default function PatientProfile() {
                         </div>
 
                         {/* Medical History */}
-                        <div className="col-lg-6">
+                        <div className="col-lg-6 ">
 
                             <div className="card border-0 shadow h-100 profile-option-card">
 
                                 <div className="card-body p-4">
 
-                                    <div className="d-flex gap-4 justify-content-evenly flex-column flex-md-row">
+                                    <div className="d-flex align-items-center mb-3">
 
                                         <div className="icon-box me-3">
                                             <i className="bi bi-file-earmark-medical"></i>

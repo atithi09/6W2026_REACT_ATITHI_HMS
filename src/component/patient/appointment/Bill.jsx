@@ -96,7 +96,7 @@ export default function Bills() {
                             >
 
                                 <div className="card shadow border-0 rounded-4">
-                                    <div className="card p-4">
+                                    <div className="card-body p-4">
                                         <div className="d-flex justify-content-between align-items-center mb-3">
 
                                             <div>
@@ -111,7 +111,7 @@ export default function Bills() {
 
                                             </div>
 
-                                            <span className="badge p-2 fs-6 bg-success">
+                                            <span className="badge py-2 px-4 fs-6 bg-success">
                                                 {bill.paymentStatus}
                                             </span>
 

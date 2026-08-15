@@ -35,6 +35,18 @@ class BillService {
                 });
                 return Bills
     }
+
+    async BillByDoctor(doctorId){
+        const q = query(collection(db, "Bills"), where("doctorId", "==", doctorId))
+                const querySnapshot = await getDocs(q)
+                let Bills = []
+                querySnapshot.forEach((bill) => {
+                    // doc.data() is never undefined for query doc snapshots
+                    Bills.push({ id: bill.id, ...bill.data() })
+                });
+                return Bills
+
+    }
 }
 
 export default new BillService();

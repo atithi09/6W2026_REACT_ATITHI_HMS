@@ -53,7 +53,7 @@ export default function DoctorHeader() {
                                 <li><Link to="/doctor/viewappt">View Appointments</Link></li>
                                 <li><Link to="/doctor/viewpatient">Patients </Link></li>
                                 <li><Link to="/doctor/appthistory">Appointment History</Link></li>
-                                <li><Link to="/doctors">Earnings</Link></li>
+                                <li><Link to="/doctor/earnings">Earnings</Link></li>
                                 <li><Link to="/doctor/docfeedback">Feedback</Link></li>
                             </ul>
                         </nav>

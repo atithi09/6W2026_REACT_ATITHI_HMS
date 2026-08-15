@@ -11,7 +11,7 @@ export default function Home() {
               <div className="col-lg-6">
                 <div className="hero-content">
                   <div
-                    className="trust-badges mb-4"
+                    className="trust-badges mt-3 mb-4"
                   >
                     <div className="badge-item">
                       <i className="bi bi-shield-check" />
