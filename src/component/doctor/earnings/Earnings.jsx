@@ -16,6 +16,33 @@ export default function Earnings() {
     const [bills, setBills] = useState([])
     const [patients, setPatients] = useState([])
     const doctorId = AuthService.uid()
+    const now = new Date()
+    const thisMonth = bills.filter((bill) => {
+        const date = bill.createdAt.toDate();
+        return (
+            date.getMonth() === now.getMonth() &&
+            date.getFullYear() === now.getFullYear()
+        );
+    });
+    const thisYear = bills.filter((bill)=>{
+        const date = bill.createdAt.toDate()
+        return(
+            date.getFullYear()=== now.getFullYear()
+        );
+    });
+
+    const totalEarnings = bills.reduce((total, bill) => {
+        return total + Number(bill.totalAmount)
+    }, 0)
+
+    const monthlyEarnings = thisMonth.reduce((total, bill) => {
+        return total + Number(bill.totalAmount);
+    }, 0);
+
+    const yearlyEarnings = thisYear.reduce((total, bill)=>{
+            return total + Number(bill.totalAmount);
+    },0);
+
     async function fetchBills() {
         try {
             let res = await BillService.BillByDoctor(doctorId)
@@ -91,7 +118,7 @@ export default function Earnings() {
                                 <div className="d-flex justify-content-between align-items-start">
                                     <div>
                                         <p className="text-muted mb-2">Total Earnings</p>
-                                        <h2 className="fw-bold mb-1">₹1,24,500</h2>
+                                        <h2 className="fw-bold mb-1">₹{totalEarnings}</h2>
                                         <small className="text-muted">All time</small>
                                     </div>
 
@@ -110,8 +137,11 @@ export default function Earnings() {
                                 <div className="d-flex justify-content-between align-items-start">
                                     <div>
                                         <p className="text-muted mb-2">This Month</p>
-                                        <h2 className="fw-bold mb-1">₹12,500</h2>
-                                        <small className="text-muted">August 2026</small>
+                                        <h2 className="fw-bold mb-1">₹{monthlyEarnings.toLocaleString("en-IN")}</h2>
+                                        <small className="text-muted">{now.toLocaleString("en-IN", {
+                                            month: "long",
+                                            year: "numeric"
+                                        })}</small>
                                     </div>
 
                                     <div className="bg-success bg-opacity-10 rounded-circle p-3">
@@ -129,8 +159,11 @@ export default function Earnings() {
                                 <div className="d-flex justify-content-between align-items-start">
                                     <div>
                                         <p className="text-muted mb-2">This Year</p>
-                                        <h2 className="fw-bold mb-1">₹86,400</h2>
-                                        <small className="text-muted">January – August 2026</small>
+                                        <h2 className="fw-bold mb-1">₹{yearlyEarnings.toLocaleString("en-IN")}</h2>
+                                        <small className="text-muted">January-{now.toLocaleString("en-IN", {
+                                            month: "long",
+                                            year: "numeric"
+                                        })}</small>
                                     </div>
 
                                     <div className="bg-warning bg-opacity-10 rounded-circle p-3">
@@ -204,7 +237,7 @@ export default function Earnings() {
                     <div className="card border-0 shadow-sm text-center py-5">
                         <div className="card-body">
                             <i
-                                className="bi bi-calendar2-x text-primary"
+                                className="bi bi-cash-stack opacity-50 text-primary"
                                 style={{ fontSize: "4rem" }}
                             ></i>
 

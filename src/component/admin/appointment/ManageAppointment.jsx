@@ -179,7 +179,7 @@ export default function ManageAppointments() {
                         <div className="card-body">
 
                             <i
-                                className="bi bi-calendar2-x text-primary"
+                                className="bi bi-calendar2-x opacity-50 text-primary"
                                 style={{ fontSize: "4rem" }}
                             ></i>
 

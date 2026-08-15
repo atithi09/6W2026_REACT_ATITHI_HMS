@@ -121,71 +121,97 @@ export default function ManageDoctor() {
                         </div>
 
                     </div>
-                    <div
-                        style={{
-                            marginBottom: "20px"
-                        }}
-                    >
-                        <div className="table-responsive shadow-sm rounded-4">
-                            <table className="table table-hover align-middle text-center mb-0">
-                                <thead className="table-primary">
-                                    <tr>
-                                        <th className='text-nowrap'>Sr No.</th>
-                                        <th className='text-nowrap'>Name</th>
-                                        <th>Department</th>
-                                        <th>Status</th>
-                                        <th className='text-nowrap'>Date</th>
-                                        <th width="170">Action</th>
-                                    </tr>
-                                </thead>
-
-                                <tbody>
-                                    {doctors.map((doctor, index) => (
-                                        <tr key={doctor.id}>
-                                            <td >{index + 1}</td>
-
-                                            <td className="fw-semibold text-nowrap">
-                                                {doctor.name}
-                                            </td>
-
-                                            <td>{departments.find((d) => d.id == doctor.departmentid)?.name}</td>
-
-                                            <td>
-                                                <span
-                                                    className={`badge ${doctor.status
-                                                        ? "bg-success"
-                                                        : "bg-danger"
-                                                        }`}
-                                                >
-                                                    {doctor.status ? "Active" : "Inactive"}
-                                                </span>
-                                            </td>
-
-                                            <td className='text-nowrap'>
-                                                {new Date(doctor.createdAt).toLocaleDateString()}
-                                            </td>
-
-                                            <td>
-                                                <Link to={`/admin/editDoc/${doctor.id}`}>
-                                                    <button className="btn btn-outline-primary btn-sm rounded-circle me-0 me-md-2 mb-2 mb-md-0">
-                                                        <i className="bi bi-pencil-fill"></i>
-                                                    </button>
-                                                </Link>
-
-                                                <button
-                                                    className="btn btn-outline-danger btn-sm rounded-circle"
-                                                    onClick={() => deleteDoctor(doctor.id)}
-                                                >
-                                                    <i className="bi bi-trash-fill"></i>
-                                                </button>
-                                            </td>
+                    {doctors.length > 0 ? (
+                        <div
+                            style={{
+                                marginBottom: "20px"
+                            }}
+                        >
+                            <div className="table-responsive shadow-sm rounded-4">
+                                <table className="table table-hover align-middle text-center mb-0">
+                                    <thead className="table-primary">
+                                        <tr>
+                                            <th className='text-nowrap'>Sr No.</th>
+                                            <th className='text-nowrap'>Name</th>
+                                            <th>Department</th>
+                                            <th>Status</th>
+                                            <th className='text-nowrap'>Date</th>
+                                            <th width="170">Action</th>
                                         </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div >
+                                    </thead>
+
+                                    <tbody>
+                                        {doctors.map((doctor, index) => (
+                                            <tr key={doctor.id}>
+                                                <td >{index + 1}</td>
+
+                                                <td className="fw-semibold text-nowrap">
+                                                    {doctor.name}
+                                                </td>
+
+                                                <td>{departments.find((d) => d.id == doctor.departmentid)?.name}</td>
+
+                                                <td>
+                                                    <span
+                                                        className={`badge ${doctor.status
+                                                            ? "bg-success"
+                                                            : "bg-danger"
+                                                            }`}
+                                                    >
+                                                        {doctor.status ? "Active" : "Inactive"}
+                                                    </span>
+                                                </td>
+
+                                                <td className='text-nowrap'>
+                                                    {new Date(doctor.createdAt).toLocaleDateString()}
+                                                </td>
+
+                                                <td>
+                                                    <Link to={`/admin/editDoc/${doctor.id}`}>
+                                                        <button className="btn btn-outline-primary btn-sm rounded-circle me-0 me-md-2 mb-2 mb-md-0">
+                                                            <i className="bi bi-pencil-fill"></i>
+                                                        </button>
+                                                    </Link>
+
+                                                    <button
+                                                        className="btn btn-outline-danger btn-sm rounded-circle"
+                                                        onClick={() => deleteDoctor(doctor.id)}
+                                                    >
+                                                        <i className="bi bi-trash-fill"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>) : (
+                        <div className="col-12">
+                            <div className="card border-0 shadow-sm text-center py-5">
+                                <div className="card-body">
+                                    <i
+                                        className="bi bi-person-badge opacity-50 text-primary"
+                                        style={{ fontSize: "4rem" }}
+                                    ></i>
+
+                                    <h4 className="mt-3 fw-bold">
+                                        No Departments Yet
+                                    </h4>
+
+                                    <p className="text-muted mb-4">
+                                        You don't have any departments at the moment.
+                                        Add a department to get started.
+                                    </p>
+
+                                    <Link to="/admin/addDepartment">
+                                        <button className="btn btn-primary">
+                                            + Add Department
+                                        </button>
+                                    </Link>
+                                </div>
+                            </div>
+                        </div>)
+ } </div >
             }
         </>
     )

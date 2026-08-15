@@ -86,7 +86,7 @@ export default function AppointmentHistory() {
                     </div>
                 </nav>
             </div>
-            {appointments ?
+            {appointments.length>0 ?
                 <div className="container">
 
                     <div className="d-flex justify-content-between my-3">
@@ -156,7 +156,7 @@ export default function AppointmentHistory() {
                     <div className="card border-0 shadow-sm text-center py-5">
                         <div className="card-body">
                             <i
-                                className="bi bi-clock-history text-primary"
+                                className="bi bi-clock-history opacity-50 text-primary"
                                 style={{ fontSize: "4rem" }}
                             ></i>
 

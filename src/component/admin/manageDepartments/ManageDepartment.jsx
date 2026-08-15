@@ -6,21 +6,22 @@ import { RingLoader } from "react-spinners";
 import { toast } from 'react-toastify';
 
 const override = {
-  display: "block",
-  margin: "0 auto",
-  borderColor: "red",
+    display: "block",
+    margin: "0 auto",
+    borderColor: "red",
 };
 
 export default function ManageDepartment() {
     let [loading, setLoading] = useState(true);
     const [departments, setDepartments] = useState([])
     async function fetchDepartments() {
-        try{
-        let res = await DepartmentServices.all()
-        setDepartments(res)}
-        catch(err){
+        try {
+            let res = await DepartmentServices.all()
+            setDepartments(res)
+        }
+        catch (err) {
             toast.error("Something went wrong")
-        }finally{
+        } finally {
             setLoading(false)
         }
     }
@@ -55,7 +56,7 @@ export default function ManageDepartment() {
 
     return (
         <>
-        
+
             <div className="page-title">
                 <div className="heading">
                     <div className="container">
@@ -83,117 +84,151 @@ export default function ManageDepartment() {
                     </div>
                 </nav>
             </div>
-             {loading ?
-        (
-    <div className="d-flex justify-content-center my-5">
-        <RingLoader
-            color="#0D6EFD"
-            loading={loading}
-            size={70}
-        />
-    </div>
-) :
-            <div className="container">
-
-                <div className="d-flex justify-content-between my-3">
-
-                    <div className="mt-4 mb-2">
-                        <h3>Existing Departments</h3>
+            {loading ?
+                (
+                    <div className="d-flex justify-content-center my-5">
+                        <RingLoader
+                            color="#0D6EFD"
+                            loading={loading}
+                            size={70}
+                        />
                     </div>
+                ) :
+                <div className="container">
 
-                    <div className=" mt-4 mb-2">
-                        <Link to='/admin/addDepartment'>
-                            <button className="btn btn-primary">
-                                + Add Department
-                            </button>
-                        </Link>
+                    <div className="d-flex justify-content-between my-3">
+
+                        <div className="mt-4 mb-2">
+                            <h3>Existing Departments</h3>
+                        </div>
+
+                        <div className=" mt-4 mb-2">
+                            <Link to='/admin/addDepartment'>
+                                <button className="btn btn-primary">
+                                    + Add Department
+                                </button>
+                            </Link>
+                        </div>
+
                     </div>
+                    {departments.length > 0 ? (
+                        <div
+                            style={{
+                                marginBottom: "20px"
+                            }}
+                        >
+                            <div className="table-responsive shadow-sm rounded-4">
+                                <table className="table table-hover align-middle text-center mb-0">
+                                    <thead className="table-primary">
+                                        <tr>
+                                            <th className="text-nowrap">Sr No.</th>
+                                            <th>Image</th>
+                                            <th className="text-nowrap">Name</th>
+                                            <th style={{ width: "300px" }}>Description</th>
+                                            <th>Status</th>
+                                            <th>Date</th>
+                                            <th width="170">Action</th>
+                                        </tr>
+                                    </thead>
 
+                                    <tbody>
+                                        {departments.map((department, index) => (
+                                            <tr key={department.id}>
+                                                <td>{index + 1}</td>
+
+                                                <td>
+                                                    <img
+                                                        src={department.image}
+                                                        alt={department.name}
+                                                        className="rounded-circle border shadow-sm"
+                                                        style={{
+                                                            width: "70px",
+                                                            height: "70px",
+                                                            objectFit: "cover"
+                                                        }}
+                                                    />
+                                                </td>
+
+                                                <td className="fw-semibold text-nowrap">
+                                                    {department.name}
+                                                </td>
+
+                                                <td
+                                                    className="description-cell text-start"
+                                                    title={department.description}
+                                                >
+                                                    {department.description}
+                                                </td>
+
+                                                <td>
+                                                    <span
+                                                        className={`badge ${department.status
+                                                                ? "bg-success"
+                                                                : "bg-danger"
+                                                            }`}
+                                                    >
+                                                        {department.status ? "Active" : "Inactive"}
+                                                    </span>
+                                                </td>
+
+                                                <td>
+                                                    {new Date(
+                                                        department.createdAt
+                                                    ).toLocaleDateString()}
+                                                </td>
+
+                                                <td>
+                                                    <Link
+                                                        to={`/admin/editDepartment/${department.id}`}
+                                                    >
+                                                        <button className="btn btn-outline-primary btn-sm rounded-circle me-0 me-md-2 mb-2 mb-md-0">
+                                                            <i className="bi bi-pencil-fill"></i>
+                                                        </button>
+                                                    </Link>
+
+                                                    <button
+                                                        className="btn btn-outline-danger btn-sm rounded-circle"
+                                                        onClick={() =>
+                                                            deleteDepartment(department.id)
+                                                        }
+                                                    >
+                                                        <i className="bi bi-trash-fill"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    ) : (
+                        <div className="col-12">
+                            <div className="card border-0 shadow-sm text-center py-5">
+                                <div className="card-body">
+                                    <i
+                                        className="bi bi-building opacity-50 text-primary"
+                                        style={{ fontSize: "4rem" }}
+                                    ></i>
+
+                                    <h4 className="mt-3 fw-bold">
+                                        No Departments Yet
+                                    </h4>
+
+                                    <p className="text-muted mb-4">
+                                        You don't have any departments at the moment.
+                                        Add a department to get started.
+                                    </p>
+
+                                    <Link to="/admin/addDepartment">
+                                        <button className="btn btn-primary">
+                                            + Add Department
+                                        </button>
+                                    </Link>
+                                </div>
+                            </div>
+                        </div>
+                    )}
                 </div>
-                <div
-                    style={{
-                        marginBottom: "20px"
-                    }}
-                >
-                    <div className="table-responsive shadow-sm rounded-4">
-                        <table className="table table-hover align-middle text-center mb-0">
-                            <thead className="table-primary">
-                                <tr>
-                                    <th className='text-nowrap'>Sr No.</th>
-                                    <th>Image</th>
-                                    <th className='text-nowrap'>Name</th>
-                                    <th style={{ width: "300px" }}>Description</th>
-                                    <th>Status</th>
-                                    <th>Date</th>
-                                    <th width="170">Action</th>
-                                </tr>
-                            </thead>
-
-                            <tbody>
-                                {departments.map((department, index) => (
-                                    <tr key={department.id}>
-                                        <td>{index + 1}</td>
-
-                                        <td>
-                                            <img
-                                                src={department.image}
-                                                alt={department.name}
-                                                className="rounded-circle border shadow-sm"
-                                                style={{
-                                                    width: "70px",
-                                                    height: "70px",
-                                                    objectFit: "cover"
-                                                }}
-                                            />
-                                        </td>
-
-                                        <td className="fw-semibold text-nowrap">
-                                            {department.name}
-                                        </td>
-
-                                        <td
-                                            className="description-cell text-start"
-                                            title={department.description}
-                                        >
-                                            {department.description}
-                                        </td>
-
-                                        <td>
-                                            <span
-                                                className={`badge ${department.status
-                                                        ? "bg-success"
-                                                        : "bg-danger"
-                                                    }`}
-                                            >
-                                                {department.status ? "Active" : "Inactive"}
-                                            </span>
-                                        </td>
-
-                                        <td>
-                                            {new Date(department.createdAt).toLocaleDateString()}
-                                        </td>
-
-                                        <td>
-                                            <Link to={`/admin/editDepartment/${department.id}`}>
-                                                <button className="btn btn-outline-primary btn-sm rounded-circle me-0 me-md-2 mb-2 mb-md-0">
-                                                    <i className="bi bi-pencil-fill"></i>
-                                                </button>
-                                            </Link>
-
-                                            <button
-                                                className="btn btn-outline-danger btn-sm rounded-circle"
-                                                onClick={() => deleteDepartment(department.id)}
-                                            >
-                                                <i className="bi bi-trash-fill"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
             }
         </>
     )

@@ -161,7 +161,7 @@ export default function PatientsList() {
                 </div > :
                 <div className="card border-0 shadow-sm text-center py-5">
                     <div className="card-body">
-                        <i className="bi bi-people-fill display-1 text-primary"></i>
+                        <i className="bi bi-people-fill display-1 opacity-50 text-primary"></i>
 
                         <h3 className="fw-bold mt-3">
                             No Patients Found

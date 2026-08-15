@@ -105,69 +105,88 @@ export default function ManagePatient() {
 
 
                     </div>
-                    <div
-                        style={{
-                            marginBottom: "20px"
-                        }}
-                    >
-                        <div className="table-responsive shadow-sm rounded-4">
-                            <table className="table table-hover align-middle text-center mb-0">
-                                <thead className="table-primary">
-                                    <tr>
-                                        <th className='text-nowrap'>Sr No.</th>
-                                        <th>Name</th>
-                                        <th>Status</th>
-                                        <th>Date</th>
-                                        <th width="170">Action</th>
-                                    </tr>
-                                </thead>
-
-                                <tbody>
-                                    {patients.map((patients, index) => (
-                                        <tr key={patients.id}>
-                                            <td>{index + 1}</td>
-
-                                            <td className="fw-semibold text-nowrap">
-                                                {patients.name}
-                                            </td>
-
-                                            <td>
-                                                <span
-                                                    className={`badge ${patients.status
-                                                        ? "bg-success"
-                                                        : "bg-danger"
-                                                        }`}
-                                                >
-                                                    {patients.status ? "Active" : "Inactive"}
-                                                </span>
-                                            </td>
-
-                                            <td className='text-nowrap'>
-                                                {new Date(patients.createdAt).toLocaleDateString()}
-                                            </td>
-
-                                            <td>
-                                                <Link to={`/admin/editPatient/${patients.id}`}>
-                                                    <button className="btn btn-outline-primary btn-sm rounded-circle me-md-2 me-1">
-                                                        <i className="bi bi-pencil-fill"></i>
-                                                    </button>
-                                                </Link>
-
-                                                <button
-                                                    className="btn btn-outline-danger btn-sm rounded-circle"
-                                                    onClick={() => deletePatients(patients.id)}
-                                                >
-                                                    <i className="bi bi-trash-fill"></i>
-                                                </button>
-                                            </td>
+                    {patients.length > 0 ? (
+                        <div
+                            style={{
+                                marginBottom: "20px"
+                            }}
+                        >
+                            <div className="table-responsive shadow-sm rounded-4">
+                                <table className="table table-hover align-middle text-center mb-0">
+                                    <thead className="table-primary">
+                                        <tr>
+                                            <th className='text-nowrap'>Sr No.</th>
+                                            <th>Name</th>
+                                            <th>Status</th>
+                                            <th>Date</th>
+                                            <th width="170">Action</th>
                                         </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+                                    </thead>
 
-                </div >
+                                    <tbody>
+                                        {patients.map((patients, index) => (
+                                            <tr key={patients.id}>
+                                                <td>{index + 1}</td>
+
+                                                <td className="fw-semibold text-nowrap">
+                                                    {patients.name}
+                                                </td>
+
+                                                <td>
+                                                    <span
+                                                        className={`badge ${patients.status
+                                                            ? "bg-success"
+                                                            : "bg-danger"
+                                                            }`}
+                                                    >
+                                                        {patients.status ? "Active" : "Inactive"}
+                                                    </span>
+                                                </td>
+
+                                                <td className='text-nowrap'>
+                                                    {new Date(patients.createdAt).toLocaleDateString()}
+                                                </td>
+
+                                                <td>
+                                                    <Link to={`/admin/editPatient/${patients.id}`}>
+                                                        <button className="btn btn-outline-primary btn-sm rounded-circle me-md-2 me-1">
+                                                            <i className="bi bi-pencil-fill"></i>
+                                                        </button>
+                                                    </Link>
+
+                                                    <button
+                                                        className="btn btn-outline-danger btn-sm rounded-circle"
+                                                        onClick={() => deletePatients(patients.id)}
+                                                    >
+                                                        <i className="bi bi-trash-fill"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>) : (
+                        <div className="col-12">
+                            <div className="card border-0 shadow-sm text-center py-5">
+                                <div className="card-body">
+                                    <i
+                                        className="bi bi-person-badge opacity-50 text-primary"
+                                        style={{ fontSize: "4rem" }}
+                                    ></i>
+
+                                    <h4 className="mt-3 fw-bold">
+                                        No Patient Yet
+                                    </h4>
+
+                                    <p className="text-muted mb-4">
+                                        You don't have any patients at the moment.
+                                    </p>
+
+                                </div>
+                            </div>
+                        </div>)
+                    } </div >
             }
         </>
     )

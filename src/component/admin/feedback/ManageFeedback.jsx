@@ -154,7 +154,7 @@ export default function ManageFeedback() {
                     <div className="card border-0 shadow-sm text-center py-5">
                         <div className="card-body">
                             <i
-                                className="bi bi-calendar2-x text-primary"
+                                className="bi bi-calendar2-x opacity-50 text-primary"
                                 style={{ fontSize: "4rem" }}
                             ></i>
 
