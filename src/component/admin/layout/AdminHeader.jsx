@@ -4,6 +4,7 @@ import AuthService from "../../../services/AuthService";
 
 export default function AdminHeader() {
     const [mobileOpen, setMobileOpen] = useState(false);
+    const email = AuthService.email()
     const closeMenu = () => setMobileOpen(false);
     const nav = useNavigate()
 
@@ -22,7 +23,7 @@ export default function AdminHeader() {
                     <div className="container d-flex justify-content-center justify-content-md-between">
                         <div className="contact-info d-flex align-items-center">
                             <i className="bi bi-envelope d-flex align-items-center">
-                                <a href="mailto:contact@example.com">admin@example.com</a>
+                                <Link to="mailto:contact@example.com">{email}</Link>
                             </i>
 
                             <i className="bi bi-phone d-flex align-items-center ms-4">
@@ -31,21 +32,21 @@ export default function AdminHeader() {
                         </div>
 
                         <div className="social-links d-none d-md-flex align-items-center">
-                            <a href="#!" className="twitter">
+                            <Link to="#!" className="twitter">
                                 <i className="bi bi-twitter-x"></i>
-                            </a>
+                            </Link>
 
-                            <a href="#!" className="facebook">
+                            <Link to="#!" className="facebook">
                                 <i className="bi bi-facebook"></i>
-                            </a>
+                            </Link>
 
-                            <a href="#!" className="instagram">
+                            <Link to="#!" className="instagram">
                                 <i className="bi bi-instagram"></i>
-                            </a>
+                            </Link>
 
-                            <a href="#!" className="linkedin">
+                            <Link to="#!" className="linkedin">
                                 <i className="bi bi-linkedin"></i>
-                            </a>
+                            </Link>
                         </div>
                     </div>
                 </div>
