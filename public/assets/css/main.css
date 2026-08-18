@@ -4777,6 +4777,7 @@ h6 {
 .appointmnet .appointment-form .php-email-form input[type=tel],
 .appointmnet .appointment-form .php-email-form input[type=date],
 .appointmnet .appointment-form .php-email-form input[type=password],
+.appointmnet .appointment-form .php-email-form input[type=file],
 .appointmnet .appointment-form .php-email-form input[type=time],
 .appointmnet .appointment-form .php-email-form select,
 .appointmnet .appointment-form .php-email-form textarea {
@@ -4792,6 +4793,9 @@ h6 {
 .appointmnet .appointment-form .php-email-form input[type=text]:focus,
 .appointmnet .appointment-form .php-email-form input[type=email]:focus,
 .appointmnet .appointment-form .php-email-form input[type=tel]:focus,
+.appointmnet .appointment-form .php-email-form input[type=password]:focus,
+.appointmnet .appointment-form .php-email-form input[type=file]:focus,
+.appointmnet .appointment-form .php-email-form input[type=time]:focus,
 .appointmnet .appointment-form .php-email-form input[type=date]:focus,
 .appointmnet .appointment-form .php-email-form select:focus,
 .appointmnet .appointment-form .php-email-form textarea:focus {

@@ -68,7 +68,7 @@ export default function AddDepartment() {
                             <li>
                                 <Link to='/'>Home</Link>
                             </li>
-                            <li className="current">Departments</li>
+                            <li className="current">Add Departments</li>
                         </ol>
                     </div>
                 </nav>
