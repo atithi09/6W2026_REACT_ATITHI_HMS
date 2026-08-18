@@ -25,10 +25,6 @@ export default function AdminHeader() {
                             <i className="bi bi-envelope d-flex align-items-center">
                                 <Link to="mailto:contact@example.com">{email}</Link>
                             </i>
-
-                            <i className="bi bi-phone d-flex align-items-center ms-4">
-                                <span>+1 5589 55488 55</span>
-                            </i>
                         </div>
 
                         <div className="social-links d-none d-md-flex align-items-center">
