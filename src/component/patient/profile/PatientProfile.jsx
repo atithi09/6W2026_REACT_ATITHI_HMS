@@ -243,7 +243,7 @@ export default function PatientProfile() {
                         {/* Appointments */}
                         <div className="col-lg-6">
 
-                            <div className="card  shadow h-100 profile-option-card">
+                            <div className="card border-0 shadow h-100 profile-option-card">
 
                                 <div className="card-body p-4">
 
@@ -298,13 +298,13 @@ export default function PatientProfile() {
                                             <i className="bi bi-file-earmark-medical"></i>
                                         </div>
 
-                                        <div className="mb-2">
+                                        <div>
 
                                             <h4 className="mb-1">
                                                 Medical History
                                             </h4>
 
-                                            <p className="text-muted">
+                                            <p className="text-muted mb-0">
                                                 View prescriptions, diagnoses and treatment records.
                                             </p>
 
