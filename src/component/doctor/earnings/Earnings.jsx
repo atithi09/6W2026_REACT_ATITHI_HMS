@@ -24,10 +24,10 @@ export default function Earnings() {
             date.getFullYear() === now.getFullYear()
         );
     });
-    const thisYear = bills.filter((bill)=>{
+    const thisYear = bills.filter((bill) => {
         const date = bill.createdAt.toDate()
-        return(
-            date.getFullYear()=== now.getFullYear()
+        return (
+            date.getFullYear() === now.getFullYear()
         );
     });
 
@@ -39,9 +39,9 @@ export default function Earnings() {
         return total + Number(bill.totalAmount);
     }, 0);
 
-    const yearlyEarnings = thisYear.reduce((total, bill)=>{
-            return total + Number(bill.totalAmount);
-    },0);
+    const yearlyEarnings = thisYear.reduce((total, bill) => {
+        return total + Number(bill.totalAmount);
+    }, 0);
 
     async function fetchBills() {
         try {
@@ -130,6 +130,26 @@ export default function Earnings() {
                         </div>
                     </div>
 
+                    <div className="col-md-4">
+                        <div className="card border-0 shadow-sm rounded-4 h-100">
+                            <div className="card-body p-4">
+                                <div className="d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <p className="text-muted mb-2">This Year</p>
+                                        <h2 className="fw-bold mb-1">₹{yearlyEarnings.toLocaleString("en-IN")}</h2>
+                                        <small className="text-muted">January-{now.toLocaleString("en-IN", {
+                                            month: "long",
+                                            year: "numeric"
+                                        })}</small>
+                                    </div>
+
+                                    <div className="bg-warning bg-opacity-10 rounded-circle p-3">
+                                        <i className="bi bi-bar-chart-line text-warning fs-4"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                     <div className="col-md-4">
                         <div className="card border-0 shadow-sm rounded-4 h-100">
@@ -146,28 +166,6 @@ export default function Earnings() {
 
                                     <div className="bg-success bg-opacity-10 rounded-circle p-3">
                                         <i className="bi bi-calendar-check text-success fs-4"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div className="col-md-4">
-                        <div className="card border-0 shadow-sm rounded-4 h-100">
-                            <div className="card-body p-4">
-                                <div className="d-flex justify-content-between align-items-start">
-                                    <div>
-                                        <p className="text-muted mb-2">This Year</p>
-                                        <h2 className="fw-bold mb-1">₹{yearlyEarnings.toLocaleString("en-IN")}</h2>
-                                        <small className="text-muted">January-{now.toLocaleString("en-IN", {
-                                            month: "long",
-                                            year: "numeric"
-                                        })}</small>
-                                    </div>
-
-                                    <div className="bg-warning bg-opacity-10 rounded-circle p-3">
-                                        <i className="bi bi-bar-chart-line text-warning fs-4"></i>
                                     </div>
                                 </div>
                             </div>

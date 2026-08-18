@@ -17,6 +17,32 @@ export default function ManageBills() {
     const [bills, setBills] = useState([])
     const [patients, setPatients] = useState([])
     const [doctors, setDoctors] = useState([])
+    const now = new Date()
+    const thisMonth = bills.filter((bill) => {
+        const date = bill.createdAt.toDate();
+        return (
+            date.getMonth() === now.getMonth() &&
+            date.getFullYear() === now.getFullYear()
+        );
+    });
+    const thisYear = bills.filter((bill) => {
+        const date = bill.createdAt.toDate()
+        return (
+            date.getFullYear() === now.getFullYear()
+        );
+    });
+
+    const totalEarnings = bills.reduce((total, bill) => {
+        return total + Number(bill.totalAmount)
+    }, 0)
+
+    const monthlyEarnings = thisMonth.reduce((total, bill) => {
+        return total + Number(bill.totalAmount);
+    }, 0);
+
+    const yearlyEarnings = thisYear.reduce((total, bill) => {
+        return total + Number(bill.totalAmount);
+    }, 0);
 
     async function fetchBills() {
         try {
@@ -90,7 +116,73 @@ export default function ManageBills() {
                     </div>
                 </nav>
             </div>
-           
+
+            <div className="container mt-4">
+                <div className="row g-4 mb-4">
+
+                    <div className="col-md-4">
+                        <div className="card border-0 shadow-sm rounded-4 h-100">
+                            <div className="card-body p-4">
+                                <div className="d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <p className="text-muted mb-2">Total Earnings</p>
+                                        <h2 className="fw-bold mb-1">₹{totalEarnings}</h2>
+                                        <small className="text-muted">All time</small>
+                                    </div>
+
+                                    <div className="bg-primary bg-opacity-10 rounded-circle p-3">
+                                        <i className="bi bi-wallet2 text-primary fs-4"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="col-md-4">
+                        <div className="card border-0 shadow-sm rounded-4 h-100">
+                            <div className="card-body p-4">
+                                <div className="d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <p className="text-muted mb-2">This Year</p>
+                                        <h2 className="fw-bold mb-1">₹{yearlyEarnings.toLocaleString("en-IN")}</h2>
+                                        <small className="text-muted">January-{now.toLocaleString("en-IN", {
+                                            month: "long",
+                                            year: "numeric"
+                                        })}</small>
+                                    </div>
+
+                                    <div className="bg-warning bg-opacity-10 rounded-circle p-3">
+                                        <i className="bi bi-bar-chart-line text-warning fs-4"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="col-md-4">
+                        <div className="card border-0 shadow-sm rounded-4 h-100">
+                            <div className="card-body p-4">
+                                <div className="d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <p className="text-muted mb-2">This Month</p>
+                                        <h2 className="fw-bold mb-1">₹{monthlyEarnings.toLocaleString("en-IN")}</h2>
+                                        <small className="text-muted">{now.toLocaleString("en-IN", {
+                                            month: "long",
+                                            year: "numeric"
+                                        })}</small>
+                                    </div>
+
+                                    <div className="bg-success bg-opacity-10 rounded-circle p-3">
+                                        <i className="bi bi-calendar-check text-success fs-4"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
             {bills.length >
                 0 ?
                 <div className="container">
