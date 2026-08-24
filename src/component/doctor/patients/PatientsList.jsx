@@ -35,7 +35,7 @@ export default function PatientsList() {
         catch (err) {
             toast.error("Something went wrong")
         }
-         finally{
+        finally {
             setLoading(false)
         }
     }
@@ -45,8 +45,8 @@ export default function PatientsList() {
         fetchAppointments()
     }, [])
 
-    async function viewRecord(){
-        
+    async function viewRecord() {
+
     }
 
     if (loading) {
@@ -90,10 +90,10 @@ export default function PatientsList() {
                     </div>
                 </nav>
             </div>
-            {doctorPatients.length>0 ?
+            {doctorPatients.length > 0 ?
                 <div className="container my-5">
 
-                    
+
                     <div
                         style={{
                             marginBottom: "20px"
@@ -122,7 +122,7 @@ export default function PatientsList() {
 
                                             <td>
                                                 <span
-                                                    className={`badge ${patients.status
+                                                    className={`badge appBadge fs-6 ${patients.status
                                                         ? "bg-success"
                                                         : "bg-danger"
                                                         }`}
@@ -135,12 +135,15 @@ export default function PatientsList() {
                                                 {patients.gender || "not Mentioned"}
                                             </td>
 
-                                            <td>
 
-                                                 <button className="btn  btn-primary btn-sm appBadge" onClick={viewRecord}>
+                                            <td>
+                                                <Link to={`/doctor/viewRecords/${patients.id}`}>
+                                                    <button className="btn appBadge fs-6 btn-primary btn-sm">
                                                         View Records
                                                     </button>
+                                                </Link>
                                             </td>
+
                                         </tr>
                                     ))}
                                 </tbody>
