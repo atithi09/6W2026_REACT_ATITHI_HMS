@@ -18,13 +18,14 @@ export default function ViewAppointments() {
     const [loading, setLoading] = useState(true)
 
     async function fetchAppointments() {
-        try{
-        let res = await AppointmentService.AppointmentByDoctor(DoctorId)
-        setAppointments(res)}
-        catch(Err){
+        try {
+            let res = await AppointmentService.AppointmentByDoctor(DoctorId)
+            setAppointments(res)
+        }
+        catch (Err) {
             toast.error("Soemthing went wrong")
         }
-        finally{
+        finally {
             setLoading(false)
         }
     }
@@ -72,10 +73,7 @@ export default function ViewAppointments() {
                             <div className="col-lg-8">
                                 <h1 className="heading-title ">Appointments</h1>
                                 <p className="mb-0">
-                                    Odio et unde deleniti. Deserunt numquam exercitationem. Officiis
-                                    quo odio sint voluptas consequatur ut a odio voluptatem. Sit
-                                    dolorum debitis veritatis natus dolores. Quasi ratione sint. Sit
-                                    quaerat ipsum dolorem.
+                                   View and manage your upcoming patient appointments, including scheduled consultations, patient details, and appointment status.
                                 </p>
                             </div>
                         </div>
@@ -93,15 +91,9 @@ export default function ViewAppointments() {
                 </nav>
             </div>
             {appointments.length > 0 ?
-                <div className="container">
+                <div className="container my-5">
 
-                    <div className="d-flex justify-content-between my-3">
 
-                        <div className="mt-4 mb-2">
-                            <h3>Appointments</h3>
-                        </div>
-
-                    </div>
                     <div
                         style={{
                             marginBottom: "20px"
@@ -151,7 +143,7 @@ export default function ViewAppointments() {
                                                     </span>
                                                 )}
 
-                                                
+
                                             </td>
                                             <td>
                                                 {appt.appointmentStatus === "Pending" && (
@@ -174,13 +166,13 @@ export default function ViewAppointments() {
 
                                                 {appt.appointmentStatus === "Accepted" && (
                                                     <Link to={`/doctor/consultationForm/${appt.id}`}>
-                                                    <button className="btn btn-primary btn-sm appBadge">
-                                                        Start Consultation
-                                                    </button>
+                                                        <button className="btn btn-primary btn-sm appBadge">
+                                                            Start Consultation
+                                                        </button>
                                                     </Link>
                                                 )}
                                             </td>
-                                        </tr> 
+                                        </tr>
                                     ))}
                                 </tbody>
                             </table>

@@ -64,12 +64,9 @@ export default function AppointmentHistory() {
                     <div className="container">
                         <div className="row d-flex justify-content-center text-center">
                             <div className="col-lg-8">
-                                <h1 className="heading-title ">Appointments</h1>
+                                <h1 className="heading-title ">Appointment History</h1>
                                 <p className="mb-0">
-                                    Odio et unde deleniti. Deserunt numquam exercitationem. Officiis
-                                    quo odio sint voluptas consequatur ut a odio voluptatem. Sit
-                                    dolorum debitis veritatis natus dolores. Quasi ratione sint. Sit
-                                    quaerat ipsum dolorem.
+                                    Review your past appointments and access details of previous patient consultations and treatments.
                                 </p>
                             </div>
                         </div>
@@ -81,21 +78,15 @@ export default function AppointmentHistory() {
                             <li>
                                 <Link to='/'>Home</Link>
                             </li>
-                            <li className="current">Appointments</li>
+                            <li className="current">Appointment History</li>
                         </ol>
                     </div>
                 </nav>
             </div>
             {appointments.length>0 ?
-                <div className="container">
+                <div className="container my-5">
 
-                    <div className="d-flex justify-content-between my-3">
-
-                        <div className="mt-4 mb-2">
-                            <h3>Appointments</h3>
-                        </div>
-
-                    </div>
+                   
                     <div
                         style={{
                             marginBottom: "20px"

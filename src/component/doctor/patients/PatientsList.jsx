@@ -73,10 +73,7 @@ export default function PatientsList() {
                             <div className="col-lg-8">
                                 <h1 className="heading-title">Patients</h1>
                                 <p className="mb-0">
-                                    Odio et unde deleniti. Deserunt numquam exercitationem. Officiis
-                                    quo odio sint voluptas consequatur ut a odio voluptatem. Sit
-                                    dolorum debitis veritatis natus dolores. Quasi ratione sint. Sit
-                                    quaerat ipsum dolorem.
+                                    View and manage the patients you have treated, along with their basic details and medical records.
                                 </p>
                             </div>
                         </div>
@@ -94,16 +91,9 @@ export default function PatientsList() {
                 </nav>
             </div>
             {doctorPatients.length>0 ?
-                <div className="container">
+                <div className="container my-5">
 
-                    <div className="d-flex justify-content-between">
-
-                        <div className="mt-4 mb-2">
-                            <h3>Patients</h3>
-                        </div>
-
-
-                    </div>
+                    
                     <div
                         style={{
                             marginBottom: "20px"

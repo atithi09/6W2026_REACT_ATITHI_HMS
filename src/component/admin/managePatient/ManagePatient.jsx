@@ -63,7 +63,7 @@ export default function ManagePatient() {
                     <div className="container">
                         <div className="row d-flex justify-content-center text-center">
                             <div className="col-lg-8">
-                                <h1 className="heading-title">Patients</h1>
+                                <h1 className="heading-title"> Manage Patients</h1>
                                 <p className="mb-0">
                                     Odio et unde deleniti. Deserunt numquam exercitationem. Officiis
                                     quo odio sint voluptas consequatur ut a odio voluptatem. Sit
@@ -97,19 +97,13 @@ export default function ManagePatient() {
                 ) :
                 <div className="container">
 
-                    <div className="d-flex justify-content-between">
-
-                        <div className="mt-4 mb-2">
-                            <h3>Patients</h3>
-                        </div>
-
-
-                    </div>
+                    
                     {patients.length > 0 ? (
                         <div
                             style={{
-                                marginBottom: "20px"
+                                marginBottom: "20px",
                             }}
+                            className="table-responsive"
                         >
                             <div className="table-responsive shadow-sm rounded-4">
                                 <table className="table table-hover align-middle text-center mb-0">

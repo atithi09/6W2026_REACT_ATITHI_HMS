@@ -109,8 +109,8 @@ export default function Earnings() {
                     </div>
                 </nav>
             </div>
-            <div className="container mt-4">
-                <div className="row g-4 mb-4">
+            <div className="container my-5">
+                <div className="row g-4">
 
                     <div className="col-md-4">
                         <div className="card border-0 shadow-sm rounded-4 h-100">
@@ -176,15 +176,9 @@ export default function Earnings() {
             </div>
             {bills.length >
                 0 ?
-                <div className="container">
+                <div className="container my-5">
 
-                    <div className="d-flex justify-content-between my-3">
-
-                        <div className="mt-4 mb-2">
-                            <h3>Consultation Bills</h3>
-                        </div>
-
-                    </div>
+                    
                     <div
                         style={{
                             marginBottom: "20px"
