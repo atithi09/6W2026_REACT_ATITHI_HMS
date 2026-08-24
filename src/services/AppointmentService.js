@@ -116,7 +116,16 @@ class AppointmentService {
         });
         return appointments
     }
-
+    async CompletedAppointment(patientId) {
+        const q = query(collection(db, "appointments"), where("patientId", "==", patientId),where("appointmentStatus","in",["Completed"]))
+        const querySnapshot = await getDocs(q)
+        let appointments = []
+        querySnapshot.forEach((appt) => {
+            // doc.data() is never undefined for query doc snapshots
+            appointments.push({ id: appt.id, ...appt.data() })
+        });
+        return appointments
+    }
     async updateStatus(apptId, status) {
         const appointmentRef = doc(db, "appointments", apptId);
         await updateDoc(appointmentRef, {

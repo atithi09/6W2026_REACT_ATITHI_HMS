@@ -1,20 +1,45 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import PatientService from "../../../services/PatientService";
+import AppointmentService from "../../../services/AppointmentService";
 
 export default function ViewRecords() {
 
     const params = useParams()
     const [patient, setPatient] = useState({})
-    async function getPatient(){
+    const [appointments, setAppointments] = useState([])
+
+    async function getAppointments() {
+        const res = await AppointmentService.CompletedAppointment(params.id)
+        if (res) {
+            setAppointments(res)
+        }
+    }
+    async function getPatient() {
         const res = await PatientService.getSingle(params.id)
-        if(res){
+        if (res) {
             setPatient(res)
         }
     }
+    const calculateAge = (dob) => {
+        const birthDate = new Date(dob);
+        const today = new Date();
 
-    useEffect(()=>{
+        let age = today.getFullYear() - birthDate.getFullYear();
+
+        const month = today.getMonth() - birthDate.getMonth();
+
+        if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate())) {
+            age--;
+        }
+
+        return age;
+    };
+
+    useEffect(() => {
         getPatient()
+        getAppointments()
+
     })
 
     return (
@@ -83,11 +108,11 @@ export default function ViewRecords() {
                             <strong>{patient.gender}</strong>
                         </div>
 
-                         <div className="patient-detail">
+                        <div className="patient-detail">
                             <span className="detail-label">
                                 Age
                             </span>
-                            <strong>—</strong>
+                            <strong>{calculateAge(patient.dob)} years</strong>
                         </div>
 
                         <div className="patient-detail">
@@ -104,7 +129,7 @@ export default function ViewRecords() {
                             <span className="detail-label">
                                 Total Visits
                             </span>
-                            <strong></strong>
+                            <strong>--</strong>
                         </div>
 
                     </div>
@@ -131,179 +156,179 @@ export default function ViewRecords() {
 
 
                 {/* Appointment Accordion */}
-                <div className="records-accordion">
+                {appointments.length > 0 ?
+                    <div className="records-accordion">
 
-                    <div
-                        className="accordion"
-                        id="appointmentAccordion"
-                    >
+                        <div
+                            className="accordion"
+                            id="appointmentAccordion"
+                        >
+                            {appointments.map((appt, index) => (
+                               
+                                < div className = "accordion-item appointment-item" 
+                                key={patient.id} >
 
-                        {/* Appointment 1 */}
-                        <div className="accordion-item appointment-item">
+                                <h2 className="accordion-header">
 
-                            <h2 className="accordion-header">
+                                    <button
+                                        className="accordion-button"
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#appointmentOne"
+                                        aria-expanded="false"
+                                        aria-controls="appointmentOne"
+                                    >
 
-                                <button
-                                    className="accordion-button"
-                                    type="button"
-                                    data-bs-toggle="collapse"
-                                    data-bs-target="#appointmentOne"
-                                    aria-expanded="false"
-                                    aria-controls="appointmentOne"
+                                        <div className="appointment-header-content">
+
+                                            <div className="appointment-date-icon">
+                                                <i className="bi bi-calendar3"></i>
+                                            </div>
+
+                                            <div className="appointment-main-info">
+
+                                                <div className="appointment-top-row">
+
+                                                    <span className="appointment-date">
+                                                        {appt.appointmentDate}
+                                                    </span>
+
+                                                    <span className="appointment-time">
+                                                        {appt.appointmentTime}
+                                                    </span>
+
+                                                    <span className="completed-badge">
+                                                        {appt.appointmentStatus}
+                                                    </span>
+
+                                                </div>
+
+                                                <div className="appointment-reason">
+                                                    Consultation
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                    </button>
+
+                                </h2>
+
+
+                                <div
+                                    id="appointmentOne"
+                                    className="accordion-collapse collapse show"
+                                    data-bs-parent="#appointmentAccordion"
                                 >
 
-                                    <div className="appointment-header-content">
+                                    <div className="accordion-body">
 
-                                        <div className="appointment-date-icon">
-                                            <i className="bi bi-calendar3"></i>
+                                        {/* Appointment Details */}
+                                        <div className="section-title">
+                                            <i className="bi bi-calendar-check"></i>
+                                            Appointment Details
                                         </div>
 
-                                        <div className="appointment-main-info">
-
-                                            <div className="appointment-top-row">
-
-                                                <span className="appointment-date">
-                                                    Appointment Date
-                                                </span>
-
-                                                <span className="appointment-time">
-                                                    Appointment Time
-                                                </span>
-
-                                                <span className="completed-badge">
-                                                    Completed
-                                                </span>
-
-                                            </div>
-
-                                            <div className="appointment-reason">
-                                                Consultation
-                                            </div>
-
-                                            <div className="appointment-id">
-                                                Appointment ID: <strong>—</strong>
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-
-                                </button>
-
-                            </h2>
-
-
-                            <div
-                                id="appointmentOne"
-                                className="accordion-collapse collapse show"
-                                data-bs-parent="#appointmentAccordion"
-                            >
-
-                                <div className="accordion-body">
-
-                                    {/* Appointment Details */}
-                                    <div className="section-title">
-                                        <i className="bi bi-calendar-check"></i>
-                                        Appointment Details
-                                    </div>
-
-                                    <div className="appointment-details-box">
-
-                                        <div>
-                                            <span>Date</span>
-                                            <strong>—</strong>
-                                        </div>
-
-                                        <div>
-                                            <span>Time</span>
-                                            <strong>—</strong>
-                                        </div>
-
-                                        <div>
-                                            <span>Reason</span>
-                                            <strong>—</strong>
-                                        </div>
-
-                                        <div>
-                                            <span>Status</span>
-                                            <strong className="text-success">
-                                                Completed
-                                            </strong>
-                                        </div>
-
-                                    </div>
-
-
-                                    {/* Medical Record */}
-                                    <div className="section-title medical-record-title">
-                                        <i className="bi bi-file-medical"></i>
-                                        Medical Record
-                                    </div>
-
-                                    <div className="medical-record-box">
-
-                                        <div className="record-field">
-                                            <span>Diagnosis</span>
-                                            <p>—</p>
-                                        </div>
-
-                                        <div className="record-field">
-                                            <span>Symptoms</span>
-                                            <p>—</p>
-                                        </div>
-
-                                        <div className="record-field">
-                                            <span>Treatment</span>
-                                            <p>—</p>
-                                        </div>
-
-                                        <div className="record-field">
-                                            <span>Doctor's Notes</span>
-                                            <p>—</p>
-                                        </div>
-
-                                    </div>
-
-
-                                    {/* Prescription */}
-                                    <div className="section-title prescription-title">
-                                        <i className="bi bi-capsule"></i>
-                                        Prescription
-                                    </div>
-
-                                    <div className="prescription-box">
-
-                                        <div className="table-responsive">
-
-                                            <table className="table prescription-table">
-
-                                                <thead>
-                                                    <tr>
-                                                        <th>Medicine</th>
-                                                        <th>Dosage</th>
-                                                        <th>Duration</th>
-                                                    </tr>
-                                                </thead>
-
-                                                <tbody>
-                                                    <tr>
-                                                        <td>—</td>
-                                                        <td>—</td>
-                                                        <td>—</td>
-                                                    </tr>
-                                                </tbody>
-
-                                            </table>
-
-                                        </div>
-
-                                        <div className="next-visit">
-
-                                            <i className="bi bi-calendar-event"></i>
+                                        <div className="appointment-details-box">
 
                                             <div>
-                                                <span>Next Visit</span>
-                                                <strong>—</strong>
+                                                <span>Date</span>
+                                                <strong>{appt.appointmentDate}</strong>
+                                            </div>
+
+                                            <div>
+                                                <span>Time</span>
+                                                <strong>{appt.appointmentTime}</strong>
+                                            </div>
+
+                                            <div>
+                                                <span>Reason</span>
+                                                <strong>{appt.reason}</strong>
+                                            </div>
+
+                                            <div>
+                                                <span>Status</span>
+                                                <strong className="text-success">
+                                                    {appt.appointmentStatus}
+                                                </strong>
+                                            </div>
+
+                                        </div>
+
+
+                                        {/* Medical Record */}
+                                        <div className="section-title medical-record-title">
+                                            <i className="bi bi-file-medical"></i>
+                                            Medical Record
+                                        </div>
+
+                                        <div className="medical-record-box">
+
+                                            <div className="record-field">
+                                                <span>Diagnosis</span>
+                                                <p>—</p>
+                                            </div>
+
+                                            <div className="record-field">
+                                                <span>Symptoms</span>
+                                                <p>—</p>
+                                            </div>
+
+                                            <div className="record-field">
+                                                <span>Treatment</span>
+                                                <p>—</p>
+                                            </div>
+
+                                            <div className="record-field">
+                                                <span>Doctor's Notes</span>
+                                                <p>—</p>
+                                            </div>
+
+                                        </div>
+
+
+                                        {/* Prescription */}
+                                        <div className="section-title prescription-title">
+                                            <i className="bi bi-capsule"></i>
+                                            Prescription
+                                        </div>
+
+                                        <div className="prescription-box">
+
+                                            <div className="table-responsive">
+
+                                                <table className="table prescription-table">
+
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Medicine</th>
+                                                            <th>Dosage</th>
+                                                            <th>Duration</th>
+                                                        </tr>
+                                                    </thead>
+
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>—</td>
+                                                            <td>—</td>
+                                                            <td>—</td>
+                                                        </tr>
+                                                    </tbody>
+
+                                                </table>
+
+                                            </div>
+
+                                            <div className="next-visit">
+
+                                                <i className="bi bi-calendar-event"></i>
+
+                                                <div>
+                                                    <span>Next Visit</span>
+                                                    <strong>—</strong>
+                                                </div>
+
                                             </div>
 
                                         </div>
@@ -312,191 +337,14 @@ export default function ViewRecords() {
 
                                 </div>
 
-                            </div>
-
-                        </div>
-
-
-                        {/* Appointment 2 */}
-                        <div className="accordion-item appointment-item">
-
-                            <h2 className="accordion-header">
-
-                                <button
-                                    className="accordion-button collapsed"
-                                    type="button"
-                                    data-bs-toggle="collapse"
-                                    data-bs-target="#appointmentTwo"
-                                    aria-expanded="false"
-                                    aria-controls="appointmentTwo"
-                                >
-
-                                    <div className="appointment-header-content">
-
-                                        <div className="appointment-date-icon">
-                                            <i className="bi bi-calendar3"></i>
-                                        </div>
-
-                                        <div className="appointment-main-info">
-
-                                            <div className="appointment-top-row">
-
-                                                <span className="appointment-date">
-                                                    Appointment Date
-                                                </span>
-
-                                                <span className="appointment-time">
-                                                    Appointment Time
-                                                </span>
-
-                                                <span className="completed-badge">
-                                                    Completed
-                                                </span>
-
-                                            </div>
-
-                                            <div className="appointment-reason">
-                                                Follow-up Consultation
-                                            </div>
-
-                                            <div className="appointment-id">
-                                                Appointment ID: <strong>—</strong>
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-
-                                </button>
-
-                            </h2>
-
-
-                            <div
-                                id="appointmentTwo"
-                                className="accordion-collapse collapse"
-                                data-bs-parent="#appointmentAccordion"
-                            >
-
-                                <div className="accordion-body">
-
-                                    <div className="section-title">
-                                        <i className="bi bi-calendar-check"></i>
-                                        Appointment Details
-                                    </div>
-
-                                    <div className="appointment-details-box">
-
-                                        <div>
-                                            <span>Date</span>
-                                            <strong>—</strong>
-                                        </div>
-
-                                        <div>
-                                            <span>Time</span>
-                                            <strong>—</strong>
-                                        </div>
-
-                                        <div>
-                                            <span>Reason</span>
-                                            <strong>—</strong>
-                                        </div>
-
-                                        <div>
-                                            <span>Status</span>
-                                            <strong className="text-success">
-                                                Completed
-                                            </strong>
-                                        </div>
-
-                                    </div>
-
-
-                                    <div className="section-title medical-record-title">
-                                        <i className="bi bi-file-medical"></i>
-                                        Medical Record
-                                    </div>
-
-                                    <div className="medical-record-box">
-
-                                        <div className="record-field">
-                                            <span>Diagnosis</span>
-                                            <p>—</p>
-                                        </div>
-
-                                        <div className="record-field">
-                                            <span>Symptoms</span>
-                                            <p>—</p>
-                                        </div>
-
-                                        <div className="record-field">
-                                            <span>Treatment</span>
-                                            <p>—</p>
-                                        </div>
-
-                                        <div className="record-field">
-                                            <span>Doctor's Notes</span>
-                                            <p>—</p>
-                                        </div>
-
-                                    </div>
-
-
-                                    <div className="section-title prescription-title">
-                                        <i className="bi bi-capsule"></i>
-                                        Prescription
-                                    </div>
-
-                                    <div className="prescription-box">
-
-                                        <div className="table-responsive">
-
-                                            <table className="table prescription-table">
-
-                                                <thead>
-                                                    <tr>
-                                                        <th>Medicine</th>
-                                                        <th>Dosage</th>
-                                                        <th>Duration</th>
-                                                    </tr>
-                                                </thead>
-
-                                                <tbody>
-                                                    <tr>
-                                                        <td>—</td>
-                                                        <td>—</td>
-                                                        <td>—</td>
-                                                    </tr>
-                                                </tbody>
-
-                                            </table>
-
-                                        </div>
-
-                                        <div className="next-visit">
-
-                                            <i className="bi bi-calendar-event"></i>
-
-                                            <div>
-                                                <span>Next Visit</span>
-                                                <strong>—</strong>
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
+                            </div> 
+                    ))}
                     </div>
 
-                </div>
-
-            </div>
+                    </div>
+            : (<div></div>)
+                }
+        </div >
 
 
         </>
