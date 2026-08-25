@@ -125,6 +125,8 @@ GENERAL RULES:
   nonspecific symptom), say so explicitly inside "notes" and leave "diagnosis" and/or 
   "treatment" empty rather than fabricating one.
 - Never present this output as final or doctor-approved.
+- Write the response in points not in a paragraph so it should be easy to read.
+
 `
                     },
 
@@ -134,7 +136,7 @@ GENERAL RULES:
                     }
                 ],
 
-                model: "llama-3.3-70b-versatile",
+               model: "openai/gpt-oss-120b",
 
                 temperature: 0.2,
 

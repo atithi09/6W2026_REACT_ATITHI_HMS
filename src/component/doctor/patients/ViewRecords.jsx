@@ -1,27 +1,45 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+
 import PatientService from "../../../services/PatientService";
 import AppointmentService from "../../../services/AppointmentService";
+import MedicalRecordServices from "../../../services/MedicalRecordServices";
 
 export default function ViewRecords() {
 
-    const params = useParams()
-    const [patient, setPatient] = useState({})
-    const [appointments, setAppointments] = useState([])
+    const params = useParams();
+
+    const [patient, setPatient] = useState({});
+    const [appointments, setAppointments] = useState([]);
+    const [medicalRecords, setMedicalRecords] = useState([]);
 
     async function getAppointments() {
-        const res = await AppointmentService.CompletedAppointment(params.id)
+        const res = await AppointmentService.CompletedAppointment(params.id);
+
         if (res) {
-            setAppointments(res)
+            setAppointments(res);
         }
     }
+
     async function getPatient() {
-        const res = await PatientService.getSingle(params.id)
+        const res = await PatientService.getSingle(params.id);
+
         if (res) {
-            setPatient(res)
+            setPatient(res);
         }
     }
+
+    async function getRecords() {
+        const res = await MedicalRecordServices.recordByPatient(params.id);
+
+        if (res) {
+            setMedicalRecords(res);
+        }
+    }
+
     const calculateAge = (dob) => {
+        if (!dob) return "";
+
         const birthDate = new Date(dob);
         const today = new Date();
 
@@ -29,7 +47,10 @@ export default function ViewRecords() {
 
         const month = today.getMonth() - birthDate.getMonth();
 
-        if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate())) {
+        if (
+            month < 0 ||
+            (month === 0 && today.getDate() < birthDate.getDate())
+        ) {
             age--;
         }
 
@@ -37,43 +58,74 @@ export default function ViewRecords() {
     };
 
     useEffect(() => {
-        getPatient()
-        getAppointments()
+        getPatient();
+        getAppointments();
+        getRecords();
+    }, [params.id]);
+    console.log("Appointments:", appointments);
+    console.log("Medical Records:", medicalRecords);
 
-    })
+    appointments.forEach(appt => {
+        const record = medicalRecords.find(
+            record => record.appointmentId === appt.id
+        );
 
+        console.log(
+            "Appointment:",
+            appt.id,
+            "Record:",
+            record
+        );
+    });
     return (
         <>
+            {/* Page Title */}
             <div className="page-title">
+
                 <div className="heading">
                     <div className="container">
                         <div className="row d-flex justify-content-center text-center">
                             <div className="col-lg-8">
-                                <h1 className="heading-title">Records</h1>
+
+                                <h1 className="heading-title">
+                                    Records
+                                </h1>
+
                                 <p className="mb-0">
-                                    View and manage the patients you have treated, along with their basic details and medical records.
+                                    View and manage the patients you have treated,
+                                    along with their basic details and medical records.
                                 </p>
+
                             </div>
                         </div>
                     </div>
                 </div>
+
                 <nav className="breadcrumbs">
                     <div className="container">
                         <ol>
                             <li>
-                                <Link to='/'>Home</Link>
+                                <Link to="/">
+                                    Home
+                                </Link>
                             </li>
-                            <li className="current">Records</li>
+
+                            <li className="current">
+                                Records
+                            </li>
                         </ol>
                     </div>
                 </nav>
+
             </div>
+
 
             {/* Main Content */}
             <div className="container records-container">
 
                 {/* Back Button */}
-                <div className="back-button-wrapper">
+                <div className="back-button-wrapper mt-3">
+
                     <Link
                         to="/doctor/viewpatient"
                         className="back-button"
@@ -81,7 +133,9 @@ export default function ViewRecords() {
                         <i className="bi bi-arrow-left"></i>
                         Back to Patients
                     </Link>
+
                 </div>
+
 
                 {/* Patient Information */}
                 <div className="patient-info-card">
@@ -93,29 +147,48 @@ export default function ViewRecords() {
                         </div>
 
                         <div>
-                            <h3>{patient.name}</h3>
-                            <p>Patient Information</p>
+                            <h3>
+                                {patient.name}
+                            </h3>
+
+                            <p>
+                                Patient Information
+                            </p>
                         </div>
 
                     </div>
 
+
                     <div className="patient-details">
 
                         <div className="patient-detail">
+
                             <span className="detail-label">
                                 Gender
                             </span>
-                            <strong>{patient.gender}</strong>
+
+                            <strong>
+                                {patient.gender}
+                            </strong>
+
                         </div>
 
+
                         <div className="patient-detail">
+
                             <span className="detail-label">
                                 Age
                             </span>
-                            <strong>{calculateAge(patient.dob)} years</strong>
+
+                            <strong>
+                                {calculateAge(patient.dob)} years
+                            </strong>
+
                         </div>
 
+
                         <div className="patient-detail">
+
                             <span className="detail-label">
                                 Status
                             </span>
@@ -123,16 +196,24 @@ export default function ViewRecords() {
                             <span className="status-badge text-uppercase">
                                 {patient.status}
                             </span>
+
                         </div>
 
+
                         <div className="patient-detail">
+
                             <span className="detail-label">
                                 Total Visits
                             </span>
-                            <strong>--</strong>
+
+                            <strong>
+                                {appointments.length}
+                            </strong>
+
                         </div>
 
                     </div>
+
                 </div>
 
 
@@ -140,194 +221,322 @@ export default function ViewRecords() {
                 <div className="history-heading">
 
                     <div>
-                        <h2>Medical History</h2>
+
+                        <h2>
+                            Medical History
+                        </h2>
 
                         <p>
                             All appointments and medical records associated
                             with this patient.
                         </p>
+
                     </div>
 
                     <div className="visit-count">
-                        Visits
+                        {appointments.length} Visits
                     </div>
 
                 </div>
 
 
                 {/* Appointment Accordion */}
-                {appointments.length > 0 ?
+
+                {appointments.length > 0 ? (
+
                     <div className="records-accordion">
 
                         <div
                             className="accordion"
                             id="appointmentAccordion"
                         >
-                            {appointments.map((appt, index) => (
-                               
-                                < div className = "accordion-item appointment-item" 
-                                key={patient.id} >
 
-                                <h2 className="accordion-header">
+                            {appointments.map((appt, index) => {
 
-                                    <button
-                                        className="accordion-button"
-                                        type="button"
-                                        data-bs-toggle="collapse"
-                                        data-bs-target="#appointmentOne"
-                                        aria-expanded="false"
-                                        aria-controls="appointmentOne"
+                                // Find the record belonging to THIS appointment
+                                const record = medicalRecords.find(
+                                    (record) => record.appointmentId === appt.id
+                                );
+
+                                // Unique ID for each accordion
+                                const accordionId = `appointment-${index}`;
+
+                                return (
+
+                                    <div
+                                        className="accordion-item appointment-item"
+                                        key={appt.id}
                                     >
 
-                                        <div className="appointment-header-content">
+                                        {/* ================= HEADER ================= */}
 
-                                            <div className="appointment-date-icon">
-                                                <i className="bi bi-calendar3"></i>
-                                            </div>
+                                        <h2 className="accordion-header">
 
-                                            <div className="appointment-main-info">
+                                            <button
+                                                className="accordion-button"
+                                                type="button"
+                                                data-bs-toggle="collapse"
+                                                data-bs-target={`#${accordionId}`}
+                                                aria-expanded={index === 0}
+                                                aria-controls={accordionId}
+                                            >
 
-                                                <div className="appointment-top-row">
+                                                <div className="appointment-header-content">
 
-                                                    <span className="appointment-date">
-                                                        {appt.appointmentDate}
-                                                    </span>
+                                                    <div className="appointment-date-icon">
+                                                        <i className="bi bi-calendar3"></i>
+                                                    </div>
 
-                                                    <span className="appointment-time">
-                                                        {appt.appointmentTime}
-                                                    </span>
+                                                    <div className="appointment-main-info">
 
-                                                    <span className="completed-badge">
-                                                        {appt.appointmentStatus}
-                                                    </span>
+                                                        <div className="appointment-top-row">
+
+                                                            <span className="appointment-date">
+                                                                {appt.appointmentDate}
+                                                            </span>
+
+                                                            <span className="appointment-time">
+                                                                {appt.appointmentTime}
+                                                            </span>
+
+                                                            <span className="completed-badge">
+                                                                {appt.appointmentStatus}
+                                                            </span>
+
+                                                        </div>
+
+                                                        <div className="appointment-reason">
+                                                            {appt.reason || "Consultation"}
+                                                        </div>
+
+                                                    </div>
 
                                                 </div>
 
-                                                <div className="appointment-reason">
-                                                    Consultation
+                                            </button>
+
+                                        </h2>
+
+
+                                        {/* ================= BODY ================= */}
+
+                                        <div
+                                            id={accordionId}
+                                            className={`accordion-collapse collapse ${index === 0 ? "show" : ""
+                                                }`}
+                                            data-bs-parent="#appointmentAccordion"
+                                        >
+
+                                            <div className="accordion-body">
+
+
+                                                {/* ================= APPOINTMENT DETAILS ================= */}
+
+                                                <div className="section-title">
+
+                                                    <i className="bi bi-calendar-check"></i>
+
+                                                    Appointment Details
+
                                                 </div>
 
-                                            </div>
 
-                                        </div>
+                                                <div className="appointment-details-box">
 
-                                    </button>
+                                                    <div>
+                                                        <span>Date</span>
 
-                                </h2>
-
-
-                                <div
-                                    id="appointmentOne"
-                                    className="accordion-collapse collapse show"
-                                    data-bs-parent="#appointmentAccordion"
-                                >
-
-                                    <div className="accordion-body">
-
-                                        {/* Appointment Details */}
-                                        <div className="section-title">
-                                            <i className="bi bi-calendar-check"></i>
-                                            Appointment Details
-                                        </div>
-
-                                        <div className="appointment-details-box">
-
-                                            <div>
-                                                <span>Date</span>
-                                                <strong>{appt.appointmentDate}</strong>
-                                            </div>
-
-                                            <div>
-                                                <span>Time</span>
-                                                <strong>{appt.appointmentTime}</strong>
-                                            </div>
-
-                                            <div>
-                                                <span>Reason</span>
-                                                <strong>{appt.reason}</strong>
-                                            </div>
-
-                                            <div>
-                                                <span>Status</span>
-                                                <strong className="text-success">
-                                                    {appt.appointmentStatus}
-                                                </strong>
-                                            </div>
-
-                                        </div>
+                                                        <strong>
+                                                            {appt.appointmentDate}
+                                                        </strong>
+                                                    </div>
 
 
-                                        {/* Medical Record */}
-                                        <div className="section-title medical-record-title">
-                                            <i className="bi bi-file-medical"></i>
-                                            Medical Record
-                                        </div>
+                                                    <div>
+                                                        <span>Time</span>
 
-                                        <div className="medical-record-box">
-
-                                            <div className="record-field">
-                                                <span>Diagnosis</span>
-                                                <p>—</p>
-                                            </div>
-
-                                            <div className="record-field">
-                                                <span>Symptoms</span>
-                                                <p>—</p>
-                                            </div>
-
-                                            <div className="record-field">
-                                                <span>Treatment</span>
-                                                <p>—</p>
-                                            </div>
-
-                                            <div className="record-field">
-                                                <span>Doctor's Notes</span>
-                                                <p>—</p>
-                                            </div>
-
-                                        </div>
+                                                        <strong>
+                                                            {appt.appointmentTime}
+                                                        </strong>
+                                                    </div>
 
 
-                                        {/* Prescription */}
-                                        <div className="section-title prescription-title">
-                                            <i className="bi bi-capsule"></i>
-                                            Prescription
-                                        </div>
+                                                    <div>
+                                                        <span>Reason</span>
 
-                                        <div className="prescription-box">
+                                                        <strong>
+                                                            {appt.reason}
+                                                        </strong>
+                                                    </div>
 
-                                            <div className="table-responsive">
 
-                                                <table className="table prescription-table">
+                                                    <div>
+                                                        <span>Status</span>
 
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Medicine</th>
-                                                            <th>Dosage</th>
-                                                            <th>Duration</th>
-                                                        </tr>
-                                                    </thead>
+                                                        <strong className="text-success">
+                                                            {appt.appointmentStatus}
+                                                        </strong>
+                                                    </div>
 
-                                                    <tbody>
-                                                        <tr>
-                                                            <td>—</td>
-                                                            <td>—</td>
-                                                            <td>—</td>
-                                                        </tr>
-                                                    </tbody>
-
-                                                </table>
-
-                                            </div>
-
-                                            <div className="next-visit">
-
-                                                <i className="bi bi-calendar-event"></i>
-
-                                                <div>
-                                                    <span>Next Visit</span>
-                                                    <strong>—</strong>
                                                 </div>
+
+
+                                                {/* ================= MEDICAL RECORD ================= */}
+
+                                                <div className="section-title medical-record-title">
+
+                                                    <i className="bi bi-file-medical"></i>
+
+                                                    Medical Record
+
+                                                </div>
+
+
+                                                {record ? (
+
+                                                    <div className="medical-record-box">
+
+                                                        <div className="record-field">
+
+                                                            <span>
+                                                                Diagnosis
+                                                            </span>
+
+                                                            <p>
+                                                                {record.diagnosis || "—"}
+                                                            </p>
+
+                                                        </div>
+
+
+                                                        <div className="record-field">
+
+                                                            <span>
+                                                                Symptoms
+                                                            </span>
+
+                                                            <p>
+                                                                {record.symptoms || "—"}
+                                                            </p>
+
+                                                        </div>
+
+
+                                                        <div className="record-field">
+
+                                                            <span>
+                                                                Treatment
+                                                            </span>
+
+                                                            <p>
+                                                                {record.treatment || "—"}
+                                                            </p>
+
+                                                        </div>
+
+
+                                                        <div className="record-field">
+
+                                                            <span>
+                                                                Doctor's Notes
+                                                            </span>
+
+                                                            <p>
+                                                                {record.notes || "—"}
+                                                            </p>
+
+                                                        </div>
+
+                                                    </div>
+
+                                                ) : (
+
+                                                    <div className="medical-record-box">
+
+                                                        <p className="mb-0">
+                                                            No medical record available for this appointment.
+                                                        </p>
+
+                                                    </div>
+
+                                                )}
+
+
+                                                {/* ================= PRESCRIPTION ================= */}
+
+                                                <div className="section-title prescription-title">
+
+                                                    <i className="bi bi-capsule"></i>
+
+                                                    Prescription
+
+                                                </div>
+
+
+                                                <div className="prescription-box">
+
+                                                    <div className="table-responsive">
+
+                                                        <table className="table prescription-table">
+
+                                                            <thead>
+
+                                                                <tr>
+
+                                                                    <th>
+                                                                        Medicine
+                                                                    </th>
+
+                                                                    <th>
+                                                                        Dosage
+                                                                    </th>
+
+                                                                    <th>
+                                                                        Duration
+                                                                    </th>
+
+                                                                </tr>
+
+                                                            </thead>
+
+
+                                                            <tbody>
+
+                                                                <tr>
+
+                                                                    <td>—</td>
+                                                                    <td>—</td>
+                                                                    <td>—</td>
+
+                                                                </tr>
+
+                                                            </tbody>
+
+                                                        </table>
+
+                                                    </div>
+
+
+                                                    <div className="next-visit">
+
+                                                        <i className="bi bi-calendar-event"></i>
+
+                                                        <div>
+
+                                                            <span>
+                                                                Next Visit
+                                                            </span>
+
+                                                            <strong>
+                                                                —
+                                                            </strong>
+
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+
 
                                             </div>
 
@@ -335,18 +544,23 @@ export default function ViewRecords() {
 
                                     </div>
 
-                                </div>
+                                );
 
-                            </div> 
-                    ))}
+                            })}
+
+                        </div>
+
                     </div>
 
+                ) : (
+
+                    <div>
+                        No completed appointments found.
                     </div>
-            : (<div></div>)
-                }
-        </div >
 
+                )}
 
+            </div>
         </>
     );
 }

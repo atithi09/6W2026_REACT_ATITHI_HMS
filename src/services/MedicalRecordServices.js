@@ -1,4 +1,4 @@
-import { addDoc, collection, doc, getDoc } from "firebase/firestore";
+import { addDoc, collection, doc, getDoc, getDocs, query, where } from "firebase/firestore";
 import { MedicalRecord } from "../models/MedicalRecord";
 import { db } from "../firebase/FirebaseConfig";
 
@@ -31,6 +31,17 @@ class MedicalRecordServices {
                     console.log("no such document exist")
                     return false
                 }
+    }
+
+    async recordByPatient(patientId){
+        const q = query(collection(db, "medicalRecord"), where("patientId", "==", patientId))
+                const querySnapshot = await getDocs(q)
+                let records = []
+                querySnapshot.forEach((record) => {
+                    // doc.data() is never undefined for query doc snapshots
+                    records.push({ id: record.id, ...record.data() })
+                });
+                return records
     }
 }
 export default new MedicalRecordServices()
