@@ -1,4 +1,4 @@
-import { addDoc, collection } from "firebase/firestore"
+import { addDoc, collection, getDocs, query, where } from "firebase/firestore"
 import Prescription from "../models/PrescriptionModel"
 import { db } from "../firebase/FirebaseConfig"
 
@@ -18,6 +18,16 @@ async add(data) {
         return docRef
     }
 
+async recordByPatient(patientId){
+            const q = query(collection(db, "prescriptions"), where("patientId", "==", patientId))
+                    const querySnapshot = await getDocs(q)
+                    let medicines = []
+                    querySnapshot.forEach((record) => {
+                        // doc.data() is never undefined for query doc snapshots
+                        medicines.push({ id: record.id, ...record.data() })
+                    });
+                    return medicines
+        }
 
 
 

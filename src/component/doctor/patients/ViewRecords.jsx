@@ -4,6 +4,7 @@ import { Link, useParams } from "react-router-dom";
 import PatientService from "../../../services/PatientService";
 import AppointmentService from "../../../services/AppointmentService";
 import MedicalRecordServices from "../../../services/MedicalRecordServices";
+import PrescriptionServices from "../../../services/PrescriptionServices";
 
 export default function ViewRecords() {
 
@@ -12,6 +13,7 @@ export default function ViewRecords() {
     const [patient, setPatient] = useState({});
     const [appointments, setAppointments] = useState([]);
     const [medicalRecords, setMedicalRecords] = useState([]);
+    const [medicines, setMedicines] = useState([]);
 
     async function getAppointments() {
         const res = await AppointmentService.CompletedAppointment(params.id);
@@ -20,7 +22,7 @@ export default function ViewRecords() {
             setAppointments(res);
         }
     }
-
+    console.log("Records",medicalRecords)
     async function getPatient() {
         const res = await PatientService.getSingle(params.id);
 
@@ -34,6 +36,13 @@ export default function ViewRecords() {
 
         if (res) {
             setMedicalRecords(res);
+        }
+    }
+    async function getMedicines() {
+        const res = await PrescriptionServices.recordByPatient(params.id);
+        console.log(res)
+        if (res) {
+            setMedicines(res)
         }
     }
 
@@ -61,22 +70,9 @@ export default function ViewRecords() {
         getPatient();
         getAppointments();
         getRecords();
+        getMedicines();
     }, [params.id]);
-    console.log("Appointments:", appointments);
-    console.log("Medical Records:", medicalRecords);
 
-    appointments.forEach(appt => {
-        const record = medicalRecords.find(
-            record => record.appointmentId === appt.id
-        );
-
-        console.log(
-            "Appointment:",
-            appt.id,
-            "Record:",
-            record
-        );
-    });
     return (
         <>
             {/* Page Title */}
@@ -257,6 +253,9 @@ export default function ViewRecords() {
                                 const record = medicalRecords.find(
                                     (record) => record.appointmentId === appt.id
                                 );
+                                const prescription = medicines.find(
+                                    (prescription) => prescription.medicalRecordId === record?.id
+                                );
 
                                 // Unique ID for each accordion
                                 const accordionId = `appointment-${index}`;
@@ -267,8 +266,6 @@ export default function ViewRecords() {
                                         className="accordion-item appointment-item"
                                         key={appt.id}
                                     >
-
-                                        {/* ================= HEADER ================= */}
 
                                         <h2 className="accordion-header">
 
@@ -317,9 +314,6 @@ export default function ViewRecords() {
 
                                         </h2>
 
-
-                                        {/* ================= BODY ================= */}
-
                                         <div
                                             id={accordionId}
                                             className={`accordion-collapse collapse ${index === 0 ? "show" : ""
@@ -329,8 +323,6 @@ export default function ViewRecords() {
 
                                             <div className="accordion-body">
 
-
-                                                {/* ================= APPOINTMENT DETAILS ================= */}
 
                                                 <div className="section-title">
 
@@ -380,8 +372,6 @@ export default function ViewRecords() {
 
                                                 </div>
 
-
-                                                {/* ================= MEDICAL RECORD ================= */}
 
                                                 <div className="section-title medical-record-title">
 
@@ -461,82 +451,62 @@ export default function ViewRecords() {
 
                                                 )}
 
-
-                                                {/* ================= PRESCRIPTION ================= */}
-
-                                                <div className="section-title prescription-title">
-
-                                                    <i className="bi bi-capsule"></i>
-
-                                                    Prescription
-
-                                                </div>
-
-
-                                                <div className="prescription-box">
-
-                                                    <div className="table-responsive">
-
-                                                        <table className="table prescription-table">
-
-                                                            <thead>
-
-                                                                <tr>
-
-                                                                    <th>
-                                                                        Medicine
-                                                                    </th>
-
-                                                                    <th>
-                                                                        Dosage
-                                                                    </th>
-
-                                                                    <th>
-                                                                        Duration
-                                                                    </th>
-
-                                                                </tr>
-
-                                                            </thead>
-
-
-                                                            <tbody>
-
-                                                                <tr>
-
-                                                                    <td>—</td>
-                                                                    <td>—</td>
-                                                                    <td>—</td>
-
-                                                                </tr>
-
-                                                            </tbody>
-
-                                                        </table>
-
-                                                    </div>
-
-
-                                                    <div className="next-visit">
-
-                                                        <i className="bi bi-calendar-event"></i>
-
-                                                        <div>
-
-                                                            <span>
-                                                                Next Visit
-                                                            </span>
-
-                                                            <strong>
-                                                                —
-                                                            </strong>
-
+                                                {prescription ? (
+                                                    <div className="">
+                                                        <div className="section-title prescription-title">
+                                                            <i className="bi bi-capsule"></i>
+                                                            Prescription
                                                         </div>
 
+                                                        <div className="medical-record-box">
+
+                                                            <div className="prescription-content">
+
+                                                                <div className="record-field">
+                                                                    <span>
+                                                                        <i className="bi bi-capsule me-2"></i>
+                                                                        Medicines
+                                                                    </span>
+
+                                                                    <p>
+                                                                        {prescription.medicines || "—"}
+                                                                    </p>
+                                                                </div>
+
+                                                                <div className="record-field">
+                                                                    <span>
+                                                                        <i className="bi bi-info-circle me-2"></i>
+                                                                        Instructions
+                                                                    </span>
+
+                                                                    <p>
+                                                                        {prescription.instructions || "—"}
+                                                                    </p>
+                                                                </div>
+
+                                                            </div>
+
+                                                            <div className="next-visit my-3">
+                                                                <i className="bi bi-calendar-event"></i>
+
+                                                                <div>
+                                                                    <span className="fs-6 fw-bold text-dark">Next Visit</span>
+
+                                                                    <strong>
+                                                                        {prescription.nextVisitDate || "Not scheduled"}
+                                                                    </strong>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
                                                     </div>
-
-                                                </div>
-
+                                                ) : (
+                                                    <div className="medical-record-box">
+                                                        <p className="mb-0">
+                                                            No prescription available for this appointment.
+                                                        </p>
+                                                    </div>
+                                                )}
 
                                             </div>
 
