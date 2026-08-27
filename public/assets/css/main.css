@@ -7163,3 +7163,10 @@ thead tr{
     }
 
 }
+.summary-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.summary-card:hover {
+    transform: translateY(-3px);
+}

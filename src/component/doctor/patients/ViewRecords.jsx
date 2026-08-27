@@ -22,7 +22,6 @@ export default function ViewRecords() {
             setAppointments(res);
         }
     }
-    console.log("Records",medicalRecords)
     async function getPatient() {
         const res = await PatientService.getSingle(params.id);
 
