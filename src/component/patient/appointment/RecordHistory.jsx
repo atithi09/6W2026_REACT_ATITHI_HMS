@@ -147,7 +147,7 @@ function RecordHistory() {
 
 
         {/* Last Visit */}
-        <div className="col-12 col-md-6 col-lg-4">
+        <div className="summary-card col-12 col-md-6 col-lg-4">
             <div className=" d-flex align-items-center gap-3 p-3 bg-white border-0  rounded-3 shadow-sm h-100">
 
                 <div
