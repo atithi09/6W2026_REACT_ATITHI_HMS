@@ -2,7 +2,12 @@ import { useEffect, useState } from "react";
 import BillService from "../../../services/BillService";
 import AuthService from "../../../services/AuthService";
 import { Link } from "react-router-dom";
+import { RingLoader } from "react-spinners";
 
+const override = {
+  display: "block",
+  margin: "0 auto",
+}
 export default function Bills() {
 
     const [bills, setBills] = useState([]);
@@ -34,7 +39,19 @@ export default function Bills() {
 
 
     if (loading) {
-        return <p>Loading bills...</p>;
+        return (
+            <div
+                className="d-flex justify-content-center align-items-center"
+                style={{ minHeight: "80vh" }}
+            >
+                <RingLoader
+                    color="#0D6EFD"
+                    loading={loading}
+                    cssOverride={override}
+                    size={70}
+                />
+            </div>
+        )
     }
 
 

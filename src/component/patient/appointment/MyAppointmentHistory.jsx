@@ -111,8 +111,8 @@ export default function MyAppointmentHistory() {
 
                                             <td>{doctors.find((p) => p.id == appt.doctorId)?.name}</td>
 
-                                            <td className="text-nowrap"
-                                                className="description-cell"
+                                            <td className="text-nowrap
+                                               description-cell"
                                             >
                                                 {appt.appointmentTime}
                                             </td>
