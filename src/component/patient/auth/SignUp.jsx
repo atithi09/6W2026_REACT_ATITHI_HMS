@@ -1,8 +1,9 @@
 import { useState } from "react"
 import { toast } from "react-toastify"
 import UserService from "../../../services/UserService"
+import { useNavigate } from "react-router-dom"
 export default function SignUp() {
-
+    const nav = useNavigate()
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -10,6 +11,18 @@ export default function SignUp() {
 
     async function submitForm(e) {
         e.preventDefault()
+        if (password !== confirmPass) {
+            toast.error("Passwords do not match.");
+            return
+        }
+        if (!name.trim() ||
+            !email.trim() ||
+            !password.trim() ||
+            !confirmPass.trim()
+        ) {
+            toast.info("Fill all the details!")
+            return
+        }
         try {
             let payload = {
                 name: name,
@@ -18,6 +31,11 @@ export default function SignUp() {
             }
             await UserService.register(payload)
             toast.success("User Registered")
+            setName("");
+            setEmail("");
+            setPassword("");
+            setConfirmPass("");
+            nav("/")
         } catch (error) {
             console.log(error);
             console.log(error.code);
@@ -31,6 +49,7 @@ export default function SignUp() {
                 toast.error(error.message);
             }
         }
+
     }
     return (
         <>
@@ -63,7 +82,8 @@ export default function SignUp() {
                                         name="name"
                                         id="name"
                                         placeholder="Enter your name"
-                                        required=""
+                                        required
+                                        value={name}
                                         onChange={(e) => setName(e.target.value)}
                                     />
                                 </div>
@@ -74,7 +94,8 @@ export default function SignUp() {
                                         name="email"
                                         id="email"
                                         placeholder="Email"
-                                        required=""
+                                        required
+                                        value={email}
                                         onChange={(e) => setEmail(e.target.value)}
                                     />
                                 </div>
@@ -85,7 +106,8 @@ export default function SignUp() {
                                         name="passwrod"
                                         id="passwrod"
                                         placeholder="Enter Password"
-                                        required=""
+                                        required
+                                        value={password}
                                         onChange={(e) => setPassword(e.target.value)}
                                     />
                                 </div>
@@ -96,7 +118,8 @@ export default function SignUp() {
                                         name="c-passwrod"
                                         id="c-passwrod"
                                         placeholder="Confirm Password"
-                                        required=""
+                                        required
+                                        value={confirmPass}
                                         onChange={(e) => setConfirmPass(e.target.value)}
                                     />
                                 </div>
