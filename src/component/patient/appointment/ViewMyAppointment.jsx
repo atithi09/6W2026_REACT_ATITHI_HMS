@@ -145,7 +145,7 @@ export default function ViewMyAppointment() {
                     <div className="card border-0 shadow-sm text-center py-5">
                         <div className="card-body">
                             <i
-                                className="bi bi-calendar2-x text-primary"
+                                className="bi bi-calendar2-x"
                                 style={{ fontSize: "4rem" }}
                             ></i>
 

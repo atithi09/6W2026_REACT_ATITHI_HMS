@@ -78,111 +78,111 @@ function RecordHistory() {
                 </nav>
             </div>
             {/* Medical Summary */}
-<div className="medical-summary container mt-5">
+            <div className="medical-summary container mt-5">
 
-    <div className="row g-3">
-        <div className="col-12 col-md-6 col-lg-4">
-            <div className="summary-card d-flex align-items-center gap-3 p-3 bg-white border-0 rounded-3 shadow-sm h-100">
+                <div className="row g-3">
+                    <div className="col-12 col-md-6 col-lg-4">
+                        <div className="summary-card d-flex align-items-center gap-3 p-3 bg-white border-0 rounded-3 shadow-sm h-100">
 
-                <div
-                    className="summary-icon d-flex align-items-center justify-content-center rounded-3 flex-shrink-0"
-                    style={{
-                        width: "50px",
-                        height: "50px",
-                        backgroundColor: "#f0f7f8"
-                    }}
-                >
-                    <i className="bi bi-calendar-check fs-4"></i>
-                </div>
+                            <div
+                                className="summary-icon d-flex align-items-center justify-content-center rounded-3 flex-shrink-0"
+                                style={{
+                                    width: "50px",
+                                    height: "50px",
+                                    backgroundColor: "#f0f7f8"
+                                }}
+                            >
+                                <i className="bi bi-calendar-check fs-4"></i>
+                            </div>
 
-                <div className="summary-content">
-                    <span className="d-block text-muted  fs-6 fw-bold">
-                        Total Visits
-                    </span>
+                            <div className="summary-content">
+                                <span className="d-block text-muted  fs-6 fw-bold">
+                                    Total Visits
+                                </span>
 
-                    <strong className="d-block fs-4">
-                        {appointments.length}
-                    </strong>
+                                <strong className="d-block fs-4">
+                                    {appointments.length}
+                                </strong>
 
-                    <small className="text-muted">
-                        Completed visits
-                    </small>
+                                <small className="text-muted">
+                                    Completed visits
+                                </small>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+
+                    <div className=" col-12 col-md-6 col-lg-4">
+                        <div className="summary-card d-flex align-items-center gap-3 p-3 bg-white border-0 rounded-3 shadow-sm h-100">
+
+                            <div
+                                className="summary-icon d-flex align-items-center justify-content-center rounded-3 flex-shrink-0"
+                                style={{
+                                    width: "50px",
+                                    height: "50px",
+                                    backgroundColor: "#f0f7f8"
+                                }}
+                            >
+                                <i className="bi bi-file-medical fs-4"></i>
+                            </div>
+
+                            <div className="summary-content">
+                                <span className="d-block text-muted  fs-6 fw-bold">
+                                    Medical Records
+                                </span>
+
+                                <strong className="d-block fs-4">
+                                    {records.length}
+                                </strong>
+
+                                <small className="text-muted">
+                                    Available records
+                                </small>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                    {/* Last Visit */}
+                    <div className="summary-card col-12 col-md-6 col-lg-4">
+                        <div className=" d-flex align-items-center gap-3 p-3 bg-white border-0  rounded-3 shadow-sm h-100">
+
+                            <div
+                                className="summary-icon d-flex align-items-center justify-content-center rounded-3 flex-shrink-0"
+                                style={{
+                                    width: "50px",
+                                    height: "50px",
+                                    backgroundColor: "#f0f7f8"
+                                }}
+                            >
+                                <i className="bi bi-clock-history fs-4"></i>
+                            </div>
+
+                            <div className="summary-content">
+                                <span className="d-block text-muted  fs-6 fw-bold">
+                                    Last Visit
+                                </span>
+
+                                <strong className="d-block fs-5">
+                                    {appointments.length > 0
+                                        ? appointments[0].appointmentDate
+                                        : "—"}
+                                </strong>
+
+                                <small className="text-muted">
+                                    Recent consultation
+                                </small>
+                            </div>
+
+                        </div>
+                    </div>
+
                 </div>
 
             </div>
-        </div>
-
-
-        
-        <div className=" col-12 col-md-6 col-lg-4">
-            <div className="summary-card d-flex align-items-center gap-3 p-3 bg-white border-0 rounded-3 shadow-sm h-100">
-
-                <div
-                    className="summary-icon d-flex align-items-center justify-content-center rounded-3 flex-shrink-0"
-                    style={{
-                        width: "50px",
-                        height: "50px",
-                        backgroundColor: "#f0f7f8"
-                    }}
-                >
-                    <i className="bi bi-file-medical fs-4"></i>
-                </div>
-
-                <div className="summary-content">
-                    <span className="d-block text-muted  fs-6 fw-bold">
-                        Medical Records
-                    </span>
-
-                    <strong className="d-block fs-4">
-                        {records.length}
-                    </strong>
-
-                    <small className="text-muted">
-                        Available records
-                    </small>
-                </div>
-
-            </div>
-        </div>
-
-
-        {/* Last Visit */}
-        <div className="summary-card col-12 col-md-6 col-lg-4">
-            <div className=" d-flex align-items-center gap-3 p-3 bg-white border-0  rounded-3 shadow-sm h-100">
-
-                <div
-                    className="summary-icon d-flex align-items-center justify-content-center rounded-3 flex-shrink-0"
-                    style={{
-                        width: "50px",
-                        height: "50px",
-                        backgroundColor: "#f0f7f8"
-                    }}
-                >
-                    <i className="bi bi-clock-history fs-4"></i>
-                </div>
-
-                <div className="summary-content">
-                    <span className="d-block text-muted  fs-6 fw-bold">
-                        Last Visit
-                    </span>
-
-                    <strong className="d-block fs-5">
-                        {appointments.length > 0
-                            ? appointments[0].appointmentDate
-                            : "—"}
-                    </strong>
-
-                    <small className="text-muted">
-                        Recent consultation
-                    </small>
-                </div>
-
-            </div>
-        </div>
-
-    </div>
-
-</div>
 
             <section id="appointmnet" className="appointmnet section">
                 <div className="container" >
@@ -471,11 +471,25 @@ function RecordHistory() {
                         </div>
 
                     ) : (
+                        <div className="col-12">
+                            <div className="card border-0 shadow-sm text-center py-5">
+                                <div className="card-body">
+                                    <i
+                                        className="bi bi-clock-history"
+                                        style={{ fontSize: "4rem" }}
+                                    ></i>
 
-                        <div>
-                            No completed appointments found.
+                                    <h4 className="mt-3 fw-bold">
+                                        No Records Yet
+                                    </h4>
+
+                                    <p className="text-muted mb-4">
+                                        No medical records found. Your records will appear here once they are available.
+                                    </p>
+
+                                </div>
+                            </div>
                         </div>
-
                     )}
                 </div>
             </section>

@@ -145,7 +145,7 @@ export default function MyAppointmentHistory() {
                     <div className="card border-0 shadow-sm text-center py-5">
                         <div className="card-body">
                             <i
-                                className="bi bi-clock-history text-primary"
+                                className="bi bi-clock-history"
                                 style={{ fontSize: "4rem" }}
                             ></i>
 

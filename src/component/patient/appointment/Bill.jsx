@@ -5,8 +5,8 @@ import { Link } from "react-router-dom";
 import { RingLoader } from "react-spinners";
 
 const override = {
-  display: "block",
-  margin: "0 auto",
+    display: "block",
+    margin: "0 auto",
 }
 export default function Bills() {
 
@@ -85,21 +85,26 @@ export default function Bills() {
 
 
 
-            {bills.length === 0 ? (
+            {bills.length === 0 ? (<div className="col-12">
+                <div className="card border-0 shadow-sm text-center py-5">
+                    <div className="card-body">
+                        <i
+                            className="bi bi-receipt fs-1"
+                            style={{ fontSize: "4rem" }}
+                        ></i>
 
-                <div className="text-center py-5">
+                        <h4 className="mt-3 fw-bold">
+                            No Bills Found
+                        </h4>
 
-                    <i className="bi bi-receipt fs-1"></i>
+                        <p className="text-muted mb-4">
+                            You don't have any appointment bills yet.
 
-                    <h4 className="mt-3">
-                        No Bills Found
-                    </h4>
+                        </p>
 
-                    <p>
-                        You don't have any appointment bills yet.
-                    </p>
-
+                    </div>
                 </div>
+            </div>
 
             ) :
                 <div className="container my-5">
