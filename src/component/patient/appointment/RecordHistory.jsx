@@ -481,6 +481,7 @@ function RecordHistory() {
 
                                     <h4 className="mt-3 fw-bold">
                                         No Records Yet
+                                        
                                     </h4>
 
                                     <p className="text-muted mb-4">

@@ -2,7 +2,7 @@ export default class Prescription{
     medicalRecordId=''
     patientId=''
     doctorId=''
-    medicines=[]
+    medicines=''
     instructions=''
     nextVisitDate=''
     createdAt=Date.now()

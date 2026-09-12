@@ -3,6 +3,7 @@ import BillService from "../../../services/BillService";
 import AuthService from "../../../services/AuthService";
 import { Link } from "react-router-dom";
 import { RingLoader } from "react-spinners";
+import jsPDF from "jspdf";
 
 const override = {
     display: "block",
@@ -13,24 +14,145 @@ export default function Bills() {
     const [bills, setBills] = useState([]);
     const [loading, setLoading] = useState(true);
 
+    const formatDate = (date) => {
+    if (!date) return "N/A";
+
+    if (date?.toDate) {
+        return date.toDate().toLocaleDateString("en-IN");
+    }
+
+    return new Date(date).toLocaleDateString("en-IN");
+};
+
+    const downloadBill = (bill) => {
+    const doc = new jsPDF();
+    const pageWidth = doc.internal.pageSize.getWidth();
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(20);
+    doc.text("Hospital Management System", 20, 25);
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(11);
+    doc.text("Payment Invoice", 20, 33);
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(11);
+    doc.text(
+        `Invoice: ${bill.invoiceNumber || "N/A"}`,
+        pageWidth - 20,
+        25,
+        { align: "right" }
+    );
+
+    doc.setFont("helvetica", "normal");
+    doc.text(
+        `Status: ${bill.paymentStatus || "N/A"}`,
+        pageWidth - 20,
+        33,
+        { align: "right" }
+    );
+
+
+    doc.setLineWidth(0.5);
+    doc.line(20, 42, pageWidth - 20, 42);
+
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(13);
+    doc.text("Payment Details", 20, 58);
+
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(11);
+
+    doc.text(
+        `Payment Date: ${formatDate(bill.createdAt)}`,
+        20,
+        70
+    );
+
+    doc.text(
+        `Payment Method: ${bill.paymentMethod || "N/A"}`,
+        20,
+        80
+    );
+
+    doc.text(
+        `Payment ID: ${bill.paymentId || "N/A"}`,
+        20,
+        90
+    )
+
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(13);
+    doc.text("Billing Summary", 20, 110);
+
+    
+    doc.setFillColor(240, 240, 240);
+    doc.rect(20, 118, pageWidth - 40, 12, "F");
+
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(11);
+
+    doc.text("Description", 25, 126);
+    doc.text("Amount", pageWidth - 25, 126, {
+        align: "right"
+    });
+
+
+    doc.setFont("helvetica", "normal");
+
+    doc.text("Doctor Consultation", 25, 141);
+
+    doc.text(
+        `Rs. ${bill.consultationFee || 0}`,
+        pageWidth - 25,
+        141,
+        { align: "right" }
+    );
+
+    doc.line(20, 147, pageWidth - 20, 147);
+
+   
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(13);
+
+    doc.text("Total Amount", 25, 162);
+
+    doc.text(
+        `Rs. ${bill.totalAmount || 0}`,
+        pageWidth - 25,
+        162,
+        { align: "right" }
+    );
+
+
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(10);
+
+    doc.text(
+        "Thank you for using our Hospital Management System.",
+        pageWidth / 2,
+        190,
+        { align: "center" }
+    );
+    doc.text(
+        "This is a computer-generated invoice.",
+        pageWidth / 2,
+        198,
+        { align: "center" }
+    );
+
+
+    doc.save(`Bill-${bill.invoiceNumber || bill.id}.pdf`);
+};
     async function fetchBills() {
 
         try {
-
             const patientId = AuthService.uid();
-
             const res = await BillService.BillByPatient(patientId);
-
             setBills(res);
 
         } catch (err) {
-
             console.log("Error fetching bills:", err);
-
         } finally {
-
             setLoading(false);
-
         }
     }
     useEffect(() => {
@@ -203,7 +325,9 @@ export default function Bills() {
 
                                         <button
                                             className="btn btn-primary mt-4"
+                                           onClick={() => downloadBill(bill)}
                                         >
+                                            <i className="bi bi-download me-2"></i>
                                             Download Bill
                                         </button>
 

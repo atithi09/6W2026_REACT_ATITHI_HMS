@@ -517,10 +517,11 @@ h6 {
 
 .footer-16 .brand-section .logo .sitename {
   font-family: var(--heading-font);
-  font-size: 32px;
-  font-weight: 300;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-decoration: none;
   color: var(--heading-color);
-  letter-spacing: -0.5px;
+  
 }
 
 .footer-16 .brand-section .brand-description {

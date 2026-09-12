@@ -77,7 +77,9 @@ export default function Header() {
                             ></i>
                        
                         <Link to="/" className="logo d-flex align-items-center">
-                            <h1 className="sitename">Clinic</h1>
+                            <h1 className="sitename">MEDORA
+
+                            </h1>
                         </Link>
 
                         <nav id="navmenu" className="navmenu ms-auto me-3">
@@ -86,6 +88,7 @@ export default function Header() {
                                     <Link to="/" onClick={closeMenu}>
                                         Home
                                     </Link>
+
                                 </li>
 
                                 <li>
