@@ -187,7 +187,8 @@ export default function Bills() {
                             <div className="col-lg-8">
                                 <h1 className="heading-title">My Bills</h1>
                                 <p className="mb-0">
-                                    Manage your personal information, update your contact details, and keep your profile up to date. Your profile helps us provide a personalized, secure, and seamless healthcare experience.
+                                    Stay informed about your healthcare expenses with easy access to your bills and payment history. Review consultation charges, payment details, and invoices anytime, all securely organized in one place.
+
                                 </p>
                             </div>
                         </div>
