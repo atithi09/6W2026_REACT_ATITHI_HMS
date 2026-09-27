@@ -60,18 +60,18 @@ export default function admin() {
                     <div className="border border-1 rounded flex-grow-1 p-3">
                         <h4 className="text-center">Today's Appointments</h4>
                     </div>
-                    <div className="d-flex flex-column gap-2 border border-1 rounded p-2">
+                    <div className="d-flex flex-column gap-2 border border-1 rounded p-2 ">
                         <h4 className="text-center py-2 px-5">Quick Actions</h4>
 
-                        <div className="quickcard border border-1 rounded border-primary py-1 px-3 mx-2"> <Link to='/admin/addDoc' className="quickact fw-bold">Add Doctor</Link></div>
+                        <div className="quickcard border border-0 rounded  py-1 px-3 mx-2"> <Link to='/admin/addDoc' className="quickact fw-bold">Add Doctor</Link></div>
 
-                        <div className="quickcard border border-1 rounded border-primary py-1 px-3 mx-2"> <Link to="/admin/managedoc" className="quickact fw-bold">Manage Doctors</Link></div>
+                        <div className="quickcard border border-0 rounded  py-1 px-3 mx-2"> <Link to="/admin/managedoc" className="quickact fw-bold">Manage Doctors</Link></div>
 
-                        <div className="quickcard border border-1 rounded border-primary py-1 px-3 mx-2"> <Link to="/admin/managepatient" className="quickact fw-bold">Manage Patients</Link></div>
+                        <div className="quickcard border border-0 rounded  py-1 px-3 mx-2"> <Link to="/admin/managepatient" className="quickact fw-bold">Manage Patients</Link></div>
 
-                        <div className="quickcard border border-1 rounded border-primary py-1 px-3 mx-2"> <Link to='/admin/addDepartment' className="quickact fw-bold">Add Department</Link></div>
+                        <div className="quickcard border border-0 rounded  py-1 px-3 mx-2"> <Link to='/admin/addDepartment' className="quickact fw-bold">Add Department</Link></div>
 
-                        <div className="quickcard border border-1 rounded border-primary py-1 px-3 mx-2"> <Link to="/admin/manageappts" className="quickact fw-bold">View Appointments</Link></div>
+                        <div className="quickcard border border-0 rounded  py-1 px-3 mx-2"> <Link to="/admin/manageappts" className="quickact fw-bold">View Appointments</Link></div>
                     </div>
                 </div>
 
