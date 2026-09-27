@@ -37,26 +37,43 @@ export default function admin() {
             <div className="mx-3 px-5">
                 <div className="d-flex flex-wrap justify-content-between">
                     <div className="dashcard border border-1 border-primary rounded p-2 d-flex align-items-start gap-3">
-                        <span><i className="bi bi-person-circle text-primary opacity-50 fs-1"></i></span>
+                        <span><i className="bi bi-person-circle text-primary opacity-50 fs-1 "></i></span>
                         <h5 className="fw-bold p-2"> Doctors</h5>
                     </div>
                     <div className="dashcard border border-1 rounded border-success p-2 d-flex align-items-start gap-3">
-                       <span><i className="bi bi-person-circle text-success opacity-50 fs-1"></i></span>
+                        <span><i className="bi bi-person-circle text-success opacity-50 fs-1 "></i></span>
                         <h5 className="fw-bold p-2"> Patients</h5>
                     </div>
 
                     <div className="dashcard border border-1 rounded border-danger p-2 d-flex align-items-start gap-3">
-                       <span><i className="bi bi-person-circle text-danger opacity-50 fs-1"></i></span>
+                        <span><i className="bi bi-person-circle text-danger opacity-50 fs-1"></i></span>
                         <h5 className="fw-bold p-2 "> Appoitnments</h5>
                     </div>
 
                     <div className="dashcard border border-1 rounded border-warning p-2 d-flex align-items-start gap-3">
-                      <span><i className="bi bi-person-circle text-warning-emphasis opacity-50 fs-1"></i></span>
+                        <span><i className="bi bi-person-circle text-warning-emphasis opacity-50 fs-1"></i></span>
                         <h5 className="fw-bold p-2"> Revenue</h5>
                     </div>
 
                 </div>
+                <div className="d-flex flex-column flex-md-row justify-content-evenly gap-3 mb-5">
+                    <div className="border border-1 rounded flex-grow-1 p-3">
+                        <h4 className="text-center">Today's Appointments</h4>
+                    </div>
+                    <div className="d-flex flex-column gap-2 border border-1 rounded p-2">
+                        <h4 className="text-center py-2 px-5">Quick Actions</h4>
+                        
+                        <div className=" border border-1 w-100 rounded border-primary bg-primary opacity-25 p-1 text-center"> <Link to='/admin/addDoc' className="text-white fw-bold">Add Doctor</Link></div>
 
+                        <div className=" border border-1 w-100 rounded border-primary bg-primary opacity-25 p-1 text-center"> <Link to="/admin/managedoc" className="text-white fw-bold">Manage Doctors</Link></div>
+
+                        <div className=" border border-1 w-100 rounded border-primary bg-primary opacity-25 p-1 text-center"> <Link to="/admin/managepatient" className="text-white fw-bold">Manage Patients</Link></div>
+
+                        <div className=" border border-1 w-100 rounded border-primary bg-primary opacity-25 p-1 text-center"> <Link to='/admin/addDepartment' className="text-white fw-bold">Add Department</Link></div>
+
+                        <div className=" border border-1 w-100 rounded border-primary bg-primary opacity-25 p-1 text-center"> <Link to="/admin/manageappts" className="text-white fw-bold">View Appointments</Link></div>
+                    </div>
+                </div>
 
             </div>
         </>
