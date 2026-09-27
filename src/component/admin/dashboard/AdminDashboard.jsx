@@ -36,23 +36,23 @@ export default function admin() {
             </div>
             <div className="mx-3 px-5">
                 <div className="d-flex flex-wrap justify-content-between">
-                    <div className="dashcard shadow rounded p-2 d-flex align-items-start gap-3">
+                    <div className="dashcard border border-1 border-primary rounded p-2 d-flex align-items-start gap-3">
                         <span><i className="bi bi-person-circle text-primary opacity-50 fs-1"></i></span>
-                        <h5 className="fw-bold text-primary-emphasis p-2"> Doctors</h5>
+                        <h5 className="fw-bold p-2"> Doctors</h5>
                     </div>
-                    <div className="dashcard shadow rounded p-2 d-flex align-items-start gap-3">
+                    <div className="dashcard border border-1 rounded border-success p-2 d-flex align-items-start gap-3">
                        <span><i className="bi bi-person-circle text-success opacity-50 fs-1"></i></span>
-                        <h5 className="fw-bold text-success p-2"> Patients</h5>
+                        <h5 className="fw-bold p-2"> Patients</h5>
                     </div>
 
-                    <div className="dashcard shadow rounded p-2 d-flex align-items-start gap-3">
+                    <div className="dashcard border border-1 rounded border-danger p-2 d-flex align-items-start gap-3">
                        <span><i className="bi bi-person-circle text-danger opacity-50 fs-1"></i></span>
-                        <h5 className="fw-bold p-2 text-danger"> Appoitnments</h5>
+                        <h5 className="fw-bold p-2 "> Appoitnments</h5>
                     </div>
 
-                    <div className="dashcard shadow rounded p-2 d-flex align-items-start gap-3">
+                    <div className="dashcard border border-1 rounded border-warning p-2 d-flex align-items-start gap-3">
                       <span><i className="bi bi-person-circle text-warning-emphasis opacity-50 fs-1"></i></span>
-                        <h5 className="fw-bold text-warning-emphasis p-2"> Revenue</h5>
+                        <h5 className="fw-bold p-2"> Revenue</h5>
                     </div>
 
                 </div>
