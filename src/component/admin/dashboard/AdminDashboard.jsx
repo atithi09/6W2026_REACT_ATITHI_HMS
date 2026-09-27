@@ -21,7 +21,7 @@ export default function admin() {
                                         Welcome back, Admin
                                     </h1>
                                     <span className="border border-1 rounded p-2">
-                                        <i className="bi bi-calendar fs-3 me-1 " style={{ color: ' #112344' }}></i>
+                                        <i className="bi bi-calendar fs-3 me-2 " style={{ color: ' #112344' }}></i>
                                         <span className="fs-4" style={{ color: ' #112344' }}>{formattedDate}</span>
                                     </span>
                                 </div>
@@ -36,20 +36,23 @@ export default function admin() {
             </div>
             <div className="mx-3 px-5">
                 <div className="d-flex flex-wrap justify-content-between">
-                    <div className="dashcard shadow rounded p-3">
-                        <h5 className="fw-bold"> Doctors</h5>
+                    <div className="dashcard shadow rounded p-2 d-flex align-items-start gap-3">
+                        <span><i className="bi bi-person-circle text-primary opacity-50 fs-1"></i></span>
+                        <h5 className="fw-bold text-primary-emphasis p-2"> Doctors</h5>
                     </div>
-                    <div className="dashcard shadow rounded p-3">
-                        <h5 className="fw-bold">Patients</h5>
-
-                    </div>
-
-                    <div className="dashcard shadow rounded p-3">
-                        <h5 className="fw-bold">Appointments</h5>
+                    <div className="dashcard shadow rounded p-2 d-flex align-items-start gap-3">
+                       <span><i className="bi bi-person-circle text-success opacity-50 fs-1"></i></span>
+                        <h5 className="fw-bold text-success p-2"> Patients</h5>
                     </div>
 
-                    <div className="dashcard shadow rounded p-3">
-                        <h5 className="fw-bold text-center">Revenue</h5>
+                    <div className="dashcard shadow rounded p-2 d-flex align-items-start gap-3">
+                       <span><i className="bi bi-person-circle text-danger opacity-50 fs-1"></i></span>
+                        <h5 className="fw-bold p-2 text-danger"> Appoitnments</h5>
+                    </div>
+
+                    <div className="dashcard shadow rounded p-2 d-flex align-items-start gap-3">
+                      <span><i className="bi bi-person-circle text-warning-emphasis opacity-50 fs-1"></i></span>
+                        <h5 className="fw-bold text-warning-emphasis p-2"> Revenue</h5>
                     </div>
 
                 </div>
