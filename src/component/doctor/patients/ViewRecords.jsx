@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-
+import jsPDF from "jspdf";
 import PatientService from "../../../services/PatientService";
 import AppointmentService from "../../../services/AppointmentService";
 import MedicalRecordServices from "../../../services/MedicalRecordServices";
@@ -39,7 +39,6 @@ export default function ViewRecords() {
     }
     async function getMedicines() {
         const res = await PrescriptionServices.recordByPatient(params.id);
-        console.log(res)
         if (res) {
             setMedicines(res)
         }
@@ -248,7 +247,6 @@ export default function ViewRecords() {
 
                             {appointments.map((appt, index) => {
 
-                                // Find the record belonging to THIS appointment
                                 const record = medicalRecords.find(
                                     (record) => record.appointmentId === appt.id
                                 );
@@ -256,7 +254,6 @@ export default function ViewRecords() {
                                     (prescription) => prescription.medicalRecordId === record?.id
                                 );
 
-                                // Unique ID for each accordion
                                 const accordionId = `appointment-${index}`;
 
                                 return (
@@ -306,7 +303,7 @@ export default function ViewRecords() {
                                                         </div>
 
                                                     </div>
-
+                                                   
                                                 </div>
 
                                             </button>
@@ -368,6 +365,8 @@ export default function ViewRecords() {
                                                             {appt.appointmentStatus}
                                                         </strong>
                                                     </div>
+
+                                                    
 
                                                 </div>
 

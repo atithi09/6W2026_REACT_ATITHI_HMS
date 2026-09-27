@@ -58,7 +58,7 @@ export default function AdminHeader() {
                             ></i>
                         </div>
                         <Link to="/" className="logo d-flex align-items-center">
-                            <h1 className="sitename">Clinic</h1>
+                            <h1 className="sitename">MEDORA</h1>
                         </Link>
 
                         <nav id="navmenu" className="navmenu ms-auto me-3">
