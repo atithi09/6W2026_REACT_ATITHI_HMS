@@ -7171,3 +7171,11 @@ thead tr{
 .summary-card:hover {
     transform: translateY(-3px);
 }
+
+.quickact{
+  color:#172554;
+  text-decoration: none;
+}
+.quickcard{
+  background-color: #C2DBFF;
+}

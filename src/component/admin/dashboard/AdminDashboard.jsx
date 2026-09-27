@@ -62,16 +62,16 @@ export default function admin() {
                     </div>
                     <div className="d-flex flex-column gap-2 border border-1 rounded p-2">
                         <h4 className="text-center py-2 px-5">Quick Actions</h4>
-                        
-                        <div className=" border border-1 w-100 rounded border-primary bg-primary opacity-25 p-1 text-center"> <Link to='/admin/addDoc' className="text-white fw-bold">Add Doctor</Link></div>
 
-                        <div className=" border border-1 w-100 rounded border-primary bg-primary opacity-25 p-1 text-center"> <Link to="/admin/managedoc" className="text-white fw-bold">Manage Doctors</Link></div>
+                        <div className="quickcard border border-1 rounded border-primary py-1 px-3 mx-2"> <Link to='/admin/addDoc' className="quickact fw-bold">Add Doctor</Link></div>
 
-                        <div className=" border border-1 w-100 rounded border-primary bg-primary opacity-25 p-1 text-center"> <Link to="/admin/managepatient" className="text-white fw-bold">Manage Patients</Link></div>
+                        <div className="quickcard border border-1 rounded border-primary py-1 px-3 mx-2"> <Link to="/admin/managedoc" className="quickact fw-bold">Manage Doctors</Link></div>
 
-                        <div className=" border border-1 w-100 rounded border-primary bg-primary opacity-25 p-1 text-center"> <Link to='/admin/addDepartment' className="text-white fw-bold">Add Department</Link></div>
+                        <div className="quickcard border border-1 rounded border-primary py-1 px-3 mx-2"> <Link to="/admin/managepatient" className="quickact fw-bold">Manage Patients</Link></div>
 
-                        <div className=" border border-1 w-100 rounded border-primary bg-primary opacity-25 p-1 text-center"> <Link to="/admin/manageappts" className="text-white fw-bold">View Appointments</Link></div>
+                        <div className="quickcard border border-1 rounded border-primary py-1 px-3 mx-2"> <Link to='/admin/addDepartment' className="quickact fw-bold">Add Department</Link></div>
+
+                        <div className="quickcard border border-1 rounded border-primary py-1 px-3 mx-2"> <Link to="/admin/manageappts" className="quickact fw-bold">View Appointments</Link></div>
                     </div>
                 </div>
 
