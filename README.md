@@ -1,6 +1,6 @@
-# Hospital Management System
+#AI Assisted Hospital Management System
 
-A modern Hospital Management System built using **React.js**, **Firebase Firestore**, and **Bootstrap**. The project provides separate dashboards for **Admin**, **Doctor**, and **Patient** to streamline hospital operations such as appointment booking, doctor management, medical records, and prescriptions.
+A modern AI Assisted Hospital Management System built using **React.js**, **Firebase Firestore**, and **Bootstrap**. The project provides separate dashboards for **Admin**, **Doctor**, and **Patient** to streamline hospital operations such as appointment booking, doctor management, medical records, and prescriptions.
 
 ## Features
 
@@ -117,7 +117,6 @@ The project uses the following Firestore collections: :contentReference[oaicite:
 
 ## Future Enhancements
 
-- AI-assisted prescription generation
 - Voice-to-text consultation support
 - Email notifications
 - SMS appointment reminders
