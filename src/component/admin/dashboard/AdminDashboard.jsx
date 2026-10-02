@@ -63,15 +63,35 @@ export default function admin() {
                     <div className="d-flex flex-column gap-2 border border-1 rounded p-2 ">
                         <h4 className="text-center py-2 px-5">Quick Actions</h4>
 
-                        <div className="d-flex align-items-center justify-content-between quickcard border border-0 rounded  py-1 px-3 mx-2"><i className="quickact fs-4 bi bi-person-add"></i> <Link to='/admin/addDoc' className="quickact fw-bold">Add Doctor</Link><i className="bi bi-arrow-right-short quickact fs-4"></i></div>
+                        <div className="d-flex align-items-center justify-content-between quickcard border border-0 rounded  py-1 px-3 mx-2">
+                            <i className="quickact fs-4 bi bi-person-add"></i>
+                            <Link to='/admin/addDoc' className="quickact fw-bold">Add Doctor</Link>
+                            <i className="bi bi-arrow-right-short quickact fs-4"></i>
+                        </div>
 
-                        <div className="d-flex align-items-center justify-content-between quickcard border border-0 rounded  py-1 px-3 mx-2"> <i className="quickact fs-4 bi bi-people"></i> <Link to="/admin/managedoc" className="quickact fw-bold">Manage Doctors</Link><i className="bi bi-arrow-right-short quickact fs-4"></i></div>
+                        <div className="d-flex align-items-center justify-content-between quickcard border border-0 rounded  py-1 px-3 mx-2">
+                            <i className="quickact fs-4 bi bi-people"></i>
+                            <Link to="/admin/managedoc" className="quickact fw-bold">Manage Doctors</Link>
+                            <i className="bi bi-arrow-right-short quickact fs-4"></i>
+                        </div>
 
-                        <div className="d-flex align-items-center justify-content-between quickcard border border-0 rounded  py-1 px-3 mx-2"> <i className="quickact fs-4 bi bi-person-check"></i> <Link to="/admin/managepatient" className="quickact fw-bold">Manage Patients</Link><i className="bi bi-arrow-right-short quickact fs-4"></i></div>
+                        <div className="d-flex align-items-center justify-content-between quickcard border border-0 rounded  py-1 px-3 mx-2">
+                            <i className="quickact fs-4 bi bi-person-check"></i>
+                            <Link to="/admin/managepatient" className="quickact fw-bold">Manage Patients</Link>
+                            <i className="bi bi-arrow-right-short quickact fs-4"></i>
+                        </div>
 
-                        <div className="d-flex align-items-center justify-content-between quickcard border border-0 rounded  py-1 px-3 mx-2"> <i className="quickact fs-4 bi bi-building-add"></i> <Link to='/admin/addDepartment' className="quickact fw-bold">Add Department</Link><i className="bi bi-arrow-right-short quickact fs-4"></i></div>
+                        <div className="d-flex align-items-center justify-content-between quickcard border border-0 rounded  py-1 px-3 mx-2">
+                            <i className="quickact fs-4 bi bi-building-add"></i>
+                            <Link to='/admin/addDepartment' className="quickact fw-bold">Add Department</Link>
+                            <i className="bi bi-arrow-right-short quickact fs-4"></i>
+                        </div>
 
-                        <div className="d-flex align-items-center justify-content-between quickcard border border-0 rounded  py-1 px-3 mx-2"> <i className="quickact fs-4 bi bi-calendar-event"></i> <Link to="/admin/manageappts" className="quickact fw-bold">View Appointments</Link><i className="bi bi-arrow-right-short quickact fs-4"></i></div>
+                        <div className="d-flex align-items-center justify-content-between quickcard border border-0 rounded  py-1 px-3 mx-2">
+                            <i className="quickact fs-4 bi bi-calendar-event"></i>
+                            <Link to="/admin/manageappts" className="quickact fw-bold">View Appointments</Link>
+                            <i className="bi bi-arrow-right-short quickact fs-4"></i>
+                        </div>
                     </div>
                 </div>
 
