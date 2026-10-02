@@ -7178,5 +7178,16 @@ thead tr{
 }
 .quickcard{
   background-color: #d2e1f7;
- 
+}
+.revenue{
+  background-color: #fff0be;
+}
+.appointment{
+  background-color: #FAE1E3;
+}
+.patient{
+  background-color: #E1EFE9;
+}
+.doctor{
+  background-color: hwb(212 67% 0%) ;
 }
