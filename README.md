@@ -117,7 +117,6 @@ The project uses the following Firestore collections: :contentReference[oaicite:
 
 ## Future Enhancements
 
-- AI-assisted prescription generation
 - Voice-to-text consultation support
 - Email notifications
 - SMS appointment reminders
