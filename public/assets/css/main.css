@@ -7191,3 +7191,20 @@ thead tr{
 .doctor{
   background-color: hwb(212 67% 0%) ;
 }
+
+.quickAct{
+ 
+    display: flex;
+    flex-direction: column;
+}
+
+.quick-action-list{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.quick-actions-list div {
+    flex: 1;
+}
