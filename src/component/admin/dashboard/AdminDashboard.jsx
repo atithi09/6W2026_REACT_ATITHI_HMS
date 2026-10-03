@@ -119,7 +119,7 @@ export default function admin() {
     return (
         <>
 
-            <div className="page-title m-md-3 p-md-5 mt-3 pt-3 mb-lg-0 pb-lg-0">
+            <div className="page-title  m-md-3 p-md-5 mt-3 pt-3 mb-lg-0 pb-lg-0">
                 <div className="heading">
                     <div className="container-fluid">
                         <div className=" d-flex justify-content-between align-items-start text-start">
@@ -144,8 +144,8 @@ export default function admin() {
 
             </div>
             <div className="mx-3 px-5">
-                <div className="d-flex flex-wrap justify-content-between">
-                    <div className="dashcard doctor border border-1 border-primary rounded p-2 d-flex align-items-start gap-3">
+                <div className="d-flex flex-wrap justify-content-md-between justify-content-center">
+                    <div className="dashcard doctor border border-1 border-primary rounded p-2 me-2 d-flex align-items-start gap-3">
                         <span><i className="bi bi-person-circle text-primary opacity-75 fs-1 "></i></span>
                         <div>
                             <h6 className="fw-bold pt-2 text-secondary text-start"> Doctors</h6>
@@ -156,7 +156,7 @@ export default function admin() {
                         </div>
                     </div>
                     
-                    <div className="dashcard patient border border-1 rounded border-success p-2 d-flex align-items-start gap-3">
+                    <div className="dashcard patient border border-1 rounded border-success p-2 d-flex align-items-start me-2 gap-3">
                         <span><i className="bi bi-person-circle text-success opacity-75 fs-1 "></i></span>
                         <div>
                             <h6 className="fw-bold pt-2 text-secondary text-start"> Patients</h6>
@@ -167,7 +167,7 @@ export default function admin() {
                         </div>
                     </div>
 
-                    <div className="dashcard appointment border border-1 rounded border-danger p-2 d-flex align-items-start gap-3">
+                    <div className="dashcard appointment border border-1 rounded border-danger p-2 d-flex align-items-start me-2 gap-3">
                         <span><i className="bi bi-calendar-event text-danger opacity-75 fs-1"></i></span>
                         <div>
                             <h6 className="fw-bold pt-2 text-secondary text-start "> Appoitnments</h6>
@@ -178,7 +178,7 @@ export default function admin() {
                         </div>
                     </div>
 
-                    <div className="dashcard revenue border border-1 rounded border-warning p-2 d-flex align-items-start gap-3">
+                    <div className="dashcard revenue border border-1 rounded border-warning p-2 d-flex align-items-start me-2 gap-3">
 
                         <span><i className="bi bi-currency-rupee text-warning-emphasis opacity-75 fs-1"></i></span>
                         <div>
@@ -195,8 +195,18 @@ export default function admin() {
 
                 </div>
                 <div className="d-flex flex-column flex-md-row justify-content-evenly gap-3 mb-5">
-                    <div className="border border-1 rounded flex-grow-1 p-3">
-                        <h4 className="text-center">Today's Appointments</h4>
+                    <div className="border border-1 rounded flex-grow-1 p-3 d-flex justify-content-between">
+                        <div>
+                        <i className="d-inline quickact fs-4 me-3 bi bi-calendar-event"></i>
+                        <h4 className="d-inline text-start">Today's Appointments</h4>
+                        </div>
+                        <div>
+                            <Link to="/admin/manageappts" className="d-none d-md-block">
+                            <div>
+                                View All <i className="bi bi-arrow-right-short quickact fs-4"></i>
+                            </div>   
+                            </Link>
+                        </div>
                     </div>
                     <div className="d-flex flex-column gap-2 border border-1 rounded p-2 ">
                         <h4 className="text-center py-2 px-5">Quick Actions</h4>
@@ -225,7 +235,7 @@ export default function admin() {
                             <i className="bi bi-arrow-right-short quickact fs-4"></i>
                         </div>
 
-                        <div className="d-flex align-items-center justify-content-between quickcard border border-0 rounded  py-1 px-3 mx-2">
+                        <div className="d-flex align-items-center justify-content-between quickcard border border-0 rounded  py-1 px-3 mx-2 mb-2">
                             <i className="quickact fs-4 bi bi-calendar-event"></i>
                             <Link to="/admin/manageappts" className="quickact fw-bold">View Appointments</Link>
                             <i className="bi bi-arrow-right-short quickact fs-4"></i>
