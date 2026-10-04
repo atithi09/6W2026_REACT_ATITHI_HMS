@@ -104,9 +104,6 @@ export default function DoctorDashboard() {
                                         <span className="fs-5 " style={{ color: ' #112344' }}>{formattedDate}</span>
                                     </span>
                                 </div>
-                                <p className=" text-start fs-6 fw-bolder mb-0 text-secondary pt-0">Here is an overview of your
-                                    hospital management system
-                                </p>
                             </div>
                         </div>
                     </div>
@@ -143,7 +140,7 @@ export default function DoctorDashboard() {
                             <h6 className="fw-bold pt-2 text-secondary text-start"> Patients</h6>
                             <div className="text-start">
                                 <h2 className="fw-bold mb-1">{doctorPatients.length}</h2>
-                                <small className="text-secondary fs-6">Registered Patients</small>
+                                <small className="text-secondary fs-6">Patients Treated</small>
                             </div>
                         </div>
                     </div>
@@ -155,7 +152,10 @@ export default function DoctorDashboard() {
                             <h6 className="fw-bold pt-2 text-secondary text-start"> Revenue</h6>
                             <div className="text-start">
                                 <h2 className="fw-bold mb-1">₹</h2>
-                                <small className="text-secondary fs-6"></small>
+                                <small className="text-secondary fs-6">{now.toLocaleString("en-IN", {
+                                    month: "long",
+                                    year: "numeric"
+                                })}</small>
                             </div>
                         </div>
                     </div>
