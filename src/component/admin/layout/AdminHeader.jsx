@@ -20,14 +20,14 @@ export default function AdminHeader() {
             >
                 {/* Top Bar */}
                 <div className="topbar d-flex align-items-center dark-background">
-                    <div className="container d-flex justify-content-center justify-content-md-between">
+                    <div className="container d-flex  justify-content-between">
                         <div className="contact-info d-flex align-items-center">
                             <i className="bi bi-envelope d-flex align-items-center">
                                 <Link to="mailto:contact@example.com">{email}</Link>
                             </i>
                         </div>
 
-                        <div className="social-links d-none d-md-flex align-items-center">
+                        <div className="social-links d-md-flex align-items-center">
                             <Link to="#!" className="twitter">
                                 <i className="bi bi-twitter-x"></i>
                             </Link>
@@ -48,7 +48,7 @@ export default function AdminHeader() {
                 </div>
 
                 {/* Branding */}
-                <div className="branding d-flex align-items-center">
+                <div className="branding d-flex justify-content-between align-items-center">
                     <div className="container position-relative d-flex align-items-center justify-content-between">
                         <div>
                             <i

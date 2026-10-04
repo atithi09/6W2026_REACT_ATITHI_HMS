@@ -213,9 +213,9 @@ export default function admin() {
 
                     <div className="border border-1 rounded pb-3 h-100 " style={{ flex: 2 }}>
                         <div className="p-3 d-flex justify-content-between ">
-                            <div>
+                            <div className="d-flex ">
                                 <i className="d-inline quickact fs-4 me-3 bi bi-calendar-event"></i>
-                                <h4 className="d-inline text-start">Today's Appointments</h4>
+                                <h4 className="d-inline text-start text-nowrap">Today's Appointments</h4>
                             </div>
                             <div>
                                 <Link to="/admin/manageappts" className="d-none d-md-block">
