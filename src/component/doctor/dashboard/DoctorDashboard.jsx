@@ -118,21 +118,10 @@ export default function DoctorDashboard() {
                     <div className="dashcard doctor border border-1 border-primary rounded p-2 me-2 d-flex align-items-start gap-3">
                         <span><i className="bi bi-person-circle text-primary opacity-75 fs-1 "></i></span>
                         <div>
-                            <h6 className="fw-bold pt-2 text-secondary text-start"> Doctors</h6>
+                            <h6 className="fw-bold pt-2 text-secondary text-start"> Appointments</h6>
                             <div className="text-start">
                                 <h2 className="fw-bold mb-1"></h2>
-                                <small className="text-secondary fs-6">Active Doctors</small>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="dashcard patient border border-1 rounded border-success p-2 d-flex align-items-start me-2 gap-3">
-                        <span><i className="bi bi-person-circle text-success opacity-75 fs-1 "></i></span>
-                        <div>
-                            <h6 className="fw-bold pt-2 text-secondary text-start"> Patients</h6>
-                            <div className="text-start">
-                                <h2 className="fw-bold mb-1">{doctorPatients.length}</h2>
-                                <small className="text-secondary fs-6">Registered Patients</small>
+                                <small className="text-secondary fs-6">Total Appoinmtnets</small>
                             </div>
                         </div>
                     </div>
@@ -144,6 +133,17 @@ export default function DoctorDashboard() {
                             <div className="text-start">
                                 <h2 className="fw-bold mb-1"></h2>
                                 <small className="text-secondary fs-6">This Month</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="dashcard patient border border-1 rounded border-success p-2 d-flex align-items-start me-2 gap-3">
+                        <span><i className="bi bi-person-circle text-success opacity-75 fs-1 "></i></span>
+                        <div>
+                            <h6 className="fw-bold pt-2 text-secondary text-start"> Patients</h6>
+                            <div className="text-start">
+                                <h2 className="fw-bold mb-1">{doctorPatients.length}</h2>
+                                <small className="text-secondary fs-6">Registered Patients</small>
                             </div>
                         </div>
                     </div>
@@ -177,7 +177,92 @@ export default function DoctorDashboard() {
                                 </Link>
                             </div>
                         </div>
+                        {todayAppointments.length > 0 ? (
+                            <div className="table-responsive shadow-sm rounded m-5">
+                                <table className="table table-hover align-middle text-center mb-0">
 
+                                    <thead className="table-primary">
+                                        <tr >
+                                            <th className='text-nowrap '>Patient Name</th>
+                                            <th className='text-nowrap'>Doctor Name</th>
+                                            <th className='date-column'>Time</th>
+                                            <th>Date</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        {todayAppointments.map((appt, index) => (
+                                            <tr key={appt.id}>
+
+                                                <td className='text-nowrap'>
+                                                    {patients.find((p) => p.id === appt.patientId)?.name}
+                                                </td>
+
+                                                <td className='text-nowrap'>
+                                                    {doctors.find((d) => d.id === appt.doctorId)?.name}
+                                                </td>
+
+                                                <td >{appt.appointmentTime}</td>
+
+                                                <td className='text-nowrap'>{appt.appointmentDate}</td>
+
+                                                <td>
+                                                    {appt.appointmentStatus === "Pending" && (
+                                                        <span className="badge appBadge bg-warning  fs-6">
+                                                            Pending
+                                                        </span>
+                                                    )}
+
+                                                    {appt.appointmentStatus === "Accepted" && (
+                                                        <span className="badge appBadge bg-success fs-6">
+                                                            Accepted
+                                                        </span>
+                                                    )}
+
+                                                    {appt.appointmentStatus === "Cancelled" && (
+                                                        <span className="badge appBadge bg-danger fs-6">
+                                                            Cancelled
+                                                        </span>
+                                                    )}
+
+                                                    {appt.appointmentStatus === "Completed" && (
+                                                        <span className="badge appBadge bg-success  fs-6">
+                                                            Completed
+                                                        </span>
+                                                    )}
+                                                </td>
+
+                                            </tr>
+                                        ))}
+                                    </tbody>
+
+                                </table>
+                            </div>) :
+                            (<div className="container">
+                                <div className="card border-0  text-center m-3 ">
+
+                                    <div className="card-body">
+
+                                        <i
+                                            className="bi bi-calendar2-x opacity-50 text-primary"
+                                            style={{ fontSize: "4rem" }}
+                                        ></i>
+
+                                        <h4 className="mt-3 fw-bold">
+                                            No Appointments Scheduled
+                                        </h4>
+
+                                        <p className="text-muted mb-4">
+                                            You don't have any appointments at the moment.
+                                            Check back later for new bookings.
+                                        </p>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                            )}
                     </div>
 
                     <div className="d-flex flex-column h-100 gap-2 border border-1 flex-grow-1 rounded p-2 " style={{ flex: 1 }} >
