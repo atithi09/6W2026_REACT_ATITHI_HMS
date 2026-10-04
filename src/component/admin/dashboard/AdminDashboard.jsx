@@ -133,20 +133,19 @@ export default function admin() {
     }, [])
     return (
         <>
-
             <div className="page-title px-3 mt-3 pt-5 mb-lg-0 pb-lg-0">
                 <div className="heading ">
                     <div className="container-fluid">
                         <div className=" d-flex justify-content-between align-items-start text-start">
                             <div className="w-100">
-                                <p className=" text-start fs-6 fw-bolder mb-1 text-secondary p-0">ADMIN DASHBOARD</p>
+                                <p className=" text-md-start text-center fs-6 fw-bolder mb-1 text-secondary p-0">ADMIN DASHBOARD</p>
                                 <div className="d-flex flex-column flex-md-row align-items-start align-items-md-center justify-content-between mb-2 mb-lg-0">
-                                    <h1 className="heading-title">
+                                    <h2 className="heading-title">
                                         Welcome back, Admin
-                                    </h1>
+                                    </h2>
                                     <span className="border border-1 rounded p-2">
-                                        <i className="bi bi-calendar fs-3 me-2 " style={{ color: ' #112344' }}></i>
-                                        <span className="fs-4" style={{ color: ' #112344' }}>{formattedDate}</span>
+                                        <i className="bi bi-calendar fs-4 me-2 " style={{ color: ' #112344' }}></i>
+                                        <span className="fs-5" style={{ color: ' #112344' }}>{formattedDate}</span>
                                     </span>
                                 </div>
                                 <p className=" text-start fs-6 fw-bolder mb-0 text-secondary pt-0">Here is an overview of your
@@ -340,7 +339,7 @@ export default function admin() {
                             <i className="bi bi-arrow-right-short quickact fs-4"></i>
                         </div>
 
-                        <div className="d-flex align-items-center justify-content-between quickcard border border-0 rounded  py-1 px-3 mx-2 flex-fill mb-2">
+                        <div className="d-flex align-items-center justify-content-between quickcard border border-0 rounded  py-1 px-3 mx-2 flex-fill mb-3">
                             <i className="quickact fs-4 bi bi-calendar-event"></i>
                             <Link to="/admin/manageappts" className="quickact fw-bold text-nowrap">View Appointments</Link>
                             <i className="bi bi-arrow-right-short quickact fs-4"></i>

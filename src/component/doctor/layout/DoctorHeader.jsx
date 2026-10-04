@@ -72,7 +72,7 @@ export default function DoctorHeader() {
                             onClick={() => setMobileOpen(!mobileOpen)}
                         ></i>
                         <Link to="/" className="logo d-flex align-items-center">
-                            <h1 className="sitename">Clinic</h1>
+                            <h1 className="sitename">Medora</h1>
                         </Link>
 
                         <nav id="navmenu" className="navmenu ms-auto me-3">

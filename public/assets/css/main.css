@@ -7208,3 +7208,16 @@ thead tr{
 .quick-actions-list div {
     flex: 1;
 }
+.dashboard-greeting {
+    font-size: 2rem;
+}
+
+@media (max-width: 767.98px) {
+    .dashboard-greeting {
+        font-size: 1.5rem;
+    }
+
+    .dashboard-greeting span {
+        display: block;
+    }
+}

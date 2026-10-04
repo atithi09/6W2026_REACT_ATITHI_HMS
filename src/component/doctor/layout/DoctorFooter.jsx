@@ -26,7 +26,7 @@ export default function DoctorFooter() {
                                         to="/"
                                         className="logo d-flex align-items-center mb-4"
                                     >
-                                        <span className="sitename">Clinic</span>
+                                        <span className="sitename">Medora</span>
                                     </Link>
                                     <p className="brand-description">
                                         Crafting exceptional digital experiences through thoughtful design
@@ -112,7 +112,7 @@ export default function DoctorFooter() {
                                 <div className="col-lg-6">
                                     <div className="copyright">
                                         <p>
-                                            © <span className="sitename">Clinic</span>. All rights reserved.
+                                            © <span className="sitename">Medora</span>. All rights reserved.
                                         </p>
                                     </div>
                                 </div>
