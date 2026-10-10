@@ -33,13 +33,12 @@ class UserService {
         const user = userData.user
 
         const userFirestoreData = await getDoc(doc(db, "users", user.uid))
-        if (user.emailVerified === false && userData.user.email) {
-            await signOut(auth);
-
+        if (userdata.userType === 3 && !user.emailVerified) {
             throw new Error(
                 "Please verify your email before logging in."
             );
-        }
+        };
+        
         const userdata = userFirestoreData.data()
         if (userFirestoreData.exists()) {
 
