@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth"
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, sendEmailVerification } from "firebase/auth"
 import { auth, db } from "../firebase/FirebaseConfig"
 import UserModel from "../models/UserModel"
 import { doc, setDoc, getDoc } from "firebase/firestore"
@@ -9,16 +9,23 @@ class UserService {
     async register(data) {
         const userData = await createUserWithEmailAndPassword(auth, data.email, data.password)
         const user = userData.user
-        let newUser = new UserModel()
-        newUser.id = user.uid
-        newUser.name = data.name
-        newUser.email = user.email
-        newUser.userType = 3
+        try {
 
-        const setDocData = await setDoc(doc(db, "users", user.uid), { ...newUser });
-        await signOut(auth);
-        return setDocData
-
+            await sendEmailVerification(user);
+            let newUser = new UserModel()
+            newUser.id = user.uid
+            newUser.name = data.name
+            newUser.email = user.email
+            newUser.userType = 3
+            const setDocData = await setDoc(doc(db, "users", user.uid), { ...newUser });
+            return {
+                success: true,
+                message: "Verification email sent successfully."
+            };
+        }
+        finally {
+            await signOut(auth);
+        }
     }
 
     async login(data) {
@@ -26,6 +33,13 @@ class UserService {
         const user = userData.user
 
         const userFirestoreData = await getDoc(doc(db, "users", user.uid))
+        if (user.emailVerified === false && userData.user.email) {
+            await signOut(auth);
+
+            throw new Error(
+                "Please verify your email before logging in."
+            );
+        }
         const userdata = userFirestoreData.data()
         if (userFirestoreData.exists()) {
 

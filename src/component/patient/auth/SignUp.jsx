@@ -30,7 +30,7 @@ export default function SignUp() {
                 password: password
             }
             await UserService.register(payload)
-            toast.success("User Registered")
+            toast.success("Registration successful! Please check your email to verify your account.");
             setName("");
             setEmail("");
             setPassword("");
