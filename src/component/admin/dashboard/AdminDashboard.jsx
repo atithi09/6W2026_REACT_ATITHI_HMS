@@ -6,7 +6,12 @@ import DoctorServices from "../../../services/DoctorServices"
 import AppointmentService from "../../../services/AppointmentService"
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import { RingLoader } from 'react-spinners'
 
+const override = {
+    display: "block",
+    margin: "0 auto",
+}
 export default function admin() {
     const [loading, setLoading] = useState(true)
     const [bills, setBills] = useState([])
@@ -131,6 +136,22 @@ export default function admin() {
         fetchPatients()
         fetchDoctors()
     }, [])
+
+     if (loading) {
+        return (
+            <div
+                className="d-flex justify-content-center align-items-center"
+                style={{ minHeight: "80vh" }}
+            >
+                <RingLoader
+                    color="#0D6EFD"
+                    loading={loading}
+                    cssOverride={override}
+                    size={70}
+                />
+            </div>
+        )
+    }
     return (
         <>
             <div className="page-title px-3 mt-3 pt-5 mb-lg-0 pb-lg-0">
