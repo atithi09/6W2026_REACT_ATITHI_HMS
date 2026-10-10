@@ -90,19 +90,19 @@ export default function DoctorHeader() {
 
                             <div className="d-flex gap-3 ms-auto me-2 align-items-center">
 
-                                <button
-                                    className="btn btn-primary py-1 px-3"
-                                    onClick={logout}
-                                >
-                                    Logout
-                                </button>
 
                                 <Link
                                     to={`/doctor/doctorProfile/${doctorId}`}
                                 >
                                     <i className="bi bi-person-circle fs-3"></i>
                                 </Link>
-
+                                
+                                <button
+                                    className="btn btn-primary py-1 px-3"
+                                    onClick={logout}
+                                >
+                                    Logout
+                                </button>
 
 
                             </div>

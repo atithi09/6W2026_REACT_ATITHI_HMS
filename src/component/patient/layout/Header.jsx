@@ -124,13 +124,14 @@ export default function Header() {
                         </nav>
                         {email ? (
                             <div className="d-flex gap-3 ms-auto me-2 align-items-center">
-                                <Link to="/"> <button className="btn btn-primary text-white py-1 px-3" onClick={logout}>
-                                    Logout </button>
-                                </Link>
-
                                 {(userType === '3') && (
                                     <Link to={`/profile/${userId}`}><i className="bi bi-person-circle fs-3"></i></Link>)
                                 }
+
+                                <Link to="/"> <button className="btn btn-primary text-white py-1 px-3" onClick={logout}>
+                                    Logout </button>
+                                </Link>
+                                
                             </div>
                         ) : (
                             <div className="d-flex gap-3 ms-auto me-2">
