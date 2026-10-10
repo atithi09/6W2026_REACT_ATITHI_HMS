@@ -5,19 +5,34 @@ import DoctorServices from "../../../services/DoctorServices"
 import { toast } from "react-toastify"
 import AppointmentService from "../../../services/AppointmentService"
 import PatientService from "../../../services/PatientService"
+import BillService from "../../../services/BillService"
+import { RingLoader } from 'react-spinners'
 
+const override = {
+    display: "block",
+    margin: "0 auto",
+}
 export default function DoctorDashboard() {
     const [loading, setLoading] = useState(true)
     const uid = AuthService.uid()
     const [doctor, setDoctor] = useState([])
     const [appointments, SetAppointments] = useState([])
     const [patients, setPatients] = useState([])
+    const [bills, setBills] = useState([])
     const now = new Date()
     const formattedDate = new Date().toLocaleDateString("en-US", {
         year: "numeric",
         month: "long",
         day: "numeric"
     })
+
+    const thisMonth = bills.filter((bill) => {
+        const date = bill.createdAt.toDate();
+        return (
+            date.getMonth() === now.getMonth() &&
+            date.getFullYear() === now.getFullYear()
+        );
+    });
     const hour = new Date().getHours();
 
     let greeting;
@@ -51,6 +66,22 @@ export default function DoctorDashboard() {
             setLoading(false)
         }
     }
+    async function fetchBills() {
+        try {
+            let res = await BillService.BillByDoctor(uid)
+            setBills(res)
+        }
+        catch (err) {
+            toast.error("Something went wrong")
+            console.log(err)
+        }
+        finally {
+            setLoading(false)
+        }
+    }
+    const monthlyEarnings = thisMonth.reduce((total, bill) => {
+        return total + Number(bill.totalAmount);
+    }, 0);
 
     const todayAppointments = appointments.filter((appt) => {
         if (!appt.createdAt) return false;
@@ -85,7 +116,24 @@ export default function DoctorDashboard() {
         getDoctor()
         fetchAppointments()
         fetchPatients()
+        fetchBills()
     }, [])
+    if (loading) {
+        return (
+            <div
+                className="d-flex justify-content-center align-items-center"
+                style={{ minHeight: "80vh" }}
+            >
+                <RingLoader
+                    color="#0D6EFD"
+                    loading={loading}
+                    cssOverride={override}
+                    size={70}
+                />
+            </div>
+        )
+    }
+
     return (
         <>
             <div className="page-title px-3 mt-3 pt-5 mb-lg-0 pb-lg-0">
@@ -151,7 +199,7 @@ export default function DoctorDashboard() {
                         <div>
                             <h6 className="fw-bold pt-2 text-secondary text-start"> Revenue</h6>
                             <div className="text-start">
-                                <h2 className="fw-bold mb-1">₹</h2>
+                                <h2 className="fw-bold mb-1">₹ {monthlyEarnings}</h2>
                                 <small className="text-secondary fs-6">{now.toLocaleString("en-IN", {
                                     month: "long",
                                     year: "numeric"
@@ -170,7 +218,7 @@ export default function DoctorDashboard() {
                                 <h4 className="d-inline text-start text-nowrap">Today's Appointments</h4>
                             </div>
                             <div>
-                                <Link to="/admin/manageappts" className="d-none d-md-block">
+                                <Link to="/doctor/viewappt" className="d-none d-md-block">
                                     <div>
                                         View All <i className="bi bi-arrow-right-short quickact fs-4"></i>
                                     </div>

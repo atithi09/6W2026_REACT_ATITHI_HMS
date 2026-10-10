@@ -88,7 +88,7 @@ export default function admin() {
         );
     });
 
-    const monthlyEarnings = thisMonth.reduce((total, bill) => {
+   const monthlyEarnings = thisMonth.reduce((total, bill) => {
         return total + Number(bill.totalAmount);
     }, 0);
 
