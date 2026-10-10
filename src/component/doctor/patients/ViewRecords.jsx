@@ -103,6 +103,11 @@ export default function ViewRecords() {
                                     Home
                                 </Link>
                             </li>
+                             <li>
+                                <Link to="/doctor/viewpatient">
+                                    Patients                                    
+                                </Link>
+                            </li>
 
                             <li className="current">
                                 Records
@@ -114,24 +119,8 @@ export default function ViewRecords() {
             </div>
 
 
-            {/* Main Content */}
             <div className="container records-container">
 
-                {/* Back Button */}
-                <div className="back-button-wrapper mt-3">
-
-                    <Link
-                        to="/doctor/viewpatient"
-                        className="back-button"
-                    >
-                        <i className="bi bi-arrow-left"></i>
-                        Back to Patients
-                    </Link>
-
-                </div>
-
-
-                {/* Patient Information */}
                 <div className="patient-info-card">
 
                     <div className="patient-info-heading">

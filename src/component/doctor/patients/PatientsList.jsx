@@ -45,9 +45,7 @@ export default function PatientsList() {
         fetchAppointments()
     }, [])
 
-    async function viewRecord() {
-
-    }
+    
 
     if (loading) {
         return (
