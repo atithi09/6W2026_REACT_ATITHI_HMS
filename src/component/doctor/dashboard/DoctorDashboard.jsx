@@ -96,6 +96,37 @@ export default function DoctorDashboard() {
             doctorId === uid
         );
     })
+    const completedAppointments = appointments.filter((appt) => {
+
+        if (!appt.createdAt) return false;
+
+        const date = appt.createdAt?.toDate
+            ? appt.createdAt.toDate()
+            : new Date(appt.createdAt);
+
+        return (
+            date.getMonth() === now.getMonth() &&
+            date.getFullYear() === now.getFullYear() &&
+            appt.status === "Completed" &&
+            appt.doctorId === uid
+        );
+    });
+    const pendingAppointments = appointments.filter((appt) => {
+
+        if (!appt.createdAt) return false;
+
+        const date = appt.createdAt?.toDate
+            ? appt.createdAt.toDate()
+            : new Date(appt.createdAt);
+
+        return (
+            date.getFullYear() === now.getFullYear() &&
+            appt.status === "Pending" &&
+            appt.doctorId === uid
+        );
+    });
+    const completedApptThisMonth = completedAppointments.length
+    const pendingAppointmentsCount = pendingAppointments.length
     async function fetchPatients() {
         try {
             let res = await PatientService.all()
@@ -165,8 +196,8 @@ export default function DoctorDashboard() {
                         <div>
                             <h6 className="fw-bold pt-2 text-secondary text-start"> Appointments</h6>
                             <div className="text-start">
-                                <h2 className="fw-bold mb-1"></h2>
-                                <small className="text-secondary fs-6">Total Appoinmtnets</small>
+                                <h2 className="fw-bold mb-1">{pendingAppointmentsCount}</h2>
+                                <small className="text-secondary fs-6 text-nowrap">Pending Appointments</small>
                             </div>
                         </div>
                     </div>
@@ -176,7 +207,7 @@ export default function DoctorDashboard() {
                         <div>
                             <h6 className="fw-bold pt-2 text-secondary text-start "> Appointments</h6>
                             <div className="text-start">
-                                <h2 className="fw-bold mb-1"></h2>
+                                <h2 className="fw-bold mb-1">{completedApptThisMonth}</h2>
                                 <small className="text-secondary fs-6">This Month</small>
                             </div>
                         </div>
