@@ -350,7 +350,7 @@ export default function DoctorDashboard() {
 
                         <div className="d-flex align-items-center justify-content-between quickcard border border-0 rounded  py-1 px-3 mx-2 flex-fill">
                             <i className="quickact fs-4 bi bi-calendar-event"></i>
-                            <Link to="/doctor/appthitory" className="quickact fw-bold text-nowrap">View Appointment History</Link>
+                            <Link to="/doctor/appthistory" className="quickact fw-bold text-nowrap">View Appointment History</Link>
                             <i className="bi bi-arrow-right-short quickact fs-4"></i>
                         </div>
 
