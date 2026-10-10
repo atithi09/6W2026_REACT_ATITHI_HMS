@@ -45,8 +45,6 @@ export default function SignUp() {
                 toast.error("Password must be at least 6 characters long.");
             } else if (error.code === "auth/email-already-in-use") {
                 toast.error("Email already exists.");
-            }else if (error,code === "auth/email-not-verified") {
-                toast.error("Email is not verified.");
             }else {
                 toast.error(error.message);
             }

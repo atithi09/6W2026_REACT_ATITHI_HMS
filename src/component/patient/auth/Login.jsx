@@ -29,10 +29,18 @@ export default function Login() {
         }
     }
 
-        catch(err){
-            console.log("error:",err)
-            toast.error("User not found")
+       catch (error) {
+            console.log(error);
+            console.log(error.code);
+            console.log(error.message);
+
+            if (error.code === "auth/email-not-verified") {
+                toast.error("Email not verified");
+            }else {
+                toast.error("User not found");
+            }
         }
+
 
     }
     return (
