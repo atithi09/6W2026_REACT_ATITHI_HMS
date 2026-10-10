@@ -39,6 +39,7 @@ import Bill from "./component/patient/appointment/Bill"
 import Earnings from "./component/doctor/earnings/Earnings"
 import ManageBills from "./component/admin/bills/ManageBills"
 import ViewRecords from "./component/doctor/patients/ViewRecords"
+import ManagePrescription from "./component/doctor/consultation/ManagePrescription"
 
 function App() {
 
@@ -91,6 +92,7 @@ function App() {
           <Route path='PrescriptionForm/:id' element={<PrescriptionForm/>}></Route>  
           <Route path='earnings' element={<Earnings/>}></Route>
           <Route path='viewRecords/:id' element={<ViewRecords/>}></Route>
+          <Route path='managePrescription' element={<ManagePrescription/>}></Route>
           </Route>
           
         </Routes>

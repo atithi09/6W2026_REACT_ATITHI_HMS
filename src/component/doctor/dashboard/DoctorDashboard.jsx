@@ -13,8 +13,8 @@ const override = {
     margin: "0 auto",
 }
 export default function DoctorDashboard() {
-    const [loading, setLoading] = useState(true)
     const uid = AuthService.uid()
+    const [loading, setLoading] = useState(true)
     const [doctor, setDoctor] = useState([])
     const [appointments, SetAppointments] = useState([])
     const [patients, setPatients] = useState([])
@@ -33,8 +33,8 @@ export default function DoctorDashboard() {
             date.getFullYear() === now.getFullYear()
         );
     });
+    
     const hour = new Date().getHours();
-
     let greeting;
     if (hour < 12) {
         greeting = "Good morning";
@@ -127,6 +127,7 @@ export default function DoctorDashboard() {
     });
     const completedApptThisMonth = completedAppointments.length
     const pendingAppointmentsCount = pendingAppointments.length
+
     async function fetchPatients() {
         try {
             let res = await PatientService.all()
@@ -348,34 +349,30 @@ export default function DoctorDashboard() {
                         <h4 className="text-center py-2 px-5">Quick Actions</h4>
 
                         <div className="d-flex align-items-center justify-content-between quickcard border border-0 rounded  py-1 px-3 mx-2 flex-fill">
-                            <i className="quickact fs-4 bi bi-person-add"></i>
-                            <Link to='/admin/addDoc' className="quickact fw-bold">Add Doctor</Link>
-                            <i className="bi bi-arrow-right-short quickact fs-4"></i>
-                        </div>
-
-                        <div className="d-flex align-items-center justify-content-between quickcard border border-0 rounded  py-1 px-3 mx-2 flex-fill">
-                            <i className="quickact fs-4 bi bi-people"></i>
-                            <Link to="/admin/managedoc" className="quickact fw-bold">Manage Doctors</Link>
+                            <i className="quickact fs-4 bi bi-calendar-event"></i>
+                            <Link to="/doctor/appthitory" className="quickact fw-bold text-nowrap">View Appointment History</Link>
                             <i className="bi bi-arrow-right-short quickact fs-4"></i>
                         </div>
 
                         <div className="d-flex align-items-center justify-content-between quickcard border border-0 rounded  py-1 px-3 mx-2 flex-fill">
                             <i className="quickact fs-4 bi bi-person-check"></i>
-                            <Link to="/admin/managepatient" className="quickact fw-bold">Manage Patients</Link>
+                            <Link to="/doctor/viewpatient" className="quickact fw-bold">view Patients</Link>
                             <i className="bi bi-arrow-right-short quickact fs-4"></i>
                         </div>
 
+
                         <div className="d-flex align-items-center justify-content-between quickcard border border-0 rounded  py-1 px-3 mx-2 flex-fill">
-                            <i className="quickact fs-4 bi bi-building-add"></i>
-                            <Link to='/admin/addDepartment' className="quickact fw-bold">Add Department</Link>
+                            <i className="quickact fs-4 bi bi-coin"></i>
+                            <Link to="/doctor/earnings" className="quickact fw-bold">View Bills</Link>
                             <i className="bi bi-arrow-right-short quickact fs-4"></i>
                         </div>
 
                         <div className="d-flex align-items-center justify-content-between quickcard border border-0 rounded  py-1 px-3 mx-2 flex-fill mb-3">
-                            <i className="quickact fs-4 bi bi-calendar-event"></i>
-                            <Link to="/admin/manageappts" className="quickact fw-bold text-nowrap">View Appointments</Link>
+                            <i className="quickact fs-4 bi bi-people"></i>
+                            <Link to="/doctor/managePrescription" className="quickact fw-bold">View Prescriptions</Link>
                             <i className="bi bi-arrow-right-short quickact fs-4"></i>
                         </div>
+                        
                     </div>
                 </div>
 

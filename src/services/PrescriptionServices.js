@@ -29,8 +29,18 @@ async recordByPatient(patientId){
                     return medicines
         }
 
-
+async recordByDoctor(doctorId){
+    const q = query(collection(db, "prescriptions"), where("doctorId", "==", doctorId))
+                    const querySnapshot = await getDocs(q)
+                    let medicines = []
+                    querySnapshot.forEach((record) => {
+                        // doc.data() is never undefined for query doc snapshots
+                        medicines.push({ id: record.id, ...record.data() })
+                    });
+                    return medicines   
+}
 
 }
+
 
 export default new PrescriptionServices()
